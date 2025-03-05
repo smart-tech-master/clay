@@ -17,6 +17,9 @@ function CreatePaletModal() {
   // start of backend integration
   const colours = useSelector(state => state.Feature.colours);
   const parsedColoursDataByProductName = parseDataByObjectKey(colours, 'product_name');
+  console.log('parsedColoursDataByProductName', parsedColoursDataByProductName);
+
+  const isOpen = useSelector((state) => state.Feature.isOpenCreatePaletModal);
 
 
   // end of backend ingration
@@ -27,7 +30,7 @@ function CreatePaletModal() {
 
   const dispatch = useDispatch();
 
-  const isOpen = useSelector((state) => state.Status.isOpenCreatePaletModal);
+/*  const isOpen = useSelector((state) => state.Status.isOpenCreatePaletModal);*/
   const isOpenCreatePaletModal = () => {
     dispatch(statusAction.isOpenCreatePaletModal());
   }
@@ -118,7 +121,7 @@ function CreatePaletModal() {
 
             <div className='setting-colours m-top'>
               {
-                Object.entries(parsedUserPaletData).map( ([key, data], index ) => (
+                Object.entries(parsedColoursDataByProductName).map( ([key, data], index ) => (
                   <PaletListRm key={index} category={key} data={data} onClickHandle={ removeUserPaletData } />
                 ))
               }

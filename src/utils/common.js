@@ -35,7 +35,7 @@ export const compareArraysByName = (array1, array2) => {
   };
 };
 
-export const convertAllProductsToArray = (products) => {
+export const convertAllProductsToColourArray = (products) => {
     let result = [];
 
     for (const productId in products) {

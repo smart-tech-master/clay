@@ -9,6 +9,8 @@ import Canvas from './containers/Canvas';
 import ToolBar from "./containers/ToolBar";
 import Modals from "./components/Modals";
 
+import axios from 'axios';
+
 function App() {
   const dispatch = useDispatch(); 
   

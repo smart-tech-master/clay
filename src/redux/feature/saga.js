@@ -6,12 +6,12 @@ import { getQuery, postQuery } from 'utils/api';
 export function* getColours() {
   yield takeLatest(actions.GET_COLOURS_REQUEST, function* getPalletRequest() {
     try {
-      const response = yield getQuery(`colors?ajax=1`);
-      console.log('this is color request result', response);
+      const response = yield getQuery(``);
+      /*console.log('this is color request result', response.data);*/
       if(response.status === 200) {
         yield put({
           type: actions.GET_COLOURS_REQUEST_SUCCESS,
-          payload: response.data
+          payload: response.data,
         });
       }
     } catch (e) {

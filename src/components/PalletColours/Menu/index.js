@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import statusAction from "../../../redux/status/actions";
+import featureActions from "../../../redux/feature/actions";
 
 import './Menu.css';
 import settingsButton from '../../../assets/images/settings-lg.svg';
