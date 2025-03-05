@@ -1,0 +1,84 @@
+.canvas-container {
+  width: 65%;
+  height: 100%;
+/*  width: 500px;
+  height: 500px;*/
+  /*border: 1px solid black;*/
+  /*margin-top:550px;*/
+}
+
+.pdf-header {
+  width: 980px;
+  height: 280px;
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  align-items: center;
+
+  border-bottom: 2px solid #CACACA;
+  margin-bottom: 70px;
+}
+
+.pdf-header > div > img {
+  width: 200px;
+}
+
+table {
+  width: 980px;
+  font-size: 20px;
+
+  border-collapse: collapse;
+  border-color: #CACACA;
+  margin-top: 50px;
+}
+
+td, th{
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+}
+
+th:nth-child(1) {
+  width: 54%;
+  text-align: left;
+  padding-left: 20px;
+}
+
+th:nth-child(2) {
+  width: 23%;
+}
+
+th:nth-child(3) {
+  width: 23%;
+}
+
+td:nth-child(1) {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.total-price {
+  width: 980px;
+  height: 80px;
+
+  display: flex;
+  justify-content: right;
+  text-align: right;
+
+  margin-top:30px;
+}
+
+.total-price > div:nth-child(1) {
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.total-price > div:nth-child(2) {
+  font-size: 30px;
+  font-weight: 500;
+}

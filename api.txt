@@ -1,0 +1,35 @@
+Get Objects: https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1&action=getObjects
+Set Object: https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1
+with data fields:
+-> action: setObject
+-> name: "My object name"
+-> id_object: (for update) otherwise null
+
+All colors: https://clay.powdev.lt/en/module/revisualizer/colors?ajax=1
+Color of specifyc pallet: https://clay.powdev.lt/en/module/revisualizer/colors?ajax=1&id_pallet=1
+All pallets: https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1&action=getPallets
+Set Pallet: https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1 Works only if you are logged in.
+with data fields:
+-> action	: setPallet
+-> name: "My pallet name"
+-> colors: array of id_product_attributes
+
+Add products to cart: https://clay.powdev.lt/en/module/revisualizer/cart?ajax=1
+with data:
+let data = {
+    products: [
+        {
+            id_product_attribute: 88,
+            qty: 5
+        },
+
+    ]
+}; // Replace with actual data
+
+https://clay.powdev.lt/lt/module/revisualizer/app
+
+For work in JS I made variables for routes:
+console.log(visualizer_objects); // To get or store objects
+console.log(visualizer_pallets); // To get or store pallets
+console.log(visualizer_colors); // To get colors
+console.log(visualizer_cart); // To add products to cart

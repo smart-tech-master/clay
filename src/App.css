@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'Poppins', sans-serif;
+  align-items: center;
+}
+
+.App {
+  margin-right: 0px !important;
+}
+
+.Toolbar > div {
+  width: 100%;
+}
+
+/*common style*/
+.d-flex {
+  display: flex;
+}
+
+.jc-space-between {
+  justify-content: space-between;
+}
+
+.m-top {
+  /*margin-top: 1rem;*/
+}
+
+.m-bottom {
+  /*margin-bottom: 1rem;*/
+}
+
+.m-right {
+  margin-right: 1rem;
+}
+
+.p-right {
+  padding-right: 0.5rem;
+}
+
+.p-top {
+  padding-top: 1rem;
+}
+
+.p-bottom {
+  padding-bottom: 1rem;
+}
+
+/* font weight */
+.fw-500 {
+  font-weight: 500;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.normal-font-style {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.sm-title {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16.5px;
+  padding-top: 6px;
+  padding-bottom: 1px;
+  border-bottom: 1px solid #CACACA;
+}
+
+input {
+  width: 54px;
+  height: 28px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #CACACA;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    width: 29px;
+    height: 28px;
+    background-color: #343935;
+    border-radius: 4px;
+}
+
+.button:hover {
+  background-color: #535353;
+}
+
+
+.col-md-8 {
+  flex: 0 0 auto;
+  width: 65.666667% !important;
+}

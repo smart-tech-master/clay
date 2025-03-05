@@ -1,0 +1,10 @@
+.Canvas {
+    width: 65%;
+    height: 100vh;
+    /*border: gray 1px solid;*/
+}
+
+.main-board {
+    width: 100%;
+    height: 100%;
+}

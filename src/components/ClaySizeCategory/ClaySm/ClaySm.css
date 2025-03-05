@@ -1,0 +1,29 @@
+.clay-container-sm {
+    width: 49px;
+    height: 50px;
+
+    border: 1px solid #CACACA;
+}
+
+.clay-container-sm > .clay {
+    width: 100%;
+    height: 35px;
+
+    display: flex;
+    justify-content: center;
+
+    border: none;
+    cursor: pointer;
+}
+
+/*.clay-container-sm > .clay > img {
+    cursor: pointer;
+}*/
+
+.clay-container-sm > .name {
+    width: 100%;
+    height: 10px;
+
+    font-weight: 400;
+    text-align: center;
+}

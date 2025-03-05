@@ -1,0 +1,40 @@
+.remove-container {
+    width: 64px;
+    height: 80px;
+
+    border: 1px solid #CACACA;
+}
+
+.remove-container > .clay {
+    width: 100%;
+    height: 62px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    border: none;
+}
+
+.remove-container > .clay > img {
+    margin-top: 6px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.remove-container > .name {
+    width: 100%;
+    height: 16px;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-clay-container {
+    width: 64px;
+    height: 1px;
+}

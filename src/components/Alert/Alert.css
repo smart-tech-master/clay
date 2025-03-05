@@ -1,0 +1,17 @@
+.alert {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+
+    padding-left: 7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 3px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #F6F3E8;
+
+    border-radius: 5px;
+}

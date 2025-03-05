@@ -1,0 +1,22 @@
+.container-lg {
+    width: 202px;
+    height: 264px;
+
+    border: 1px solid #CACACA;
+}
+
+.container-lg > .clay {
+    width: 100%;
+    height: 242px;
+
+    border: none;
+}
+
+.container-lg > .name {
+    width: 100%;
+    height: 10px;
+
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}
