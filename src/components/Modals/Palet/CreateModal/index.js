@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 
 import statusAction from '../../../../redux/status/actions';
-import { parseDataByCategory } from "utils/common";
+import { parseDataByCategory, parseDataByObjectKey } from "utils/common";
 
 import PaletListSm from "components/PaletListCategory/PaletListSm";
 import PaletListRm from "components/PaletListCategory/PaletListRm";
@@ -14,6 +14,12 @@ import mdClose from 'assets/images/md-close.svg';
 Modal.setAppElement('#root');
 
 function CreatePaletModal() {
+  // start of backend integration
+  const colours = useSelector(state => state.Feature.colours);
+  const parsedColoursDataByProductName = parseDataByObjectKey(colours, 'product_name');
+
+
+  // end of backend ingration
   const [userPalet, setUserPalet] = React.useState({
     userPaletName: 'my palet',
     userPaletData: []
