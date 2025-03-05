@@ -33,3 +33,5 @@ console.log(visualizer_objects); // To get or store objects
 console.log(visualizer_pallets); // To get or store pallets
 console.log(visualizer_colors); // To get colors
 console.log(visualizer_cart); // To add products to cart
+
+https://docs.google.com/document/d/1zZCAYU2tE0TH645JPELdAD1zjHOTq3-H_QUbQqL70LI/edit?tab=t.0
