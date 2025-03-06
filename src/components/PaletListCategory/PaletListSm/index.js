@@ -12,7 +12,7 @@ const PaletListSm = ({ category, data, onClickHandle }) => {
       <div className='colors d-flex'>
         {
           data.map((item, index) => (
-            <ClaySm key={index} src={baseUrl+item.color_image} name={item.color_name} onClickHandle={() => onClickHandle(item) }/>
+            <ClaySm key={index} id={item.id_product_attribute} src={baseUrl+item.color_image} name={item.color_name} onClickHandle={() => onClickHandle(item) }/>
           ))
         }
         <PaletListSmPrettier />

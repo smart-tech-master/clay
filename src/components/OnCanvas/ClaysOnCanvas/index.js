@@ -1,54 +1,58 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import statusActions from "../../../redux/status/actions";
+import featureActions from "../../../redux/feature/actions";
+import { truncateToTwoDecimals } from "utils/common";
 
 import ActionButtons from "../../ActionButtons";
 
 
 const ClaysOnCanvas = ({category, data}) => {
+  /*api integration start*/
+  const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   const dispatch = useDispatch();
-
-  const removeItem = (name) => {
-    dispatch(statusActions.confirmModalActionDefine({
-      type: statusActions.REMOVE_CALY_ON_CANVAS,
-      payload: name,
-    }));
-  }
-
-  console.log('data.length', data.length)
-
-  const priceData = useSelector((state) => state.Status.priceDataOfClaysOnCanvas);
+  const priceData = useSelector((state) => state.Feature.priceData);
   const [size, setSize] = useState({});
   const [price, setPrice] = useState({});
 
   useEffect(() => {
     const initSize = priceData.reduce((acc, item) => {
-      console.log('item.name', item.name);
-      acc[item.name] = item.size;
+      //console.log('item.name', item.name);
+      acc[item.id_product_attribute] = item.m2;
       return acc;
     }, {});
     setSize(initSize);
 
     const initPrice = priceData.reduce((acc, item) => {
-      acc[item.name] = item.price;
+      acc[item.id_product_attribute] = truncateToTwoDecimals(item.price / item.m2);
       return acc;
     }, {});
     setPrice(initPrice);
   }, [data]);
 
-  useEffect(() => {
-    dispatch(statusActions.updateSizeOnCanvas(size))
-  }, [size]);
+  /*api integration end*/
+
+  const removeItem = (id) => {
+    dispatch(statusActions.confirmModalActionDefine({
+      type: featureActions.REMOVE_COLOUR_0N_CANVAS,
+      payload: id,
+    }));
+  }
+
+/*  useEffect(() => {
+    dispatch(featureActions.updateSize({size, price}));
+  }, [size]);*/
 
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (id, value) => {
     setSize({
       ...size,
-      [name]: value
+      [id]: value
     })
+    dispatch(featureActions.updateSize({size, price}))
   };
 
-  console.log('size, price', size, price);
+/*  console.log('size, price', size, price);*/
 
   return (
     <>
@@ -57,24 +61,24 @@ const ClaysOnCanvas = ({category, data}) => {
         data.map((item, index) => (
           <div key={index} className='oncanvas-grid-row d-flex jc-space-between'>
             <div className='oncanvas-grid-clay'>
-              <img src={item.src} alt='color'/>
+              <img src={baseUrl+item.color_image} alt='color'/>
             </div>
             <div>
               <input
                 type='number'
-                value={size[item.name]}
+                value={size[item.id_product_attribute]}
                 onChange={(e) =>
-                  handleInputChange(item.name, e.target.value)
+                  handleInputChange(item.id_product_attribute, e.target.value)
                 }
               />
             </div>
-            <div>€{size[item.name] * price[item.name]}</div>
-            <ActionButtons data={item} name={item.name} src={item.src} removeItem={removeItem}/>
+            <div>€{truncateToTwoDecimals(size[item.id_product_attribute] * price[item.id_product_attribute])}</div>
+            <ActionButtons data={item} id={item.id_product_attribute} name={item.color_name} src={baseUrl+item.color_image} removeItem={removeItem}/>
           </div>
         ))
       }
     </>
   );
-}
+};
 
 export default ClaysOnCanvas;

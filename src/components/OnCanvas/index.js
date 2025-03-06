@@ -2,11 +2,13 @@ import React, { useRef } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import html2pdf from "html2pdf.js";
 
-import {parseDataByCategory} from "../../utils/common";
+import {parseDataByCategory, parseDataByObjectKey} from "../../utils/common";
 import statusAction from "../../redux/status/actions";
+import featureAction from "../../redux/feature/actions";
 
 import "./OnCanvas.css";
 import Title from "../Title";
+import TotalPrice from "./TotalPrice";
 
 import image1 from '../../assets/images/clays/1_B.png';
 import downloadPdf from '../../assets/images/download-pdf.svg';
@@ -15,23 +17,22 @@ import ClaysOnCanvas from "./ClaysOnCanvas";
 
 
 function OnCanvas() {
+  /*api integration start*/
   const dispatch = useDispatch();
-  // pdf generate test
-  const contentRef = useRef();
   const generatePDF = () => {
-    dispatch(statusAction.dowloadPdf()); // First call immediately
-
+    dispatch(statusAction.dowloadPdf());
     setTimeout(() => {
       dispatch(statusAction.dowloadPdf()); // Second call after 1 second
     }, 1000); // Delay in milliseconds (1000ms = 1s)
-  };
+  }
 
-  const claysOnCanvas = parseDataByCategory(useSelector(state => state.Status.claysDataOnCanvas));
+  const coloursOnCanvas = parseDataByObjectKey(useSelector(state => state.Feature.coloursOnCanvas), 'product_name');
+  /*api integration end*/
 
   return (
-    <div className="oncanvas-grid-container m-top" ref={contentRef}>
+    <div className="oncanvas-grid-container m-top">
 
-      <Title title='ON CANVAS' />
+      <Title title='ON CANVAS'/>
 
       <div className='oncanvas-grid'>
 
@@ -47,8 +48,8 @@ function OnCanvas() {
 
         <div className='oncanvas-grid-body'>
           {
-            Object.entries(claysOnCanvas).map( ([key, data], index ) => (
-              <ClaysOnCanvas key={index} category={key} data={data} />
+            Object.entries(coloursOnCanvas).map(([key, data], index) => (
+              <ClaysOnCanvas key={index} category={key} data={data}/>
             ))
           }
         </div>
@@ -56,10 +57,10 @@ function OnCanvas() {
       </div>
 
       <div className='checkout jc-space-between'>
-        <Title title='TOTAL: €489.66' />
+        <TotalPrice />
         <div className='d-flex'>
           <div className='download-pdf' onClick={generatePDF}>
-            <img src={downloadPdf} alt='color' />
+            <img src={downloadPdf} alt='color'/>
           </div>
           <div className='add-to-cart'>Add to cart</div>
         </div>

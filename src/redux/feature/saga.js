@@ -7,7 +7,7 @@ export function* getColours() {
   yield takeLatest(actions.GET_COLOURS_REQUEST, function* getPalletRequest() {
     try {
       const response = yield getQuery(``);
-      /*console.log('this is color request result', response.data);*/
+     /* console.log('this is color request result', response.data);*/
       if(response.status === 200) {
         yield put({
           type: actions.GET_COLOURS_REQUEST_SUCCESS,

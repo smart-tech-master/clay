@@ -7,11 +7,13 @@ const ClayLg = ({ src, name }) => {
   const normalBackgroundStyle = {
     backgroundImage: `url("${src}")`,
     backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
   };
 
   return (
     <div
-      className='container-lg'
+      className='clay-container-lg'
     >
       <div className='clay' style={ normalBackgroundStyle }>
       </div>

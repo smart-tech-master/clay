@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import statusAction from "../../../redux/status/actions";
+import featureAction from "../../../redux/feature/actions";
 
 import './ConfirmModal.css';
 import mdClose from '../../../assets/images/md-close.svg';
@@ -9,16 +10,16 @@ import mdClose from '../../../assets/images/md-close.svg';
 Modal.setAppElement('#root');
 
 function ConfirmModal() {
-  const isOpen = useSelector((state) => state.Status.isOpenConfirmModal);
+  const isOpen = useSelector((state) => state.Feature.isOpenConfirmModal);
 
   const dispatch = useDispatch();
   const isOpenConfirmModal = () => {
-    dispatch(statusAction.isOpenConfirmModal(statusAction.IS_OPEN_CONFIRM_MODAL));
+    dispatch(featureAction.isOpenConfirmModal(featureAction.IS_OPEN_CONFIRM_MODAL));
   }
 
   const action = {
-    type: useSelector((state) => state.Status.confirmModalAction.type),
-    payload: useSelector((state) => state.Status.confirmModalAction.payload)
+    type: useSelector((state) => state.Feature.confirmModalAction.type),
+    payload: useSelector((state) => state.Feature.confirmModalAction.payload)
   }
 
   const confirmModalAction = () => {

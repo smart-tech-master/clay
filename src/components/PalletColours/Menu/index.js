@@ -12,11 +12,11 @@ function Menu() {
   const dispatch = useDispatch();
 
   const createPallet = () => {
-    dispatch(statusAction.isOpenCreatePaletModal());
+    dispatch(featureActions.isOpenCreatePaletModal());
   };
 
   const updatePallet = () => {
-    dispatch(statusAction.isOpenUpdatePaletModal());
+    dispatch(featureActions.isOpenUpdatePaletModal());
   };
 
   return (

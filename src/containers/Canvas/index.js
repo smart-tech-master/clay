@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 import './Canvas.css';
 import statusAction from "../../redux/status/actions";
+import featureAction from "../../redux/feature/actions";
 import Logo from "assets/images/Logo.png"
 import settings from "../../assets/images/settings.svg";
 import remove from "../../assets/images/remove.svg";
@@ -12,6 +13,7 @@ import {compareArraysByName} from "../../utils/common";
 import statusActions from "../../redux/status/actions";
 
 const Canvas = () => {
+  const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -37,39 +39,34 @@ const Canvas = () => {
   }, [getDownloadPdfStatus]);
 
   const [rectsOptions, setRectsOptions] = useState([
-    { left: 720, top: 70, width: 200, height: 0 },
+    { left: 720, top: 70, width: 200, height: 10 },
     { left: 100, top: 300, width: 200, height: 200 },
     { left: 400, top: 200, width: 200, height: 200 },
     { left: 700, top: 300, width: 200, height: 200 },
   ]);
 
   const dispatch = useDispatch();
-  const removeItem = (name) => {
-    dispatch(statusActions.confirmModalActionDefine({
-      type: statusActions.REMOVE_CALY_ON_CANVAS,
-      payload: name,
-    }));
-    dispatch(
-      statusAction.isOpenConfirmModal()
-    );
+  const removeItem = (id) => {
+    dispatch(featureAction.confirmModalActionDefine({type: featureAction.REMOVE_COLOUR_0N_CANVAS, payload: id}));
+    dispatch(featureAction.isOpenConfirmModal());
   }
-  const UpdatedClayDataDefine = (name) => {
-    dispatch(
-      statusAction.updatedClayDataDefine({status: false,from:name, to:name, order: 1})
-    )
+
+  const updatedColourDefine = (id) => {
+    dispatch(featureAction.updatedColourDataDefine({status: false,from:id, to:id, order: 0}));
   }
-  const isOpenCanvasItemConfigModal = (name) => {
-    UpdatedClayDataDefine(name);
+
+  const isOpenCanvasItemConfigModal = (id) => {
+    updatedColourDefine(id);
 
     dispatch(
-      statusAction.isOpenCanvasItemConfigModal()
+      featureAction.isOpenCanvasItemConfigModal()
     );
   };
 
   const [rects, setRects] = useState([]);
-  const claysOnCanvas = useSelector(state => state.Status.claysDataOnCanvas);
-  const updatedClayData = useSelector(state => state.Status.updatedClayData);
-  const updatedPriceOfClayData = useSelector(state => state.Status.updatedPriceOfClayData);
+  const coloursOnCanvas = useSelector(state => state.Feature.coloursOnCanvas);
+  const updatedColour = useSelector(state => state.Feature.updatedColour);
+  const priceData = useSelector(state => state.Feature.priceData);
 
   const canvasRef = useRef(null);
   const [canvasInstance, setCanvasInstance] = useState(null);
@@ -92,7 +89,7 @@ const Canvas = () => {
 
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   useEffect(() => {
-    console.log('current screen size', size);
+    //console.log('current screen size', size);
     const fetchData = async () => {
       await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
       /*repaintCanvas();*/
@@ -153,18 +150,19 @@ const Canvas = () => {
   }, [size]);
 
   useEffect(() => {
-    if(updatedClayData.status) {
+    if(updatedColour.status) {
       try {
-        dispatch(statusAction.updatedClayData());
-        dispatch(statusAction.updateStatusOfUpdatedClayData(false));
+        /*dispatch(statusAction.updatedClayData());
+        dispatch(statusAction.updateStatusOfUpdatedClayData(false));*/
+        dispatch(featureAction.updateUserColours());
       } catch (error) {
         console.error('change background error:', error.message);
       }
     }
-  }, [updatedClayData]);
+  }, [updatedColour]);
 
   useEffect(() => {
-    const compareResult = compareArraysByName(claysOnCanvas, rects);
+    const compareResult = compareArraysByName(coloursOnCanvas, rects);
     if(compareResult.onlyInArray1.length > 0) {
       setRects(prevState => [...prevState, compareResult.onlyInArray1[0]]);
     }
@@ -176,10 +174,10 @@ const Canvas = () => {
     }
 
     if (compareResult.onlyInArray1.length === compareResult.onlyInArray2.length && compareResult.commonItems.length > 0) {
-        setRects([...claysOnCanvas]);
+        setRects([...coloursOnCanvas]);
     }
 
-  }, [claysOnCanvas]);
+  }, [coloursOnCanvas]);
 
   useEffect(() => {
     formateHtmlRef();
@@ -189,10 +187,10 @@ const Canvas = () => {
   const formateHtmlRef = () => {
     for(let i = 0; i < rects.length; i++) {
       if(htmlRefs.current){
-        if(htmlRefs.current[rects[i].name] !== null) {
-          htmlRefs.current[rects[i].name].style.top = rectsOptions[i].top + 'px';
-          htmlRefs.current[rects[i].name].style.left = rectsOptions[i].left + 'px';
-          htmlRefs.current[rects[i].name].style.width = rectsOptions[i].width + 'px';
+        if(htmlRefs.current[rects[i].id_product_attribute] !== null) {
+          htmlRefs.current[rects[i].id_product_attribute].style.top = rectsOptions[i].top + 'px';
+          htmlRefs.current[rects[i].id_product_attribute].style.left = rectsOptions[i].left + 'px';
+          htmlRefs.current[rects[i].id_product_attribute].style.width = rectsOptions[i].width + 'px';
         }
       }
     }
@@ -205,43 +203,69 @@ const Canvas = () => {
 
       canvas.renderAll();
       for(let i = 0; i < rects.length; i++) {
-
-        let rect = new fabric.Rect({
-          name: rects[i].name,
-          top: rectsOptions[i].top,
-          left: rectsOptions[i].left,
-          width: rects[i].visible ? rectsOptions[i].width : 0,
-          height: rects[i].visible ? rectsOptions[i].height : 0,
-          backgroundImageSrc: rects[i].src
-        });
-
-        fabric.Image.fromURL(rects[i].src, (img) => {
-          const pattern = new fabric.Pattern({
-            source: img.getElement(),
-            repeat: 'no-repeat', // You can change this to 'repeat' or 'repeat-x' if needed
+        //console.log('baseUrl + rects[i].color_image', baseUrl + rects[i].color_image);
+        let rect;
+        if(i === 0) {
+          rect = new fabric.Rect({
+            name: rects[i].id_product_attribute,
+            top: rectsOptions[i].top + 3000,
+            left: rectsOptions[i].left + 3000,
+            width: rects[i].visible ? rectsOptions[i].width : 0,
+            height: rects[i].visible ? rectsOptions[i].height : 0,
+            backgroundImageSrc: baseUrl + rects[i].color_image
           });
+        }else{
+          rect = new fabric.Rect({
+            name: rects[i].id_product_attribute,
+            top: rectsOptions[i].top,
+            left: rectsOptions[i].left,
+            width: rects[i].visible ? rectsOptions[i].width : 0,
+            height: rects[i].visible ? rectsOptions[i].height : 0,
+            backgroundImageSrc: baseUrl + rects[i].color_image
+          });
+        }
+
+
+        fabric.Image.fromURL(baseUrl+rects[i].color_image, (img) => {
+         /* const pattern = new fabric.Pattern({
+            source: img.getElement(),
+            repeat: 'no-repeat',
+          });
+          rect.set({ fill: pattern });
+          canvas.add(rect);*/
+
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = rect.width;   // make sure width is not 0
+          tempCanvas.height = rect.height; // make sure height is not 0
+
+          const ctx = tempCanvas.getContext('2d');
+          ctx.drawImage(img.getElement(), 0, 0, rect.width, rect.height);
+
+          const pattern = new fabric.Pattern({
+            source: tempCanvas,
+            repeat: 'no-repeat'
+          });
+
           rect.set({ fill: pattern });
           canvas.add(rect);
         });
 
         canvas.on('object:moving', (e) => {
-       /*   console.log('object:moving', htmlRefs);*/
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
           htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
         });
 
         canvas.on('object:scaling', (e) => {
-       /*   console.log('object:scaling', htmlRefs)*/
           htmlRefs.current[e.target.name].style.width = e.target.width * e.target.scaleX + 'px';
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
           htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
-        })
+        });
 
       }
 
       // background image setting
       if(rects.length !== 0 ){
-        fabric.Image.fromURL(rects[0].src, (img) => {
+        fabric.Image.fromURL(baseUrl+rects[0].color_image, (img) => {
           img.set({
             left: 0,  // Position the image
             top: 0,   // Position the image
@@ -268,6 +292,11 @@ const Canvas = () => {
     }
   }
 
+  const today = new Date();
+  const formattedDate = today.getFullYear() + '-' +
+    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+    String(today.getDate()).padStart(2, '0');
+
   return (
     <div className='canvas-container' ref={pdfContentRef}>
       {getDownloadPdfStatus && (<div className='pdf-header'>
@@ -275,7 +304,7 @@ const Canvas = () => {
         <div>
           <img src={Logo} alt='logo'/>
         </div>
-        <div>2025-02-03</div>
+        <div>{formattedDate}</div>
       </div>)}
 
       <div></div>
@@ -284,9 +313,9 @@ const Canvas = () => {
         rects.map((rect, index) => {
           /*console.log('htmlRefs', htmlRefs);*/
             return rect.visible && (<div
-              id={rect.name}
+              id={rect.id_product_attribute}
               key={index}
-              ref={(el) => (htmlRefs.current[rect.name] = el)}
+              ref={(el) => (htmlRefs.current[rect.id_product_attribute] = el)}
               style={{
                 position: 'absolute',
                 top: `${rectsOptions[index].top}px`,
@@ -314,18 +343,18 @@ const Canvas = () => {
                   marginTop: "-70px",
                 }}
               >
-                <div>{rect.name}</div>
+                <div>{rect.color_name}</div>
                 <img
                   src={settings}
                   alt={'setting'}
                   style={{marginLeft: '8px', marginRight: '8px', cursor: 'pointer'}}
-                  onClick={()=>isOpenCanvasItemConfigModal(rect.name)}
+                  onClick={()=>isOpenCanvasItemConfigModal(rect.id_product_attribute)}
                 />
                 <img
                   src={remove}
                   alt={'remove'}
                   style={{cursor: 'pointer'}}
-                  onClick={() => removeItem(rect.name) }
+                  onClick={() => removeItem(rect.id_product_attribute) }
                 />
               </div>
 

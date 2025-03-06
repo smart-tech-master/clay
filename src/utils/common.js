@@ -16,10 +16,10 @@ export const parseDataByObjectKey = (data, key) => {
 
   return data.reduce((acc, item) => {
     // Check if the category already exists in the accumulator object
-    if (!acc[key]) {
-      acc[key] = [];  // Initialize an empty array for this category
+    if (!acc[item[key]]) {
+      acc[item[key]] = [];  // Initialize an empty array for this category
     }
-    acc[key].push(item);  // Add the current item to the appropriate category
+    acc[item[key]].push(item);  // Add the current item to the appropriate category
     return acc;
   }, {});
 }
@@ -57,11 +57,16 @@ export const convertAllProductsToColourArray = (products) => {
                     id_product_attribute: attribute.id_product_attribute,
                     price: attribute.price,
                     weight: attribute.weight,
-                    m2: attribute.m2
+                    m2: attribute.m2,
+                    visible: true
                 });
             }
         }
     }
 
     return result;
+}
+
+export const truncateToTwoDecimals = (num) => {
+  return Math.ceil(num * 100) / 100;
 }

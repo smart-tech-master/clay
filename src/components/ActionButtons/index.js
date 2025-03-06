@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import statusAction from "../../redux/status/actions";
+import featureAction from "../../redux/feature/actions";
 
 import './ActionButtons.css';
 import visibilityOn from '../../assets/images/visible-on.svg';
@@ -8,31 +9,29 @@ import visibilityOff from '../../assets/images/visible-off.svg';
 import settings from '../../assets/images/settings.svg';
 import remove from '../../assets/images/remove.svg';
 
-function ActionButtons({data, name, src, removeItem}) {
+function ActionButtons({data, id, name, src, removeItem}) {
   const dispatch = useDispatch();
 
   const updateVisibility = () => {
-    dispatch(statusAction.updateVisibilityOnCanvas(name))
+    dispatch(featureAction.updateVisibilityOnCanvas(id));
   }
 
-  const UpdatedClayDataDefine = () => {
-    dispatch(
-      statusAction.updatedClayDataDefine({status: false,from:name, to:name, order: 1})
-    )
+  const updatedColourDefine = () => {
+    dispatch(featureAction.updatedColourDataDefine({status: false,from:id, to:id, order: 0}));
   }
 
   const isOpenCanvasItemConfigModal = () => {
-    UpdatedClayDataDefine();
+    updatedColourDefine(id);
 
     dispatch(
-      statusAction.isOpenCanvasItemConfigModal()
+      featureAction.isOpenCanvasItemConfigModal()
     );
   };
 
   const isOpenConfirmModal = () => {
-    removeItem(name);
+    removeItem(id);
     dispatch(
-      statusAction.isOpenConfirmModal()
+      featureAction.isOpenConfirmModal()
     );
   }
 

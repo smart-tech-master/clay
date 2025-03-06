@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import statusAction from "../../../redux/status/actions";
+import featureAction from "../../../redux/feature/actions";
 
 import './CanvasItemConfigModal.css';
 import mdClose from '../../../assets/images/md-close.svg';
-import image1 from '../../../assets/images/clays/1_B.png';
 
 import noSelectedResize from '../../../assets/images/settings/no-selected-resize.png';
 import noSelectedBackground from '../../../assets/images/settings/no-selected-background.png';
@@ -21,82 +21,73 @@ import selected3 from '../../../assets/images/settings/selected-3.png';
 
 
 import Title from "../../Title";
-import ClayMd from "../../ClaySizeCategory/ClayMd";
 import ClayLg from "../../ClaySizeCategory/ClayLg";
-import {parseDataByCategory} from "../../../utils/common";
+import {parseDataByCategory, parseDataByObjectKey} from "../../../utils/common";
 import PaletListMd from "../../PaletListCategory/PaletListMd";
 
 Modal.setAppElement('#root');
 
 function IsOpenCanvasItemConfig() {
+  /*api integration start*/
   const dispatch = useDispatch();
-  const userPaletData = useSelector((state) => state.Status.userPaletData);
-  const paletNames = Object.keys(userPaletData);
+  const isOpen = useSelector((state) => state.Feature.isOpenCanvasItemConfigModal);
+  const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
+  console.log('baseUrl', baseUrl);
 
-  const updatedClayData = useSelector((state) => state.Status.updatedClayData);
+  const userColours = useSelector((state) => state.Feature.userColours);
+  const paletNames = Object.keys(userColours);
+  const updatedColour = useSelector((state) => state.Feature.updatedColour);
 
-  useEffect(()=>{
-    if(paletNames.length === 1){
+  const [selectedPalet, setSelectedPalet] = useState("");
+  useEffect(() => {
+    if (paletNames.length === 1) {
       setSelectedPalet(paletNames[0]);
     }
   }, [paletNames]);
 
 
-  const [selectedPalet, setSelectedPalet] = useState("");
-
   const handleSelectedPaletChange = (event) => {
     setSelectedPalet(event.target.value);
   }
 
-
-
-  const isOpen = useSelector((state) => state.Status.isOpenCanvasItemConfigModal);
-
   const isOpenCanvasItemConfigModal = () => {
-    dispatch(
-      statusAction.isOpenCanvasItemConfigModal({
-        action: statusAction.IS_OPEN_CANVAS_ITEM_CONFIG_MODAL
-      })
-    );
+    dispatch(featureAction.isOpenCanvasItemConfigModal());
   };
 
   const updateTo = (item) => {
-    dispatch(statusAction.updateTo(item));
+    dispatch(featureAction.updateTo(item));
   }
 
-  const updateStatusOfUpdatedClayData = () => {
-    dispatch(statusAction.updateStatusOfUpdatedClayData(true));
+  const updateStatus = () => {
+    dispatch(featureAction.updateStatusOfUpdateColour(true));
     isOpenCanvasItemConfigModal();
-
   }
 
   // layer select
   const imagePairs = [
     /*{ id: 'resize', selected: selectedResize, noSelected: noSelectedResize },*/
-    { id: 'resize', selected: noSelectedResize, noSelected: noSelectedResize, order: 4 },
-    { id: 'background', selected: selectedBackground, noSelected: noSelectedBackground, order: 0 },
-    { id: 'image1', selected: selected1, noSelected: noSelected1, order: 1 },
-    { id: 'image2', selected: selected2, noSelected: noSelected2, order: 2 },
-    { id: 'image3', selected: selected3, noSelected: noSelected3, order: 3 }
+    {id: 'resize', selected: noSelectedResize, noSelected: noSelectedResize, order: 4},
+    {id: 'background', selected: selectedBackground, noSelected: noSelectedBackground, order: 0},
+    {id: 'image1', selected: selected1, noSelected: noSelected1, order: 1},
+    {id: 'image2', selected: selected2, noSelected: noSelected2, order: 2},
+    {id: 'image3', selected: selected3, noSelected: noSelected3, order: 3}
   ];
 
   const [activeImage, setActiveImage] = useState(null);
 
-  const claysDataOnCanvas = useSelector((state) => state.Status.claysDataOnCanvas);
+  const coloursOnCanvas = useSelector((state) => state.Feature.coloursOnCanvas);
   const handleClick = (id) => {
     const selectedItem = imagePairs.filter(image => image.id === id)[0];
-    if(selectedItem.order < claysDataOnCanvas.length) {
+    if (selectedItem.order < coloursOnCanvas.length) {
       setActiveImage(id);
-      dispatch(statusAction.updateOrderOfUpdatedClayData(selectedItem.order));
+      dispatch(featureAction.updateOrder(selectedItem.order));
     }
-
-    /*console.log(imagePairs[id].order);*/
   };
 
-const clayNames = claysDataOnCanvas.map(clayData => clayData.name);
+  const colourIds = coloursOnCanvas.map(colour => colour.id_product_attribute);
 //const filteredUserPaletData =  userPaletData.filter(item => clayNames.some(clayName =>  clayName === item.name));
 
-  useEffect(()=>{
+  useEffect(() => {
     setActiveImage(null);
   }, [isOpen]);
 
@@ -130,15 +121,11 @@ const clayNames = claysDataOnCanvas.map(clayData => clayData.name);
           <div className='cicm-colour'>
             <div className='cicm-current-color'>
               <Title title='CURRENT COLOUR'/>
-              {/*<Clay src={image1} name='1_B' size='xlg' />*/}
-              <ClayLg src={updatedClayData.to.src} name={updatedClayData.to.name}/>
+              <ClayLg src={baseUrl + updatedColour.to.color_image} name={updatedColour.to.color_name}/>
             </div>
             <div className='cicm-change-out-color'>
               <Title title='CHANGE OUT COLOUR'/>
-              <div>
-                {/*                <select className='pallet-select'>
-                  <option>My pallet</option>
-                </select>*/}
+              <div style={{paddingBottom: "17px"}}>
                 <select className='pallet-select'
                         onChange={handleSelectedPaletChange} value={selectedPalet}
                 >
@@ -152,8 +139,8 @@ const clayNames = claysDataOnCanvas.map(clayData => clayData.name);
               <div className='cicm-colours-list m-top'>
                 {
                   selectedPalet &&
-                  Object.entries(parseDataByCategory(userPaletData[selectedPalet])).map(([key, data], index) => {
-                    let filteredData = data.filter((item) => !(clayNames.some(clayName => clayName === item.name)));
+                  Object.entries(parseDataByObjectKey(userColours[selectedPalet], 'product_name')).map(([key, data], index) => {
+                    let filteredData = data.filter((item) => !(colourIds.some(id => id === item.id_product_attribute)));
                     return <PaletListMd key={index} category={key} data={filteredData} onClickHandle={updateTo}/>
                   })
                 }
@@ -189,7 +176,7 @@ const clayNames = claysDataOnCanvas.map(clayData => clayData.name);
             Delete canvas
           </div>
           <div>
-            <div className='cicm-footer-no' onClick={updateStatusOfUpdatedClayData}>Save</div>
+            <div className='cicm-footer-no' onClick={updateStatus}>Save</div>
           </div>
         </div>
       </Modal>

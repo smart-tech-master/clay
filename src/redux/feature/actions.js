@@ -5,6 +5,21 @@ const actions = {
   IS_OPEN_UPDATE_PALET_MODAL: 'IS_OPEN_UPDATE_PALET_MODAL',
   IS_OPEN_CANVAS_ITEM_CONFIG_MODAL: 'IS_OPEN_CANVAS_ITEM_CONFIG_MODAL',
 
+  GET_COLOURS_REQUEST: 'GET_COLOURS_REQUEST',
+  GET_COLOURS_REQUEST_SUCCESS: 'GET_COLOURS_REQUEST_SUCCESS',
+
+  CREATE_USER_COLOURS: 'CREATE_USER_COLOURS',
+  ADD_COLOUR_ON_CANVAS: 'ADD_COLOUR_ON_CANVAS',
+  CONFIRM_MODAL_ACTION_DEFINE: 'CONFIRM_MODAL_ACTION_DEFINE',
+  REMOVE_COLOUR_0N_CANVAS: 'REMOVE_COLOUR_0N_CANVAS',
+  UPDATED_COLOUR_DEFINE: 'UPDATE_COLOUR_DEFINE',
+  UPDATE_TO: 'UPDATE_TO',
+  UPDATE_STATUS_OF_UPDATED_COLOUR: 'UPDATE_STATUS_OF_UPDATED_COLOUR',
+  UPDATE_ORDER_OF_UPDATED_COLOUR: 'UPDATE_ORDER_OF_UPDATED_COLOUR',
+  UPDATE_USER_COLOURS: 'UPDATE_USER_COLOURS',
+  UPDATE_VISIBILITY_ON_CANVAS: 'UPDATE_VISIBILITY_ON_CANVAS',
+  UPDATE_SIZE: 'UPDATE_SIZE',
+
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
   }),
@@ -21,24 +36,64 @@ const actions = {
     type: actions.IS_OPEN_CANVAS_ITEM_CONFIG_MODAL
   }),
 
-  GET_COLOURS_REQUEST: 'GET_COLOURS_REQUEST',
-  GET_COLOURS_REQUEST_SUCCESS: 'GET_COLOURS_REQUEST_SUCCESS',
 
-
-  getColours: () => ({
-    type: actions.GET_COLOURS
-  }),
   getColoursRequest: () => ({
     type: actions.GET_COLOURS_REQUEST,
   }),
 
+  createUserColours: (payload) => ({
+    type: actions.CREATE_USER_COLOURS,
+    payload: payload,
+  }),
 
+  addColourOnCanvas: (payload) => ({
+    type: actions.ADD_COLOUR_ON_CANVAS,
+    payload
+  }),
 
+  confirmModalActionDefine: (payload) => ({
+    type: actions.CONFIRM_MODAL_ACTION_DEFINE,
+    payload
+  }),
 
-/*  GET_PALLET_REQUEST: 'GET_PALLET_REQUEST',
-  getPalletRequest: ()=> ({
-    type: actions.GET_PALLET_REQUEST,
-  }),*/
+  removeColourOnCanvas: (payload) => ({
+    type: actions.REMOVE_COLOUR_0N_CANVAS,
+    payload
+  }),
+
+  updatedColourDataDefine: (payload) => ({
+    type: actions.UPDATED_COLOUR_DEFINE,
+    payload
+  }),
+
+  updateTo: (payload) => ({
+    type: actions.UPDATE_TO,
+    payload
+  }),
+
+  updateStatusOfUpdateColour: (payload) => ({
+    type: actions.UPDATE_STATUS_OF_UPDATED_COLOUR,
+    payload
+  }),
+
+  updateOrder: (payload) => ({
+    type: actions.UPDATE_ORDER_OF_UPDATED_COLOUR,
+    payload
+  }),
+
+  updateUserColours: () => ({
+    type: actions.UPDATE_USER_COLOURS
+  }),
+
+  updateVisibilityOnCanvas: (payload) => ({
+    type: actions.UPDATE_VISIBILITY_ON_CANVAS,
+    payload
+  }),
+
+  updateSize: (payload) => ({
+    type: actions.UPDATE_SIZE,
+    payload
+  })
 }
 
 export default actions;
