@@ -19,6 +19,7 @@ const actions = {
   UPDATE_USER_COLOURS: 'UPDATE_USER_COLOURS',
   UPDATE_VISIBILITY_ON_CANVAS: 'UPDATE_VISIBILITY_ON_CANVAS',
   UPDATE_SIZE: 'UPDATE_SIZE',
+  SAVE_USER_COLOURS: 'SAVE_USER_COLOURS',
 
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
@@ -93,7 +94,12 @@ const actions = {
   updateSize: (payload) => ({
     type: actions.UPDATE_SIZE,
     payload
-  })
+  }),
+
+  saveUserColours: (payload) => ({
+    type: actions.SAVE_USER_COLOURS,
+    payload
+  }),
 }
 
 export default actions;

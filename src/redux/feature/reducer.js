@@ -188,6 +188,11 @@ export default function reducer(state = initState, action) {
       }
       break;
 
+      case actions.SAVE_USER_COLOURS: {
+        draft.userColours = action.payload;
+      }
+      break;
+
       default:
         break;
     }

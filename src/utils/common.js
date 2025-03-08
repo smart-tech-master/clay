@@ -12,7 +12,7 @@ export const parseDataByCategory = (data) => {
 }
 
 export const parseDataByObjectKey = (data, key) => {
-  //if(!data) { return {}; }
+  if(!data) { return {}; }
 
   return data.reduce((acc, item) => {
     // Check if the category already exists in the accumulator object

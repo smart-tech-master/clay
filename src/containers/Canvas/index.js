@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
-import html2pdf from "html2pdf.js";
+//import html2pdf from "html2pdf.js";
+import html2pdf from 'html2pdf.js/dist/html2pdf.min.js';
 import {useDispatch, useSelector} from "react-redux";
 
 import './Canvas.css';
@@ -11,6 +12,11 @@ import settings from "../../assets/images/settings.svg";
 import remove from "../../assets/images/remove.svg";
 import {compareArraysByName} from "../../utils/common";
 import statusActions from "../../redux/status/actions";
+import Table from "./Table";
+
+// pdf issue fix
+/*import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';*/
 
 const Canvas = () => {
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
@@ -20,17 +26,22 @@ const Canvas = () => {
   });
 
   const pdfContentRef = useRef();
+
   const generatePDF = () => {
     const element = pdfContentRef.current;
+
     const options = {
       margin:       1,
       filename:     'invoice.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
+      image:        { type: 'jpeg', quality: 1 },
       html2canvas:  { dpi: 192, letterRendering: true },
       jsPDF:        { unit: 'in', format: [12.5, 18.75], orientation: 'portrait' }
     };
+
+    console.log('element', element);
     html2pdf().from(element).set(options).save();
   };
+
   const getDownloadPdfStatus = useSelector(state => state.Status.downloadPdf);
   useEffect(()=>{
     if(getDownloadPdfStatus) {
@@ -363,47 +374,7 @@ const Canvas = () => {
         )
       }
 
-      {getDownloadPdfStatus &&
-        (<>
-          <div>
-            <table border="1">
-              <thead>
-              <tr>
-                <th>Colour</th>
-                <th>M²</th>
-                <th>Total</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>1_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              <tr>
-                <td>2_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              <tr>
-                <td>3_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              <tr>
-                <td>4_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className='total-price'>
-            <div>Total:</div>
-            <div>€1162,64</div>
-          </div>
-        </>)
-      }
+    {getDownloadPdfStatus && <Table />}
     </div>
   );
 };
