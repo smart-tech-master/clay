@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
 
 import './ToolBar.css';
@@ -9,16 +9,17 @@ import Room from "../../components/Room";
 import PalletColours from "../../components/PalletColours";
 import OnCanvas from "../../components/OnCanvas";
 
-import {languageData} from "../../data/languageData";
-
+import { useTranslation } from "react-i18next";
+import {changeLanguage} from "i18next";
 
 const ToolBar = () => {
-  const language = useSelector(state => state.Feature.language);
+  const { t, i18n } = useTranslation();
+
   return (
     <div className="Toolbar min-vh-100">
       <div style={{height:'20vh'}}>
-        <Title title={languageData[language]['CONFIG']} />
-        <Alert text='Log in to save your objects and pallets.' />
+        <Title title={t("CONFIG")} />
+        <Alert text={t("Log in to save your objects and pallets.")} />
         <Room />
       </div>
       <div style={{height:'30vh'}}>

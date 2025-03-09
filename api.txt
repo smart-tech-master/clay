@@ -65,3 +65,5 @@ Lietuvių
 
 let labelText = document.getElementById("language-selector-label").innerText.trim();
 console.log(labelText);
+
+https://stackoverflow.com/questions/22710627/tainted-canvases-may-not-be-exported

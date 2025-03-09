@@ -9,6 +9,9 @@ import Canvas from './containers/Canvas';
 import ToolBar from "./containers/ToolBar";
 import Modals from "./components/Modals";
 
+import { useTranslation } from "react-i18next";
+import statusAction from "./redux/status/actions";
+
 function App({ isLoggedIn, customerId }) {
 /*  console.log('isLoggedIn', isLoggedIn);
   console.log('customerId', customerId);*/
@@ -37,11 +40,18 @@ function App({ isLoggedIn, customerId }) {
     }
 
     // getting language info
+
     if(document.getElementById("language-selector-label")){
       let labelText = document.getElementById("language-selector-label").innerText.trim();
-      dispatch(featureActions.setLanguage(labelText));
+      if(labelText === 'English') {
+        dispatch(featureActions.setLanguage('en'));
+      }else{
+        dispatch(featureActions.setLanguage('lt'));
+      }
     }
   });
+
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="row App">

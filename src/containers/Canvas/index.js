@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import html2pdf from "html2pdf.js";
+import html2canvas from "html2canvas";
 /*import html2pdf from 'html2pdf.js/dist/html2pdf.min.js';*/
 import {useDispatch, useSelector} from "react-redux";
 
@@ -14,7 +15,9 @@ import {compareArraysByName} from "../../utils/common";
 import statusActions from "../../redux/status/actions";
 import Table from "./Table";
 
-import {languageData} from "data/languageData";
+import backgroundImage2 from '../../assets/images/clays/2_B.png';
+
+import { useTranslation } from "react-i18next";
 
 const Canvas = () => {
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
@@ -24,6 +27,24 @@ const Canvas = () => {
   });
 
   const pdfContentRef = useRef();
+
+  const generateImage = () => {
+    if (canvasInstance) {
+      const dataURL = canvasInstance.toDataURL({
+        format: 'png',
+        quality: 1.0
+      });
+
+      console.log('canvasInstance', dataURL);
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = 'canvas-capture.png'; // Change extension if needed
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+  }
 
   const generatePDF = () => {
     const element = pdfContentRef.current;
@@ -36,7 +57,6 @@ const Canvas = () => {
       jsPDF:        { unit: 'in', format: [12.5, 18.75], orientation: 'portrait' }
     };
 
-    console.log('element', element);
     html2pdf().from(element).set(options).save();
   };
 
@@ -120,28 +140,6 @@ const Canvas = () => {
       widthScale = 1;
       heightScale = 0.5;
     }
-/*    width = width * widthScale;
-    height = heightScale * widthScale;
-
-    setRectsOptions(prevState => {
-      return prevState.map(item => {
-        return {
-          top: item.top * (height/standardHeight),
-          left: item.left * (width/standardWidth),
-          width: item.width * (width/standardWidth),
-          height: item.height * (height/standardHeight)
-        }
-      })
-    });*/
-/*
-    [...rectsOptions].map((item, index) => {
-        return {
-          top: item.top * (standardHeight/height),
-          left: item.left * (width/standardWidth),
-          width: item.left * (standardWidth/width),
-          height: item.height * (standardHeight/height)
-        }
-    })*/
 
     // Initialize Fabric.js canvas
     const canvas = new fabric.Canvas(canvasRef.current, {
@@ -209,8 +207,8 @@ const Canvas = () => {
     const canvas = canvasInstance;
     if(canvas) {
       canvas.clear();
-
       canvas.renderAll();
+
       for(let i = 0; i < rects.length; i++) {
         //console.log('baseUrl + rects[i].color_image', baseUrl + rects[i].color_image);
         let rect;
@@ -242,6 +240,11 @@ const Canvas = () => {
           });
           rect.set({ fill: pattern });
           canvas.add(rect);*/
+/*          img.set({ crossOrigin: "anonymous" });*/
+          console.log('baseUrl+rects[i].color_image', baseUrl+rects[i].color_image);
+          fetch(baseUrl + rects[i].color_image)
+            .then(response => console.log(response.headers.get("Access-Control-Allow-Origin")))
+            .catch(error => console.error("CORS error:", error));
 
           const tempCanvas = document.createElement('canvas');
           tempCanvas.width = rect.width;   // make sure width is not 0
@@ -301,17 +304,163 @@ const Canvas = () => {
     }
   }
 
+
+  /*  const repaintCanvas = async () => {
+      const canvas = canvasInstance;
+      if (canvas) {
+        canvas.clear();
+        canvas.renderAll();
+
+        // Proxy URL to bypass CORS issues
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
+        // Function to load an image safely with CORS handling
+        const loadImageSafely = (url) => {
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';  // Force CORS handling
+            img.src = proxyUrl + 'https://via.placeholder.com/300';  // Use proxy to bypass CORS restrictions
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
+          });
+        };
+
+        // Load rectangles with images
+        for (let i = 0; i < rects.length; i++) {
+          let rect = new fabric.Rect({
+            name: rects[i].id_product_attribute,
+            top: rects[i].visible ? rectsOptions[i].top : rectsOptions[i].top + 3000,
+            left: rects[i].visible ? rectsOptions[i].left : rectsOptions[i].left + 3000,
+            width: rectsOptions[i].width,
+            height: rectsOptions[i].height
+          });
+
+          try {
+            // Load external image safely using proxy
+            const imgElement = await loadImageSafely(baseUrl + rects[i].color_image);
+
+            // Create a temporary canvas to draw the image
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = rect.width;
+            tempCanvas.height = rect.height;
+            const ctx = tempCanvas.getContext('2d');
+            ctx.drawImage(imgElement, 0, 0, rect.width, rect.height);
+
+            // Convert to Fabric.js pattern
+            const pattern = new fabric.Pattern({
+              source: tempCanvas,
+              repeat: 'no-repeat'
+            });
+
+            rect.set({ fill: pattern });
+            canvas.add(rect);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
+        // Load Background Image
+        try {
+          const bgImageUrl = rects.length !== 0 ? baseUrl + rects[0].color_image : 'assets/images/clays/canvas-container.png';
+          const bgImgElement = await loadImageSafely(bgImageUrl);
+
+          fabric.Image.fromURL(bgImgElement.src, (fabricImg) => {
+            fabricImg.set({
+              left: 0,
+              top: 0,
+              scaleX: canvas.width / bgImgElement.width,
+              scaleY: canvas.height / bgImgElement.height
+            });
+            canvas.setBackgroundImage(fabricImg, canvas.renderAll.bind(canvas));
+          }, { crossOrigin: 'anonymous' });
+        } catch (error) {
+          console.error("Error loading background image:", error);
+        }
+
+        canvas.renderAll();
+      }
+    };*/
+
+  /* const repaintCanvas = () => {
+     const canvas = canvasInstance;
+     if (canvas) {
+       canvas.clear();
+       canvas.renderAll();
+
+       for (let i = 0; i < rects.length; i++) {
+         let rect = new fabric.Rect({
+           name: rects[i].id_product_attribute,
+           top: rects[i].visible ? rectsOptions[i].top : rectsOptions[i].top + 3000,
+           left: rects[i].visible ? rectsOptions[i].left : rectsOptions[i].left + 3000,
+           width: rectsOptions[i].width,
+           height: rectsOptions[i].height
+         });
+
+         fabric.Image.fromURL(backgroundImage2, (img) => {
+           const tempCanvas = document.createElement('canvas');
+           tempCanvas.width = rect.width;   // make sure width is not 0
+           tempCanvas.height = rect.height; // make sure height is not 0
+
+           const ctx = tempCanvas.getContext('2d');
+           ctx.drawImage(img.getElement(), 0, 0, rect.width, rect.height);
+
+           const pattern = new fabric.Pattern({
+             source: tempCanvas,
+             repeat: 'no-repeat'
+           });
+
+           rect.set({ fill: pattern });
+           canvas.add(rect);
+         });
+       }
+
+       canvas.on('object:moving', (e) => {
+         htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
+         htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
+       });
+
+       canvas.on('object:scaling', (e) => {
+         htmlRefs.current[e.target.name].style.width = e.target.width * e.target.scaleX + 'px';
+         htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
+         htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
+       });
+
+       // Set background image
+       const backgroundImageUrl = rects.length !== 0 ? baseUrl + rects[0].color_image : 'assets/images/clays/canvas-container.png';
+       /!*fabric.Image.fromURL(backgroundImageUrl, (img) => {*!/
+       fabric.Image.fromURL('https://www.w3schools.com/html/pic_trulli.jpg', (img) => {
+         img.set({
+           left: 0,
+           top: 0,
+           scaleX: canvas.width / img.width,
+           scaleY: canvas.height / img.height,
+           crossOrigin: 'anonymous'
+         });
+         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+       }, { crossOrigin: 'anonymous' });
+
+
+ /!*      setTimeout(() => {*!/
+         canvas.renderAll();
+ /!*      }, 500);*!/
+     }
+   };*/
+
+
+
   const today = new Date();
   const formattedDate = today.getFullYear() + '-' +
     String(today.getMonth() + 1).padStart(2, '0') + '-' +
     String(today.getDate()).padStart(2, '0');
 
-  const language = useSelector(state => state.Feature.language);
+/*  const language = useSelector(state => state.Feature.language);*/
+//languageData[language]
+  const { t, i18n } = useTranslation();
 
   return (
     <div className='canvas-container' ref={pdfContentRef}>
       {getDownloadPdfStatus && (<div className='pdf-header'>
-        <div>{languageData[language]['Bedroom']}</div>
+        <div>{t('Bedroom')}</div>
         <div>
           <img src={Logo} alt='logo'/>
         </div>
@@ -323,7 +472,7 @@ const Canvas = () => {
       {
         rects.map((rect, index) => {
           /*console.log('htmlRefs', htmlRefs);*/
-            return rect.visible && (<div
+            return rect.visible && !getDownloadPdfStatus && (<div
               id={rect.id_product_attribute}
               key={index}
               ref={(el) => (htmlRefs.current[rect.id_product_attribute] = el)}
@@ -373,7 +522,7 @@ const Canvas = () => {
           }
         )
       }
-
+    <button onClick={generateImage}>generateImage</button>
     {getDownloadPdfStatus && <Table />}
     </div>
   );

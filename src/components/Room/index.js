@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import featureAction from "../../redux/feature/actions";
-import {languageData} from "data/languageData";
+import { useTranslation } from "react-i18next";
 
 import './Room.css';
 import saveButton from '../../assets/images/save-button.svg';
@@ -49,13 +49,16 @@ function Room() {
 /*      const userData = JSON.parse(localStorage.getItem("userData"));*/
     }
   }
+
+  const { t, i18n } = useTranslation();
+
   return (
     <div className='room d-flex space-between m-top m-bottom normal-font-style p-bottom'>
-      <div>{languageData[language]['Rooms']}</div>
+      <div>{t('Rooms')}</div>
       <div className="room-select-button-container d-flex">
         <div className='room-select-container'>
           <select className='room-select'>
-            <option>{languageData[language]['Bedroom']}</option>
+            <option>{t('Bedroom')}</option>
           </select>
         </div>
         <div className="button" onClick={setObject}>

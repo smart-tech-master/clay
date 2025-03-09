@@ -4,15 +4,15 @@ import { truncateToTwoDecimals } from "utils/common";
 
 import Title from "../../Title";
 
-import {languageData} from "data/languageData";
+import { useTranslation } from "react-i18next";
 
 const TotalPrice = () => {
   const totalPrice = (useSelector(state => state.Feature.priceData)).reduce((sum, item) => sum + item.price, 0);
 
-  const language = useSelector(state => state.Feature.language);
+  const { t, i18n } = useTranslation();
   return(
     <>
-      <Title title={`${languageData[language]['TOTAL']}: €${truncateToTwoDecimals(totalPrice)}`}/>
+      <Title title={`${t('TOTAL')}: €${truncateToTwoDecimals(totalPrice)}`}/>
     </>
   )
 }

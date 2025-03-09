@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import html2pdf from "html2pdf.js";
 
@@ -15,7 +15,8 @@ import downloadPdf from '../../assets/images/download-pdf.svg';
 
 import ClaysOnCanvas from "./ClaysOnCanvas";
 
-import {languageData} from "data/languageData";
+import { useTranslation } from "react-i18next";
+import {changeLanguage} from "i18next";
 
 function OnCanvas() {
   /*api integration start*/
@@ -46,19 +47,29 @@ function OnCanvas() {
     }
   }
 
-  const language = useSelector(state => state.Feature.language);
+  const { t, i18n } = useTranslation();
+
+/*  const testLanguage = () => {
+    i18n.changeLanguage('en');
+  }*/
+
+  const lng = useSelector(state => state.Feature.language);
+
+  useEffect(() => {
+    i18n.changeLanguage(lng);
+  }, [lng]);
 
   return (
     <div className="oncanvas-grid-container m-top">
 
-      <Title title={languageData[language]['ON CANVAS']}/>
+      <Title title={t('ON CANVAS')}/>
 
       <div className='oncanvas-grid'>
 
         <div className='header d-flex'>
-          <div>{languageData[language]['Colour']}</div>
+          <div>{t('Colour')}</div>
           <div>M<sup>2</sup></div>
-          <div>{languageData[language]['Total']}</div>
+          <div>{t('Total')}</div>
           <div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -76,12 +87,12 @@ function OnCanvas() {
       </div>
 
       <div className='checkout jc-space-between'>
-        <TotalPrice />
+        <TotalPrice/>
         <div className='d-flex'>
           <div className='download-pdf' onClick={generatePDF}>
             <img src={downloadPdf} alt='color'/>
           </div>
-          <div className='add-to-cart' onClick={addToCart}>{languageData[language]['Add to cart']}</div>
+          <div className='add-to-cart' onClick={addToCart}>{t('Add to cart')}</div>
         </div>
       </div>
     </div>

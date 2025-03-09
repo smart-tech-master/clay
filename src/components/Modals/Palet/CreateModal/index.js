@@ -12,7 +12,7 @@ import PaletListRm from "components/PaletListCategory/PaletListRm";
 import 'components/Modals/TemplateModal/TemplateModal.css';
 import mdClose from 'assets/images/md-close.svg';
 
-import {languageData} from "data/languageData";
+import { useTranslation } from "react-i18next";
 
 Modal.setAppElement('#root');
 
@@ -83,7 +83,7 @@ function CreatePaletModal() {
   }
   // end of backend ingration
 
-  const language = useSelector(state => state.Feature.language);
+  const { t, i18n } = useTranslation();
 
   return (
     <div className='confirm-modal'>
@@ -106,7 +106,7 @@ function CreatePaletModal() {
         }}
       >
         <div className='tm-header' >
-          <div className='tm-header-title'>{languageData[language]['PALLET CONFIG']}</div>
+          <div className='tm-header-title'>{t('PALLET CONFIG')}</div>
           <div className='tm-header-close' onClick={isOpenCreatePaletModal}>
             <img src={mdClose} alt='close' />
           </div>
@@ -122,7 +122,7 @@ function CreatePaletModal() {
           </div>
 
           <div className='tm-body-setting-bar'>
-            <div className='xs-title'>{languageData[language]['PALLET NAME']}</div>
+            <div className='xs-title'>{t('PALLET NAME')}</div>
             <div className='settings-select-container'>
               <input
                 type="text"
@@ -130,7 +130,7 @@ function CreatePaletModal() {
                 onChange={handleUserPaletNameChange}
               />
             </div>
-            <div className='xs-title'>{languageData[language]['IN YOUR PALLET']}</div>
+            <div className='xs-title'>{t('IN YOUR PALLET')}</div>
 
             <div className='setting-colours m-top'>
               {
@@ -143,7 +143,7 @@ function CreatePaletModal() {
             <div className='tm-setting-buttons'>
               <div></div>
               <div className='save-button' onClick={createUserColours}>
-                {languageData[language]['Create']}
+                {t('Create')}
               </div>
             </div>
           </div>

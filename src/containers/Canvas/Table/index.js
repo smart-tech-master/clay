@@ -1,22 +1,22 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import { truncateToTwoDecimals } from "utils/common";
-import {languageData} from "data/languageData";
+import { useTranslation } from "react-i18next";
 
 const Table = () => {
   const totalPrice = (useSelector(state => state.Feature.priceData)).reduce((sum, item) => sum + item.price, 0);
   const priceData = useSelector(state => state.Feature.priceData);
-  const language = useSelector(state => state.Feature.language);
 
+  const { t, i18n } = useTranslation();
   return(
     <>
       <div>
         <table border="1">
           <thead>
             <tr>
-              <th>{languageData[language]['Colour']}</th>
+              <th>{t('Colour')}</th>
               <th>M²</th>
-              <th>{languageData[language]['Total']}</th>
+              <th>{t('Total')}</th>
             </tr>
           </thead>
           <tbody>
@@ -35,7 +35,7 @@ const Table = () => {
         </table>
       </div>
       <div className='total-price'>
-        <div>{languageData[language]['Total']}:</div>
+        <div>{t('Total')}:</div>
         <div>€{truncateToTwoDecimals(totalPrice)}</div>
       </div>
     </>

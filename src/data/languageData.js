@@ -5,7 +5,7 @@ export const languageData = {
     'Rooms': 'Rooms',
     'Bedroom': 'Bedroom',
     'PALLET COLOURS': 'PALLET COLOURS',
-    'ON CANVAS': 'ON CNVAS',
+    'ON CANVAS': 'ON CANVAS',
     'TOTAL': 'TOTAL',
     'Add to cart': 'Add to cart',
 
