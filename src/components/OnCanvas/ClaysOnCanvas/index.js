@@ -11,6 +11,7 @@ const ClaysOnCanvas = ({category, data}) => {
   /*api integration start*/
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   const dispatch = useDispatch();
+  const coloursOnCanvas = useSelector((state) => state.Feature.coloursOnCanvas);
   const priceData = useSelector((state) => state.Feature.priceData);
   const [size, setSize] = useState({});
   const [price, setPrice] = useState({});
@@ -23,7 +24,7 @@ const ClaysOnCanvas = ({category, data}) => {
     }, {});
     setSize(initSize);
 
-    const initPrice = priceData.reduce((acc, item) => {
+    const initPrice = coloursOnCanvas.reduce((acc, item) => {
       acc[item.id_product_attribute] = truncateToTwoDecimals(item.price / item.m2);
       return acc;
     }, {});
@@ -45,11 +46,13 @@ const ClaysOnCanvas = ({category, data}) => {
 
 
   const handleInputChange = (id, value) => {
-    setSize({
-      ...size,
-      [id]: value
-    })
-    dispatch(featureActions.updateSize({size, price}))
+
+      setSize(prevSize => {
+        const newSize = { ...prevSize, [id]: value };
+        dispatch(featureActions.updateSize({ size: newSize, price }));
+        return newSize;
+      });
+
   };
 
 /*  console.log('size, price', size, price);*/
@@ -68,7 +71,14 @@ const ClaysOnCanvas = ({category, data}) => {
                 type='number'
                 value={size[item.id_product_attribute]}
                 onChange={(e) =>
-                  handleInputChange(item.id_product_attribute, e.target.value)
+                  {
+                    console.log("e.target.value", e.target.value);
+                    if(e.target.value === 0 || e.target.value ===undefined || e.target.value === null || e.target.value ==='') {
+                      return;
+                    }else{
+                      handleInputChange(item.id_product_attribute, e.target.value)
+                    }
+                  }
                 }
               />
             </div>

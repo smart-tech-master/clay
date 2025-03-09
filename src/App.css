@@ -6,7 +6,6 @@
   font-family: 'Poppins', sans-serif;
   align-items: center;
 }
-
 .App {
   margin-right: 0px !important;
 }
@@ -99,4 +98,13 @@ input {
 .col-md-8 {
   flex: 0 0 auto;
   width: 65.666667% !important;
+}
+
+.app {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }

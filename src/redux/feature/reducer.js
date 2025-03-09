@@ -2,7 +2,7 @@ import actions from './actions';
 import { produce } from 'immer';
 
 import { convertAllProductsToColourArray } from 'utils/common'
-import {paletData} from "../../data/palet";
+/*import {paletData} from "../../data/palet";*/
 
 /*import { colours } from "../../data/palet";*/
 
@@ -17,6 +17,10 @@ const initState = {
   confirmModalAction: {},
 
   imageBaseUrl: "https://clay.powdev.lt",
+
+  isLoggedIn: 0,
+  customerId: 0,
+  language: 'English',
 
   colours:[],
   userColours:{},
@@ -190,6 +194,29 @@ export default function reducer(state = initState, action) {
 
       case actions.SAVE_USER_COLOURS: {
         draft.userColours = action.payload;
+      }
+      break;
+
+      case actions.SET_USER_INFO: {
+        draft.isLoggedIn = action.payload.isLoggedIn;
+        draft.customerId = action.payload.customerId;
+      }
+      break;
+
+      case actions.INIT_USER_DATA: {
+        Object.assign(draft, action.payload);
+      }
+      break;
+
+      case actions.GET_OBJECTS_REQUEST_SUCCESS: {
+        if(action.payload.abjects) {
+          Object.assign(draft, action.payload.abjects);
+        }
+      }
+      break;
+
+      case actions.SET_LANGUAGE: {
+        draft.language = action.payload;
       }
       break;
 

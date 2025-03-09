@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from "react-redux";
 
 import './ToolBar.css';
 
@@ -8,12 +9,15 @@ import Room from "../../components/Room";
 import PalletColours from "../../components/PalletColours";
 import OnCanvas from "../../components/OnCanvas";
 
+import {languageData} from "../../data/languageData";
+
 
 const ToolBar = () => {
+  const language = useSelector(state => state.Feature.language);
   return (
     <div className="Toolbar min-vh-100">
       <div style={{height:'20vh'}}>
-        <Title title='CONFIG' />
+        <Title title={languageData[language]['CONFIG']} />
         <Alert text='Log in to save your objects and pallets.' />
         <Room />
       </div>

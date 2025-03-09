@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 
@@ -11,6 +11,8 @@ import PaletListRm from "components/PaletListCategory/PaletListRm";
 
 import 'components/Modals/TemplateModal/TemplateModal.css';
 import mdClose from 'assets/images/md-close.svg';
+
+import {languageData} from "data/languageData";
 
 Modal.setAppElement('#root');
 
@@ -53,6 +55,8 @@ function CreatePaletModal() {
   const createUserColours = () => {
     dispatch(featureAction.createUserColours({[userColoursData.userPaletName]: userColoursData.userColours}));
     isOpenCreatePaletModal();
+
+    setObject();
   }
 
   const handleUserPaletNameChange = (event) => {
@@ -61,7 +65,25 @@ function CreatePaletModal() {
       userPaletName: event.target.value
     });
   };
+
+
+  const userData = useSelector(state => state.Feature);
+  const setObject = () => {
+    const cloneUserData = {
+      ...userData,
+      userColours: {[userColoursData.userPaletName]: userColoursData.userColours},
+      isOpenCreatePaletModal:false
+    };
+    if (cloneUserData.isLoggedIn && cloneUserData.customerId) {
+      dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: cloneUserData});
+    }else{
+      localStorage.setItem("userData", JSON.stringify(cloneUserData));
+      /*      const userData = JSON.parse(localStorage.getItem("userData"));*/
+    }
+  }
   // end of backend ingration
+
+  const language = useSelector(state => state.Feature.language);
 
   return (
     <div className='confirm-modal'>
@@ -84,7 +106,7 @@ function CreatePaletModal() {
         }}
       >
         <div className='tm-header' >
-          <div className='tm-header-title'>PALET CONFIG</div>
+          <div className='tm-header-title'>{languageData[language]['PALLET CONFIG']}</div>
           <div className='tm-header-close' onClick={isOpenCreatePaletModal}>
             <img src={mdClose} alt='close' />
           </div>
@@ -100,7 +122,7 @@ function CreatePaletModal() {
           </div>
 
           <div className='tm-body-setting-bar'>
-            <div className='xs-title'>PALLET NAME</div>
+            <div className='xs-title'>{languageData[language]['PALLET NAME']}</div>
             <div className='settings-select-container'>
               <input
                 type="text"
@@ -108,7 +130,7 @@ function CreatePaletModal() {
                 onChange={handleUserPaletNameChange}
               />
             </div>
-            <div className='xs-title'>IN YOUR PALLET</div>
+            <div className='xs-title'>{languageData[language]['IN YOUR PALLET']}</div>
 
             <div className='setting-colours m-top'>
               {
@@ -121,7 +143,7 @@ function CreatePaletModal() {
             <div className='tm-setting-buttons'>
               <div></div>
               <div className='save-button' onClick={createUserColours}>
-                Create
+                {languageData[language]['Create']}
               </div>
             </div>
           </div>

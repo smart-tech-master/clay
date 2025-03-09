@@ -15,6 +15,7 @@ import downloadPdf from '../../assets/images/download-pdf.svg';
 
 import ClaysOnCanvas from "./ClaysOnCanvas";
 
+import {languageData} from "data/languageData";
 
 function OnCanvas() {
   /*api integration start*/
@@ -29,17 +30,35 @@ function OnCanvas() {
   const coloursOnCanvas = parseDataByObjectKey(useSelector(state => state.Feature.coloursOnCanvas), 'product_name');
   /*api integration end*/
 
+  const userData = useSelector(state => state.Feature);
+  const addToCart = () => {
+    if (userData.isLoggedIn && userData.customerId) {
+      const priceData = [...userData.priceData].map(item => {
+        return {
+          id_product_attribute: item.id_product_attribute,
+          qty: item.m2,
+        }
+      });
+      dispatch({type: featureAction.ADD_PRODUCTS_REQUEST, payload: priceData});
+    }else{
+      localStorage.setItem("productsData", JSON.stringify(userData.priceData));
+      /*      const userData = JSON.parse(localStorage.getItem("priceData"));*/
+    }
+  }
+
+  const language = useSelector(state => state.Feature.language);
+
   return (
     <div className="oncanvas-grid-container m-top">
 
-      <Title title='ON CANVAS'/>
+      <Title title={languageData[language]['ON CANVAS']}/>
 
       <div className='oncanvas-grid'>
 
         <div className='header d-flex'>
-          <div>Colour</div>
+          <div>{languageData[language]['Colour']}</div>
           <div>M<sup>2</sup></div>
-          <div>Total</div>
+          <div>{languageData[language]['Total']}</div>
           <div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -62,7 +81,7 @@ function OnCanvas() {
           <div className='download-pdf' onClick={generatePDF}>
             <img src={downloadPdf} alt='color'/>
           </div>
-          <div className='add-to-cart'>Add to cart</div>
+          <div className='add-to-cart' onClick={addToCart}>{languageData[language]['Add to cart']}</div>
         </div>
       </div>
     </div>

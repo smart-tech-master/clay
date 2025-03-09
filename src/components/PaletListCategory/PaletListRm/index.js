@@ -5,8 +5,6 @@ import {useSelector} from "react-redux";
 
 const PaletListRm = ( { category, data, onClickHandle } ) => {
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
-  console.log('category', category);
-  console.log('data', data)
   return (
     <div>
       <div className='sm-title fw-500'>{ category }</div>

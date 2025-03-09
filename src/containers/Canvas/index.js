@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
-//import html2pdf from "html2pdf.js";
-import html2pdf from 'html2pdf.js/dist/html2pdf.min.js';
+import html2pdf from "html2pdf.js";
+/*import html2pdf from 'html2pdf.js/dist/html2pdf.min.js';*/
 import {useDispatch, useSelector} from "react-redux";
 
 import './Canvas.css';
@@ -14,9 +14,7 @@ import {compareArraysByName} from "../../utils/common";
 import statusActions from "../../redux/status/actions";
 import Table from "./Table";
 
-// pdf issue fix
-/*import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';*/
+import {languageData} from "data/languageData";
 
 const Canvas = () => {
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
@@ -221,17 +219,17 @@ const Canvas = () => {
             name: rects[i].id_product_attribute,
             top: rectsOptions[i].top + 3000,
             left: rectsOptions[i].left + 3000,
-            width: rects[i].visible ? rectsOptions[i].width : 0,
-            height: rects[i].visible ? rectsOptions[i].height : 0,
+            width: rectsOptions[i].width,
+            height: rectsOptions[i].height,
             backgroundImageSrc: baseUrl + rects[i].color_image
           });
         }else{
           rect = new fabric.Rect({
             name: rects[i].id_product_attribute,
-            top: rectsOptions[i].top,
-            left: rectsOptions[i].left,
-            width: rects[i].visible ? rectsOptions[i].width : 0,
-            height: rects[i].visible ? rectsOptions[i].height : 0,
+            top: rects[i].visible ? rectsOptions[i].top : rectsOptions[i].top + 3000,
+            left: rects[i].visible ? rectsOptions[i].left : rectsOptions[i].left + 3000,
+            width: rectsOptions[i].width,
+            height: rectsOptions[i].height,
             backgroundImageSrc: baseUrl + rects[i].color_image
           });
         }
@@ -308,10 +306,12 @@ const Canvas = () => {
     String(today.getMonth() + 1).padStart(2, '0') + '-' +
     String(today.getDate()).padStart(2, '0');
 
+  const language = useSelector(state => state.Feature.language);
+
   return (
     <div className='canvas-container' ref={pdfContentRef}>
       {getDownloadPdfStatus && (<div className='pdf-header'>
-        <div>Bedroom</div>
+        <div>{languageData[language]['Bedroom']}</div>
         <div>
           <img src={Logo} alt='logo'/>
         </div>

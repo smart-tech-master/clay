@@ -25,6 +25,8 @@ import ClayLg from "../../ClaySizeCategory/ClayLg";
 import {parseDataByCategory, parseDataByObjectKey} from "../../../utils/common";
 import PaletListMd from "../../PaletListCategory/PaletListMd";
 
+import {languageData} from "data/languageData";
+
 Modal.setAppElement('#root');
 
 function IsOpenCanvasItemConfig() {
@@ -32,7 +34,6 @@ function IsOpenCanvasItemConfig() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.Feature.isOpenCanvasItemConfigModal);
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
-  console.log('baseUrl', baseUrl);
 
   const userColours = useSelector((state) => state.Feature.userColours);
   const paletNames = Object.keys(userColours);
@@ -91,6 +92,13 @@ function IsOpenCanvasItemConfig() {
     setActiveImage(null);
   }, [isOpen]);
 
+  const language = useSelector(state => state.Feature.language);
+
+  const deleteColour = () => {
+    dispatch(featureAction.removeColourOnCanvas(updatedColour.from.id_product_attribute));
+    dispatch(featureAction.isOpenCanvasItemConfigModal());
+  }
+
   return (
     <div className='confirm-modal'>
       <Modal
@@ -112,7 +120,7 @@ function IsOpenCanvasItemConfig() {
         }}
       >
         <div className='cicm-header'>
-          <div className='cicm-header-title'>CANVAS ITEM CONFIG</div>
+          <div className='cicm-header-title'>{languageData[language]['CANVAS ITEM CONFIG']}</div>
           <div className='cicm-header-close' onClick={isOpenCanvasItemConfigModal}>
             <img src={mdClose} alt='close'/>
           </div>
@@ -124,7 +132,7 @@ function IsOpenCanvasItemConfig() {
               <ClayLg src={baseUrl + updatedColour.to.color_image} name={updatedColour.to.color_name}/>
             </div>
             <div className='cicm-change-out-color'>
-              <Title title='CHANGE OUT COLOUR'/>
+              <Title title={languageData[language]['CHANGE OUT COLOUR']}/>
               <div style={{paddingBottom: "17px"}}>
                 <select className='pallet-select'
                         onChange={handleSelectedPaletChange} value={selectedPalet}
@@ -148,7 +156,7 @@ function IsOpenCanvasItemConfig() {
             </div>
           </div>
           <div className='cicm-layout'>
-            <Title title='LAYOUT'/>
+            <Title title={languageData[language]['LAYOUT']}/>
             <div className='cicm-layout-settings'>
               {
                 imagePairs.map(({id, selected, noSelected}, index) => (
@@ -166,17 +174,17 @@ function IsOpenCanvasItemConfig() {
           </div>
         </div>
         <div className='cicm-footer'>
-          <div className='delete-button'>
+          <div className='delete-button' onClick={deleteColour}>
             <svg className="delete-icon" width="12" height="14" viewBox="0 0 12 14" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M3.15717 13.0831C2.78745 13.0831 2.47169 12.9523 2.20988 12.6906C1.94822 12.4288 1.81738 12.113 1.81738 11.7433V1.99978H0.817383V0.916445H4.40072V0.0126953H8.40072V0.916445H11.984V1.99978H10.984V11.7344C10.984 12.1196 10.8545 12.4408 10.5955 12.6977C10.3365 12.9546 10.0194 13.0831 9.64426 13.0831H3.15717ZM9.90072 1.99978H2.90072V11.7433C2.90072 11.8182 2.92474 11.8796 2.9728 11.9277C3.02085 11.9758 3.08231 11.9998 3.15717 11.9998H9.64426C9.70843 11.9998 9.76718 11.973 9.82051 11.9196C9.87398 11.8662 9.90072 11.8075 9.90072 11.7433V1.99978ZM4.73738 10.4998H5.82051V3.49978H4.73738V10.4998ZM6.98092 10.4998H8.06405V3.49978H6.98092V10.4998Z"
                 fill="#BF0000"/>
             </svg>
-            Delete canvas
+            {languageData[language]['Delete canvas']}
           </div>
           <div>
-            <div className='cicm-footer-no' onClick={updateStatus}>Save</div>
+            <div className='cicm-footer-no' onClick={updateStatus}>{languageData[language]['Save']}</div>
           </div>
         </div>
       </Modal>

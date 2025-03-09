@@ -7,6 +7,8 @@ import featureAction from "../../../redux/feature/actions";
 import './ConfirmModal.css';
 import mdClose from '../../../assets/images/md-close.svg';
 
+import {languageData} from "data/languageData";
+
 Modal.setAppElement('#root');
 
 function ConfirmModal() {
@@ -26,6 +28,8 @@ function ConfirmModal() {
     dispatch(action);
     isOpenConfirmModal();
   }
+
+  const language = useSelector(state => state.Feature.language);
 
   return (
     <div className='confirm-modal'>
@@ -49,18 +53,18 @@ function ConfirmModal() {
         }}
       >
         <div className='cm-header'>
-          <div className='cm-header-title'>DELETE ITEM?</div>
+          <div className='cm-header-title'>{languageData[language]['DELETE ITEM']}</div>
           <div className='cm-header-close' onClick={isOpenConfirmModal}>
             <img src={mdClose} alt='close' />
           </div>
         </div>
-        <div className='cm-body'>Are you sure you want to delete this item?</div>
+        <div className='cm-body'>{languageData[language]['Are you sure you want to delete this item']}</div>
         <div className='cm-footer'>
           <div>
-            <div className='cm-footer-yes' onClick={confirmModalAction}>Yes</div>
+            <div className='cm-footer-yes' onClick={confirmModalAction}>{languageData[language]['Yes']}</div>
           </div>
           <div>
-            <div className='cm-footer-no' onClick={isOpenConfirmModal}>No</div>
+            <div className='cm-footer-no' onClick={isOpenConfirmModal}>{languageData[language]['No']}</div>
           </div>
         </div>
       </Modal>
