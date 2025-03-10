@@ -7,7 +7,7 @@ export function* getColours() {
   yield takeLatest(actions.GET_COLOURS_REQUEST, function* getPalletRequest() {
     try {
       //const response = yield getQuery(`colors?ajax=1`);
-      const response = yield getQuery(``);
+      const response = yield getQuery(`/colour-tempdata.json`);
      /* console.log('this is color request result', response.data);*/
       if(response.status === 200) {
         yield put({

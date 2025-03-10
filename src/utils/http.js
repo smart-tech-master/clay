@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const options = {
 	/*baseURL: "https://clay.powdev.lt/en/module/revisualizer/"*/
-	baseURL: "/colour-tempdata.json"
+	baseURL: ""
 }
 
 const instance = axios.create(options);
