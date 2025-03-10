@@ -110,7 +110,7 @@ const actions = {
   }),
 
   setUserInfo: (payload) =>({
-    type: actions.SET_UER_INFO,
+    type: actions.SET_USER_INFO,
     payload
   }),
 

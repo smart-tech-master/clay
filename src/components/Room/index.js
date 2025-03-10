@@ -14,7 +14,6 @@ function Room() {
   useEffect(() => {
 
     if (userData.isLoggedIn && userData.customerId) {
-      console.log('userData.isLoggedIn && userData.customerId', userData.isLoggedIn ,userData.customerId)
       dispatch({type: featureAction.GET_OBJECTS_REQUEST});
     }else{
       if(localStorage.getItem("userData")){

@@ -10,7 +10,6 @@ import PalletColours from "../../components/PalletColours";
 import OnCanvas from "../../components/OnCanvas";
 
 import { useTranslation } from "react-i18next";
-import {changeLanguage} from "i18next";
 
 const ToolBar = () => {
   const { t, i18n } = useTranslation();

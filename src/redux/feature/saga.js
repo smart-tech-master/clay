@@ -47,7 +47,7 @@ export function* setObjects() {
         {
           action: 'setObject',
           name: `${payload.customerId}-objects`,
-          id_object: payload,
+          id_object: JSON.stringify(payload) ,
         }
       );
       if(response.status === 200) {

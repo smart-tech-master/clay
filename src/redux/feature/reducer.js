@@ -209,8 +209,8 @@ export default function reducer(state = initState, action) {
       break;
 
       case actions.GET_OBJECTS_REQUEST_SUCCESS: {
-        if(action.payload.abjects) {
-          Object.assign(draft, action.payload.abjects);
+        if(action.payload.length) {
+          Object.assign(draft, JSON.parse(action.payload.length[0]));
         }
       }
       break;
