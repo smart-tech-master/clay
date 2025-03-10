@@ -7,7 +7,7 @@ const Init = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   const [customerId, setCustomerId] = useState(0);
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState(0);
 
   useEffect(() => {
     const inputIds = ["visualizer_customer_is_logged", "visualizer_customer_id", "visualizer_language"];
@@ -50,11 +50,11 @@ const Init = () => {
 
   useEffect(() => {
     //console.log( `language changed to:`, language);
-/*    if(language === 'english'){
+    if(language === "0"){
       dispatch(featureActions.setLanguage('en'));
     }else{
       dispatch(featureActions.setLanguage('lt'));
-    }*/
+    }
   }, [language]);
 
   return(<></>)
