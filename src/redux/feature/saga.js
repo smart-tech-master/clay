@@ -8,7 +8,7 @@ export function* getColours() {
     try {
       //const response = yield getQuery(`colors?ajax=1`);
       const response = yield getQuery(`/colour-tempdata.json`);
-     /* console.log('this is color request result', response.data);*/
+/*      console.log('this is color request result', response.data);*/
       if(response.status === 200) {
         yield put({
           type: actions.GET_COLOURS_REQUEST_SUCCESS,

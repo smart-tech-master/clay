@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const options = {
-	/*baseURL: "https://clay.powdev.lt/en/module/revisualizer/"*/
+	//baseURL: "https://clay.powdev.lt/en/module/revisualizer/"
 	baseURL: ""
 }
 
