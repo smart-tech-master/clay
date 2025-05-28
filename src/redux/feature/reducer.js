@@ -17,10 +17,11 @@ const initState = {
   confirmModalAction: {},
 
   imageBaseUrl: "https://clay.powdev.lt",
+  assetsPath: '/modules/revisualizer/views/lib/',
 
   isLoggedIn: 0,
   customerId: 0,
-  language: 'English',
+  language: 'en',
 
   colours:[],
   userColours:{},

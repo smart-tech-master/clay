@@ -43,7 +43,8 @@ function ConfirmModal() {
             backgroundColor: 'rgba(0, 0, 0, 0.75)'
           },
           content: {
-            width: '386px',
+            //width: '386px',
+            width: '25%',
             height: '202px',
             margin: 'auto',
             borderRadius: '0', // No border radius

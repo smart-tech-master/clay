@@ -132,7 +132,7 @@ const Canvas = () => {
 
     let width = window.innerWidth;
     let height = window.innerHeight;
-    let widthScale = 0.62;
+    let widthScale = 0.65;
     let heightScale = 1;
     let minWidth = 768;
 
@@ -522,7 +522,6 @@ const Canvas = () => {
           }
         )
       }
-    <button onClick={generateImage}>generateImage</button>
     {getDownloadPdfStatus && <Table />}
     </div>
   );

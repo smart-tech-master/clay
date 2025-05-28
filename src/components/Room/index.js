@@ -4,14 +4,20 @@ import featureAction from "../../redux/feature/actions";
 import { useTranslation } from "react-i18next";
 
 import './Room.css';
-import saveButton from '../../assets/images/save-button.svg';
+import featureActions from "../../redux/feature/actions";
+
 
 
 function Room() {
+  // assets
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const saveButton = process.env.PUBLIC_URL + assetsPath + 'images/save-button.svg';
+
   const userData = useSelector(state => state.Feature);
   const language = useSelector(state => state.Feature.language);
 
   useEffect(() => {
+    dispatch(featureActions.getColoursRequest());
 
     if (userData.isLoggedIn && userData.customerId) {
       dispatch({type: featureAction.GET_OBJECTS_REQUEST});

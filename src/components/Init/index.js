@@ -50,11 +50,11 @@ const Init = () => {
 
   useEffect(() => {
     //console.log( `language changed to:`, language);
-    if(language === "0"){
+    // if(language === "0"){
       dispatch(featureActions.setLanguage('en'));
-    }else{
-      dispatch(featureActions.setLanguage('lt'));
-    }
+    // }else{
+    //   dispatch(featureActions.setLanguage('lt'));
+    // }
   }, [language]);
 
   return(<></>)
