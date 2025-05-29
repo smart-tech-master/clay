@@ -24,7 +24,6 @@ function Room() {
     }else{
       if(localStorage.getItem("userData")){
         const userDataInLocalStroage = JSON.parse(localStorage.getItem("userData"));
-        console.log("this is a userDataInLocalStroage data", userDataInLocalStroage);
         dispatch(featureAction.initUserData(userDataInLocalStroage));
 
         // force reload the canvas
