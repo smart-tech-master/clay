@@ -5,13 +5,16 @@ import statusAction from "../../../redux/status/actions";
 import featureAction from "../../../redux/feature/actions";
 
 import './ConfirmModal.css';
-import mdClose from '../../../assets/images/md-close.svg';
 
 import { useTranslation } from "react-i18next";
 
 Modal.setAppElement('#root');
 
 function ConfirmModal() {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const mdClose = process.env.PUBLIC_URL + assetsPath + 'images/md-close.svg';
+
   const isOpen = useSelector((state) => state.Feature.isOpenConfirmModal);
 
   const dispatch = useDispatch();

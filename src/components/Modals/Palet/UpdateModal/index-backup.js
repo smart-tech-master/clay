@@ -9,12 +9,15 @@ import PaletListSm from "components/PaletListCategory/PaletListSm";
 import PaletListRm from "components/PaletListCategory/PaletListRm";
 
 import 'components/Modals/TemplateModal/TemplateModal.css';
-import mdClose from 'assets/images/md-close.svg';
 import featureAction from "../../../../redux/feature/actions";
 
 Modal.setAppElement('#root');
 
 function UpdatePaletModal() {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const mdClose = process.env.PUBLIC_URL + assetsPath + 'images/md-close.svg';
+
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.Feature.isOpenUpdatePaletModal);
   const isOpenUpdatePaletModal = () => {

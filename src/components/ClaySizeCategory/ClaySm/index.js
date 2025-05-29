@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-
+import {useSelector} from "react-redux";
 import './ClaySm.css';
 
-import Add from '../../../assets/images/add.png';
-
 const ClaySm = ({ src, name, onClickHandle }) => {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const Add = process.env.PUBLIC_URL + assetsPath + 'images/add.svg';
+
   const [isHovered, setIsHovered] = useState(false);
 
   // background

@@ -2,23 +2,23 @@ import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import html2pdf from "html2pdf.js";
 
-import {parseDataByCategory, parseDataByObjectKey} from "../../utils/common";
+import {parseDataByObjectKey} from "../../utils/common";
 import statusAction from "../../redux/status/actions";
 import featureAction from "../../redux/feature/actions";
 
 import "./OnCanvas.css";
 import Title from "../Title";
 import TotalPrice from "./TotalPrice";
-
-import image1 from '../../assets/images/clays/1_B.png';
-import downloadPdf from '../../assets/images/download-pdf.svg';
-
 import ClaysOnCanvas from "./ClaysOnCanvas";
 
 import { useTranslation } from "react-i18next";
 import {changeLanguage} from "i18next";
 
 function OnCanvas() {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const downloadPdf = process.env.PUBLIC_URL + assetsPath + 'images/download-pdf.svg';
+
   /*api integration start*/
   const dispatch = useDispatch();
   const generatePDF = () => {

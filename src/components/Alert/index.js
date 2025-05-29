@@ -1,11 +1,14 @@
 import React from 'react';
 
 import './Alert.css';
-import info from '../../assets/images/info.svg';
 
 import {useSelector} from "react-redux";
 
 function Alert({ text }) {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const info = process.env.PUBLIC_URL + assetsPath + 'images/info.svg';
+
   const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
 
   return isLoggedIn === 0 ? (

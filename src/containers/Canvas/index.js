@@ -6,20 +6,20 @@ import html2canvas from "html2canvas";
 import {useDispatch, useSelector} from "react-redux";
 
 import './Canvas.css';
-import statusAction from "../../redux/status/actions";
 import featureAction from "../../redux/feature/actions";
-import Logo from "assets/images/Logo.png"
-import settings from "../../assets/images/settings.svg";
-import remove from "../../assets/images/remove.svg";
 import {compareArraysByName} from "../../utils/common";
-import statusActions from "../../redux/status/actions";
 import Table from "./Table";
 
-import backgroundImage2 from '../../assets/images/clays/2_B.png';
 
 import { useTranslation } from "react-i18next";
 
 const Canvas = () => {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const Logo = process.env.PUBLIC_URL + assetsPath + 'images/Logo.png';
+  const settings = process.env.PUBLIC_URL + assetsPath + 'images/settings.svg';
+  const remove = process.env.PUBLIC_URL + assetsPath + 'images/remove.svg';
+
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   const [size, setSize] = useState({
     width: window.innerWidth,

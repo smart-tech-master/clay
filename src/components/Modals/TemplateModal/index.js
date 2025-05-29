@@ -5,19 +5,17 @@ import Modal from 'react-modal';
 import statusAction from '../../../redux/status/actions';
 import { parseDataByCategory } from "utils/common";
 
-import ClaySm from "components/ClaySizeCategory/ClaySm";
-import RemoveClay from "components/ClaySizeCategory/RemoveClay";
-
 import PaletListSm from "components/PaletListCategory/PaletListSm";
 import PaletListRm from "components/PaletListCategory/PaletListRm";
 
 import './TemplateModal.css';
-import mdClose from 'assets/images/md-close.svg';
-import image1 from 'assets/images/clays/1_B.png';
-
 Modal.setAppElement('#root');
 
 function TemplateModal() {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const mdClose = process.env.PUBLIC_URL + assetsPath + 'images/md-close.svg';
+
   const [userPalet, setUserPalet] = React.useState({
     userPaletName: '',
     userPaletData: []

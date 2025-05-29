@@ -1,28 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
-import statusAction from "../../../redux/status/actions";
 import featureAction from "../../../redux/feature/actions";
 
 import './CanvasItemConfigModal.css';
-import mdClose from '../../../assets/images/md-close.svg';
-
-import noSelectedResize from '../../../assets/images/settings/no-selected-resize.png';
-import noSelectedBackground from '../../../assets/images/settings/no-selected-background.png';
-import noSelected1 from '../../../assets/images/settings/no-selected-1.png';
-import noSelected2 from '../../../assets/images/settings/no-selected-2.png';
-import noSelected3 from '../../../assets/images/settings/no-selected-3.png';
-
-import selectedResize from '../../../assets/images/settings/selected-resize.png';
-import selectedBackground from '../../../assets/images/settings/selected-background.png';
-import selected1 from '../../../assets/images/settings/selected-1.png';
-import selected2 from '../../../assets/images/settings/selected-2.png';
-import selected3 from '../../../assets/images/settings/selected-3.png';
-
 
 import Title from "../../Title";
 import ClayLg from "../../ClaySizeCategory/ClayLg";
-import {parseDataByCategory, parseDataByObjectKey} from "../../../utils/common";
+import {parseDataByObjectKey} from "../../../utils/common";
 import PaletListMd from "../../PaletListCategory/PaletListMd";
 
 import { useTranslation } from "react-i18next";
@@ -30,6 +15,21 @@ import { useTranslation } from "react-i18next";
 Modal.setAppElement('#root');
 
 function IsOpenCanvasItemConfig() {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const mdClose = process.env.PUBLIC_URL + assetsPath + 'images/md-close.svg';
+  const noSelectedResize = process.env.PUBLIC_URL + assetsPath + 'images/settings/no-selected-resize.png';
+  const noSelectedBackground = process.env.PUBLIC_URL + assetsPath + 'images/settings/no-selected-background.png';
+  const noSelected1 = process.env.PUBLIC_URL + assetsPath + 'images/settings/no-selected-1.png';
+  const noSelected2 = process.env.PUBLIC_URL + assetsPath + 'images/settings/no-selected-2.png';
+  const noSelected3 = process.env.PUBLIC_URL + assetsPath + 'images/settings/no-selected-3.png';
+  const selectedResize = process.env.PUBLIC_URL + assetsPath + 'images/settings/selected-resize.png';
+  const selectedBackground = process.env.PUBLIC_URL + assetsPath + 'images/settings/selected-background.png';
+  const selected1 = process.env.PUBLIC_URL + assetsPath + 'images/settings/selected-1.png';
+  const selected2 = process.env.PUBLIC_URL + assetsPath + 'images/settings/selected-2.png';
+  const selected3 = process.env.PUBLIC_URL + assetsPath + 'images/settings/selected-3.png';
+
+
   /*api integration start*/
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.Feature.isOpenCanvasItemConfigModal);

@@ -9,7 +9,7 @@ import featureActions from "../../redux/feature/actions";
 
 
 function Room() {
-  // assets
+  // assets init
   const assetsPath = useSelector(state => state.Feature.assetsPath);
   const saveButton = process.env.PUBLIC_URL + assetsPath + 'images/save-button.svg';
 
@@ -24,6 +24,7 @@ function Room() {
     }else{
       if(localStorage.getItem("userData")){
         const userDataInLocalStroage = JSON.parse(localStorage.getItem("userData"));
+        console.log("this is a userDataInLocalStroage data", userDataInLocalStroage);
         dispatch(featureAction.initUserData(userDataInLocalStroage));
 
         // force reload the canvas

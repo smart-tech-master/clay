@@ -48,14 +48,29 @@ const Init = () => {
     //console.log( `customerId changed to:`, customerId);
   }, [isLoggedIn, customerId]);
 
+  // useEffect(() => {
+  //   console.log( `language changed to:`, language);
+  //   if(language === "0"){
+  //     dispatch(featureActions.setLanguage('en'));
+  //   }else{
+  //     dispatch(featureActions.setLanguage('lt'));
+  //   }
+  // }, [language]);
+
   useEffect(() => {
-    //console.log( `language changed to:`, language);
-    // if(language === "0"){
+    const assetsPath = document.getElementById('root')?.getAttribute('data-assetsurl');
+    dispatch(featureActions.setAssetsPath(assetsPath));
+  }, []);
+
+  useEffect(() => {
+    const language = document.getElementById('root')?.getAttribute('data-locale');
+    if(language === "en"){
       dispatch(featureActions.setLanguage('en'));
-    // }else{
-    //   dispatch(featureActions.setLanguage('lt'));
-    // }
-  }, [language]);
+    }else{
+      dispatch(featureActions.setLanguage('lt'));
+    }
+    dispatch(featureActions.setLanguage(language));
+  }, []);
 
   return(<></>)
 }

@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import html2pdf from "html2pdf.js";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 import './Canvas.css';
-import statusAction from "../../redux/status/actions";
-import Logo from "assets/images/Logo.png"
-import settings from "../../assets/images/settings.svg";
-import remove from "../../assets/images/remove.svg";
 import {compareArraysByName} from "../../utils/common";
 
 const Canvas = () => {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const settings = process.env.PUBLIC_URL + assetsPath + 'images/settings.svg';
+  const remove = process.env.PUBLIC_URL + assetsPath + 'images/remove.svg';
+
   // pdf download
   const pdfContentRef = useRef();
   const generatePDF = () => {

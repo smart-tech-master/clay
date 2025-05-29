@@ -28,6 +28,7 @@ const actions = {
   GET_COLOURS_REQUEST_SUCCESS: 'GET_COLOURS_REQUEST_SUCCESS',
   ADD_PRODUCTS_REQUEST: 'ADD_PRODUCT',
   SET_LANGUAGE: 'SET_LANGUAGE',
+  SET_ASSETS_PATH: 'SET_ASSETS_PATH',
 
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
@@ -121,6 +122,11 @@ const actions = {
 
   setLanguage: (payload) => ({
     type: actions.SET_LANGUAGE,
+    payload
+  }),
+
+  setAssetsPath: (payload) => ({
+    type: actions.SET_ASSETS_PATH,
     payload
   })
 }

@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+const rootElement = document.getElementById('root');
+const baseURL = rootElement?.getAttribute('data-assetsurl') || '';
+
 const options = {
 	//baseURL: "https://clay.powdev.lt/en/module/revisualizer/"
-	baseURL: ""
+	baseURL
 }
 
 const instance = axios.create(options);

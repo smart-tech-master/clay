@@ -17,7 +17,8 @@ const initState = {
   confirmModalAction: {},
 
   imageBaseUrl: "https://clay.powdev.lt",
-  assetsPath: '/modules/revisualizer/views/lib/',
+  // assetsPath: '/modules/revisualizer/views/lib/',
+  assetsPath: '',
 
   isLoggedIn: 0,
   customerId: 0,
@@ -218,6 +219,11 @@ export default function reducer(state = initState, action) {
 
       case actions.SET_LANGUAGE: {
         draft.language = action.payload;
+      }
+      break;
+
+      case actions.SET_ASSETS_PATH: {
+        draft.assetsPath = action.payload;
       }
       break;
 

@@ -5,11 +5,14 @@ import featureActions from "../../../redux/feature/actions";
 import { useTranslation } from "react-i18next";
 
 import './Menu.css';
-import settingsButton from '../../../assets/images/settings-lg.svg';
-import createButton from '../../../assets/images/create.svg';
 import Title from "../../Title";
 
 function Menu() {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const settingsButton = process.env.PUBLIC_URL + assetsPath + 'images/settings-lg.svg';
+  const createButton = process.env.PUBLIC_URL + assetsPath + 'images/create.svg';
+
   const dispatch = useDispatch();
 
   const createPallet = () => {
