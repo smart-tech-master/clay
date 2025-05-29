@@ -1,11 +1,11 @@
-.remove-container {
+.acp-remove-container {
     width: 64px;
     height: 80px;
 
     border: 1px solid #CACACA;
 }
 
-.remove-container > .clay {
+.acp-remove-container > .acp-clay {
     width: 100%;
     height: 62px;
 
@@ -16,13 +16,13 @@
     border: none;
 }
 
-.remove-container > .clay > img {
+.acp-remove-container > .acp-clay > img {
     margin-top: 6px;
     margin-right: 2px;
     cursor: pointer;
 }
 
-.remove-container > .name {
+.acp-remove-container > .acp-name {
     width: 100%;
     height: 16px;
 
@@ -34,7 +34,7 @@
     align-items: center;
 }
 
-.empty-clay-container {
+.acp-empty-acp-clay-container {
     width: 64px;
     height: 1px;
 }

@@ -37,11 +37,11 @@ function PalletColours() {
   }
 
   return (
-    <div className='toolbar-pallet-color-container m-bottom'>
+    <div className='acp-toolbar-pallet-color-container'>
       <Menu/>
 
       <div style={{paddingBottom: '10px'}}>
-        <select className='pallet-select' onChange={handleSelectedPaletChange} value={selectedPalet}>
+        <select className='acp-pallet-select' onChange={handleSelectedPaletChange} value={selectedPalet}>
           {
             paletNames.map(key => (
               <option key={key} value={key}>{key}</option>
@@ -50,7 +50,7 @@ function PalletColours() {
         </select>
       </div>
 
-      <div className='colours m-top'>
+      <div className='acp-colours m-top'>
         {
           selectedPalet &&
           Object.entries(parseDataByObjectKey(userColours[selectedPalet], 'product_name')).map(([key, data], index) => (

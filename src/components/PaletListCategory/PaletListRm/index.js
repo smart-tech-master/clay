@@ -7,8 +7,8 @@ const PaletListRm = ( { category, data, onClickHandle } ) => {
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   return (
     <div>
-      <div className='sm-title fw-500'>{ category }</div>
-      <div className='colors d-flex'>
+      <div className='acp-sm-title acp-fw-500'>{ category }</div>
+      <div className='acp-colors acp-d-flex'>
         {
           data.map((item, index) => (
             <RemoveClay key={index} id={item.id_product_attribute} src={baseUrl+item.color_image} name={item.color_name} onClickHandle={() => onClickHandle(item) }/>

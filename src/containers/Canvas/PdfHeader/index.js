@@ -308,7 +308,7 @@ const Canvas = () => {
       {getDownloadPdfStatus &&
         (<>
           <div>
-            <table border="1">
+            <table border="1" className='acp-table'>
               <thead>
               <tr>
                 <th>Colour</th>
@@ -340,7 +340,7 @@ const Canvas = () => {
               </tbody>
             </table>
           </div>
-          <div className='total-price'>
+          <div className='acp-total-price'>
             <div>Total:</div>
             <div>€1162,64</div>
           </div>

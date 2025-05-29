@@ -1,8 +1,8 @@
-.toolbar-pallet-color-container {
+.acp-toolbar-pallet-color-container {
     height: 30vh;
 }
 
-.pallet-select {
+.acp-pallet-select {
     width: 100%;
     height: 28px;
     margin-right: 16px;
@@ -10,7 +10,7 @@
     border: 1px solid #CACACA;
 }
 
-.colours {
+.acp-colours {
     width: 100%;
     height: 62%;
     border-radius: 4px;
@@ -20,7 +20,7 @@
     overflow-y: auto;
 }
 
-.clays {
+.acp-clays {
     padding-top: 10px;
     justify-content: space-between;
     align-content: flex-start;

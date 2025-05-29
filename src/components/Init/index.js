@@ -17,7 +17,7 @@ const Init = () => {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === "attributes" && mutation.attributeName === "value") {
-          console.log( `Input ${mutation.target.id} changed to:`, mutation.target.value);
+          // console.log( `Input ${mutation.target.id} changed to:`, mutation.target.value);
           if(mutation.target.id === "visualizer_customer_is_logged"){
             setIsLoggedIn(mutation.target.value);
           }

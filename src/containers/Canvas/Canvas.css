@@ -1,13 +1,9 @@
-.canvas-container {
+.acp-canvas-container {
   width: 65%;
   height: 100%;
-/*  width: 500px;
-  height: 500px;*/
-  /*border: 1px solid black;*/
-  /*margin-top:550px;*/
 }
 
-.pdf-header {
+.acp-pdf-header {
   width: 980px;
   height: 280px;
   display: flex;
@@ -22,11 +18,11 @@
   margin-bottom: 70px;
 }
 
-.pdf-header > div > img {
+.acp-pdf-header > div > img {
   width: 200px;
 }
 
-table {
+.acp-table {
   width: 980px;
   font-size: 20px;
 
@@ -35,7 +31,7 @@ table {
   margin-top: 50px;
 }
 
-td, th{
+.acp-table td, th{
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -43,26 +39,26 @@ td, th{
   border: solid 1px #CACACA;
 }
 
-th:nth-child(1) {
+.acp-table th:nth-child(1) {
   width: 54%;
   text-align: left;
   padding-left: 20px;
 }
 
-th:nth-child(2) {
+.acp-table th:nth-child(2) {
   width: 23%;
 }
 
-th:nth-child(3) {
+.acp-table th:nth-child(3) {
   width: 23%;
 }
 
-td:nth-child(1) {
+.acp-table td:nth-child(1) {
   text-align: left;
   padding-left: 20px;
 }
 
-.total-price {
+.acp-total-price {
   width: 980px;
   height: 80px;
 
@@ -73,13 +69,13 @@ td:nth-child(1) {
   margin-top:30px;
 }
 
-.total-price > div:nth-child(1) {
+.acp-total-price > div:nth-child(1) {
   margin-right: 10px;
   font-size: 20px;
   font-weight: 500;
 }
 
-.total-price > div:nth-child(2) {
+.acp-total-price > div:nth-child(2) {
   font-size: 30px;
   font-weight: 500;
 }

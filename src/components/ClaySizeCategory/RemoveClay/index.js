@@ -33,11 +33,11 @@ const RemoveClay = ({ src, name, onClickHandle }) => {
 
   return (
     <div
-      className='remove-container'
+      className='acp-remove-container'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className='clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle }>
+      <div className='acp-clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle }>
         <img
           src={ removeClay }
           alt='info'
@@ -45,7 +45,7 @@ const RemoveClay = ({ src, name, onClickHandle }) => {
           onClick={onClickHandle}
         />
       </div>
-      <div className='name'>
+      <div className='acp-name'>
         { name }
       </div>
     </div>

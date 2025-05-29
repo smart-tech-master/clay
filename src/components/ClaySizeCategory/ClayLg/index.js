@@ -13,11 +13,11 @@ const ClayLg = ({ src, name }) => {
 
   return (
     <div
-      className='clay-container-lg'
+      className='acp-clay-container-lg'
     >
-      <div className='clay' style={ normalBackgroundStyle }>
+      <div className='acp-clay' style={ normalBackgroundStyle }>
       </div>
-      <div className='name'>
+      <div className='acp-name'>
         { name }
       </div>
     </div>

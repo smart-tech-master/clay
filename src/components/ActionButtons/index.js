@@ -39,14 +39,14 @@ function ActionButtons({data, id, name, src, removeItem}) {
   }
 
   return (
-    <div className='action-buttons d-flex' >
-      <div className='visibility' onClick={()=> { updateVisibility() }}>
+    <div className='acp-action-buttons acp-d-flex' >
+      <div className='acp-visibility' onClick={()=> { updateVisibility() }}>
         <img src={ data.visible ? visibilityOn : visibilityOff } alt='visibility' />
       </div>
-      <div className='settings' onClick={isOpenCanvasItemConfigModal}>
+      <div className='acp-settings' onClick={isOpenCanvasItemConfigModal}>
         <img src={settings} alt='settings' />
       </div>
-      <div className='remove'>
+      <div className='acp-remove'>
         <img src={remove} alt='remove' onClick={isOpenConfirmModal}/>
       </div>
     </div>

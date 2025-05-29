@@ -42,18 +42,18 @@ const ClaySm = ({ src, name, onClickHandle }) => {
 
   return (
     <div
-      className='clay-container-sm'
+      className='acp-clay-container-sm'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className='clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle } onClick={onClickHandle}>
+      <div className='acp-clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle } onClick={onClickHandle}>
         <img
           src={ Add }
           alt='info'
           style={ isHovered ? showAddButtonStyle : hideAddButtonStyle }
         />
       </div>
-      <div className='name' style={ isHovered ? hoveredNameStyle : normalNameStyle }>
+      <div className='acp-name' style={ isHovered ? hoveredNameStyle : normalNameStyle }>
         { name }
       </div>
     </div>

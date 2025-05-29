@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {useSelector} from "react-redux";
-
+import React from 'react';
 import './ToolBar.css';
 
 import Title from "../../components/Title";
@@ -12,10 +10,10 @@ import OnCanvas from "../../components/OnCanvas";
 import { useTranslation } from "react-i18next";
 
 const ToolBar = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
-    <div className="Toolbar min-vh-100">
+    <div className="acp-Toolbar min-vh-100">
       <div style={{height:'20vh'}}>
         <Title title={t("CONFIG")} />
         <Alert text={t("Log in to save your objects and pallets.")} />

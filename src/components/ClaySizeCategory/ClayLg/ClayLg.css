@@ -1,18 +1,18 @@
-.clay-container-lg {
+.acp-clay-container-lg {
     width: 202px;
     height: 264px;
 
     border: 1px solid #CACACA;
 }
 
-.clay-container-lg > .clay {
+.acp-clay-container-lg > .acp-clay {
     width: 100%;
     height: 242px;
 
     border: none;
 }
 
-.clay-container-lg > .name {
+.acp-clay-container-lg > .acp-name {
     width: 100%;
     height: 10px;
 

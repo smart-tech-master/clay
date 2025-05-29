@@ -60,13 +60,13 @@ function OnCanvas() {
   }, [lng]);
 
   return (
-    <div className="oncanvas-grid-container m-top">
+    <div className="acp-acp-oncanvas-grid-container m-top">
 
       <Title title={t('ON CANVAS')}/>
 
-      <div className='oncanvas-grid'>
+      <div className='acp-oncanvas-grid'>
 
-        <div className='header d-flex'>
+        <div className='acp-header acp-d-flex'>
           <div>{t('Colour')}</div>
           <div>M<sup>2</sup></div>
           <div>{t('Total')}</div>
@@ -76,7 +76,7 @@ function OnCanvas() {
           </div>
         </div>
 
-        <div className='oncanvas-grid-body'>
+        <div className='acp-oncanvas-grid-body'>
           {
             Object.entries(coloursOnCanvas).map(([key, data], index) => (
               <ClaysOnCanvas key={index} category={key} data={data}/>
@@ -86,13 +86,13 @@ function OnCanvas() {
 
       </div>
 
-      <div className='checkout jc-space-between'>
+      <div className='acp-checkout acp-jc-space-between'>
         <TotalPrice/>
-        <div className='d-flex'>
-          <div className='download-pdf' onClick={generatePDF}>
+        <div className='acp-d-flex'>
+          <div className='acp-download-pdf' onClick={generatePDF}>
             <img src={downloadPdf} alt='color'/>
           </div>
-          <div className='add-to-cart' onClick={addToCart}>{t('Add to cart')}</div>
+          <div className='acp-add-to-cart' onClick={addToCart}>{t('Add to cart')}</div>
         </div>
       </div>
     </div>

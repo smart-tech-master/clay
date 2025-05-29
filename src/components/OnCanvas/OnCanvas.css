@@ -1,8 +1,8 @@
-.oncanvas-grid-container {
+.acp-acp-oncanvas-grid-container {
     min-height: 50vh;
 }
 
-.oncanvas-grid {
+.acp-oncanvas-grid {
     width: 100%;
     height: 70%;
     border-radius: 4px;
@@ -12,7 +12,7 @@
     padding-right: 0px;
 }
 
-.oncanvas-grid .header {
+.acp-oncanvas-grid .acp-header {
     justify-content: space-between;
     border-bottom: 1px solid #CACACA;
     margin-right: 27px;
@@ -22,38 +22,38 @@
     line-height: 18px;
 }
 
-.header div:nth-child(2) {
+.acp-header div:nth-child(2) {
   padding-bottom: 4px;
 }
 
-.oncanvas-grid-row {
+.acp-oncanvas-grid-row {
     padding-top: 10px;
     padding-bottom: 4px;
 }
 
-.oncanvas-grid-clay {
+.acp-oncanvas-grid-clay {
     height: 34px;
     width: 34px;
 }
 
-.oncanvas-grid-clay img {
+.acp-oncanvas-grid-clay img {
     height: 100%;
     width: 100%;
 }
 
-.oncanvas-grid-body {
+.acp-oncanvas-grid-body {
     height: 30vh;
     padding-right: 10px;
     overflow-y: auto;
 }
 
-.checkout {
+.acp-checkout {
     margin-top: 20px;
     width: 100%;
     display: flex;
 }
 
-.download-pdf {
+.acp-download-pdf {
     width: 52px;
     height: 37px;
     background-color: #E8E8E8;
@@ -66,16 +66,16 @@
     cursor: pointer;
 }
 
-.download-pdf img {
+.acp-download-pdf img {
     display: block;
     margin: 0 auto;
 }
 
-.download-pdf:hover {
+.acp-download-pdf:hover {
     background-color: #D9D9D9;
  }
 
-.add-to-cart {
+.acp-add-to-cart {
     width: 128px;
     height: 37px;
     display: flex;
@@ -94,6 +94,6 @@
     cursor: pointer;
 }
 
-.add-to-cart:hover {
+.acp-add-to-cart:hover {
     background-color: #535353;
 }

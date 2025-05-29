@@ -59,15 +59,16 @@ const ClaysOnCanvas = ({category, data}) => {
 
   return (
     <>
-      <div className='sm-title'>{category}</div>
+      <div className='acp-sm-title'>{category}</div>
       {
         data.map((item, index) => (
-          <div key={index} className='oncanvas-grid-row d-flex jc-space-between'>
-            <div className='oncanvas-grid-clay'>
+          <div key={index} className='acp-oncanvas-grid-row acp-d-flex acp-jc-space-between'>
+            <div className='acp-oncanvas-grid-clay'>
               <img src={baseUrl+item.color_image} alt='color'/>
             </div>
             <div>
               <input
+                className='acp-input'
                 type='number'
                 value={size[item.id_product_attribute]}
                 onChange={(e) =>

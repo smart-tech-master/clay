@@ -12,7 +12,7 @@ function Alert({ text }) {
   const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
 
   return isLoggedIn === 0 ? (
-    <div className='alert m-top' >
+    <div className='acp-alert' >
       <img src={info} alt='info' />
       <span>{ text }</span>
     </div>

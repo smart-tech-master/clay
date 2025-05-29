@@ -108,15 +108,15 @@ function CreatePaletModal() {
           }
         }}
       >
-        <div className='tm-header' >
-          <div className='tm-header-title'>{t('PALLET CONFIG')}</div>
-          <div className='tm-header-close' onClick={isOpenCreatePaletModal}>
+        <div className='acp-tm-header' >
+          <div className='acp-tm-header-title'>{t('PALLET CONFIG')}</div>
+          <div className='acp-tm-header-close' onClick={isOpenCreatePaletModal}>
             <img src={mdClose} alt='close' />
           </div>
         </div>
-        <div className='tm-body'>
+        <div className='acp-tm-body'>
 
-          <div className='tm-body-palet-list'>
+          <div className='acp-tm-body-palet-list'>
             {
               Object.entries(parsedColoursDataByProductName).map( ([key, data], index ) => (
                 <PaletListSm key={index} category={key} data={data} onClickHandle={ addUserColour } />
@@ -124,18 +124,19 @@ function CreatePaletModal() {
             }
           </div>
 
-          <div className='tm-body-setting-bar'>
-            <div className='xs-title'>{t('PALLET NAME')}</div>
-            <div className='settings-select-container'>
+          <div className='acp-tm-body-setting-bar'>
+            <div className='acp-xs-title'>{t('PALLET NAME')}</div>
+            <div className='acp-settings-select-container'>
               <input
+                className='acp-input'
                 type="text"
                 value={userColoursData.userPaletName}
                 onChange={handleUserPaletNameChange}
               />
             </div>
-            <div className='xs-title'>{t('IN YOUR PALLET')}</div>
+            <div className='acp-xs-title'>{t('IN YOUR PALLET')}</div>
 
-            <div className='setting-colours m-top'>
+            <div className='acp-setting-colours m-top'>
               {
                 Object.entries(parseDataByObjectKey(userColoursData.userColours, 'product_name')).map( ([key, data], index ) => (
                   <PaletListRm key={index} category={key} data={data} onClickHandle={ removeUserColour } />
@@ -143,9 +144,9 @@ function CreatePaletModal() {
               }
             </div>
 
-            <div className='tm-setting-buttons'>
+            <div className='acp-tm-setting-buttons'>
               <div></div>
-              <div className='save-button' onClick={createUserColours}>
+              <div className='acp-save-button' onClick={createUserColours}>
                 {t('Create')}
               </div>
             </div>

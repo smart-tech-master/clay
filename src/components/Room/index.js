@@ -58,15 +58,15 @@ function Room() {
   const { t, i18n } = useTranslation();
 
   return (
-    <div className='room d-flex space-between m-top m-bottom normal-font-style p-bottom'>
+    <div className='acp-room acp-d-flex acp-space-between m-top acp-normal-font-style acp-p-bottom'>
       <div>{t('Rooms')}</div>
-      <div className="room-select-button-container d-flex">
-        <div className='room-select-container'>
-          <select className='room-select'>
+      <div className="acp-room-select-button-container acp-d-flex">
+        <div className='acp-room-select-container'>
+          <select className='acp-room-select'>
             <option>{t('Bedroom')}</option>
           </select>
         </div>
-        <div className="button" onClick={setObject}>
+        <div className="acp-button" onClick={setObject}>
           <img src={saveButton} alt='button' />
         </div>
       </div>

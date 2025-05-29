@@ -26,13 +26,13 @@ function Menu() {
   const { t, i18n } = useTranslation();
 
   return (
-    <div className='d-flex space-between normal-font-style p-bottom'>
+    <div className='acp-d-flex acp-space-between acp-normal-font-style acp-p-bottom'>
       <Title title={t('PALLET COLOURS')} />
-      <div className="d-flex">
-        <div className="button settings-lg" onClick={updatePallet}>
+      <div className="acp-d-flex">
+        <div className="acp-button acp-settings-lg" onClick={updatePallet}>
           <img src={settingsButton} alt='button' />
         </div>
-        <div className="button" onClick={createPallet}>
+        <div className="acp-button" onClick={createPallet}>
           <img src={createButton} alt='button' />
         </div>
       </div>

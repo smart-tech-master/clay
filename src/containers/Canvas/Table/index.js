@@ -7,11 +7,12 @@ const Table = () => {
   const totalPrice = (useSelector(state => state.Feature.priceData)).reduce((sum, item) => sum + item.price, 0);
   const priceData = useSelector(state => state.Feature.priceData);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  
   return(
     <>
       <div>
-        <table border="1">
+        <table border="1" className='acp-table'>
           <thead>
             <tr>
               <th>{t('Colour')}</th>
@@ -34,7 +35,7 @@ const Table = () => {
           </tbody>
         </table>
       </div>
-      <div className='total-price'>
+      <div className='acp-total-price'>
         <div>{t('Total')}:</div>
         <div>€{truncateToTwoDecimals(totalPrice)}</div>
       </div>

@@ -3,7 +3,7 @@ import './Title.css';
 
 function Title({title}) {
   return (
-    <div className='title'>
+    <div className='acp-title'>
       { title }
     </div>
   );

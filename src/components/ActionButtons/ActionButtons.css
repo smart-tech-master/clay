@@ -1,4 +1,4 @@
-.action-buttons {
+.acp-action-buttons {
     width: 72px;
     height: 28px;
     /*border: black solid 1px;*/
@@ -9,17 +9,17 @@
               0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.visibility {
+.acp-visibility {
     padding-top: 3px;
     cursor: pointer;
 }
 
-.settings {
+.acp-settings {
     padding-top: 3px;
     cursor: pointer;
 }
 
-.remove {
+.acp-remove {
     padding-right: 2px;
     cursor: pointer;
 }

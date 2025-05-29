@@ -10,7 +10,7 @@ import Init from './components/Init';
 
 function App() {
   return (
-    <div className="row App">
+    <div className="row acp-App">
       <div className="col-12 col-md-8">
         <Canvas />
       </div>
