@@ -2,9 +2,6 @@ import actions from './actions';
 import { produce } from 'immer';
 
 import { convertAllProductsToColourArray } from 'utils/common'
-/*import {paletData} from "../../data/palet";*/
-
-/*import { colours } from "../../data/palet";*/
 
 const initState = {
   isOpenConfirmModal: false,
@@ -16,9 +13,7 @@ const initState = {
 
   confirmModalAction: {},
 
-  // imageBaseUrl: "https://clay.powdev.lt",
   imageBaseUrl:'',
-  // assetsPath: '/modules/revisualizer/views/lib/',
   assetsPath: '',
 
   isLoggedIn: 0,
