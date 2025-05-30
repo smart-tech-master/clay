@@ -16,7 +16,8 @@ const initState = {
 
   confirmModalAction: {},
 
-  imageBaseUrl: "https://clay.powdev.lt",
+  // imageBaseUrl: "https://clay.powdev.lt",
+  imageBaseUrl:'',
   // assetsPath: '/modules/revisualizer/views/lib/',
   assetsPath: '',
 

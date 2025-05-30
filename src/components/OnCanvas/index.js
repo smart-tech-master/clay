@@ -40,7 +40,7 @@ function OnCanvas() {
           qty: item.m2,
         }
       });
-      dispatch({type: featureAction.ADD_PRODUCTS_REQUEST, payload: priceData});
+      dispatch({type: featureAction.ADD_TO_CART_REQUEST, payload: priceData});
     }else{
       localStorage.setItem("productsData", JSON.stringify(userData.priceData));
       /*      const userData = JSON.parse(localStorage.getItem("priceData"));*/

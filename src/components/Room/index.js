@@ -22,6 +22,7 @@ function Room() {
     if (userData.isLoggedIn && userData.customerId) {
       dispatch({type: featureAction.GET_OBJECTS_REQUEST});
     }else{
+
       if(localStorage.getItem("userData")){
         const userDataInLocalStroage = JSON.parse(localStorage.getItem("userData"));
         dispatch(featureAction.initUserData(userDataInLocalStroage));
@@ -39,7 +40,10 @@ function Room() {
             dispatch(featureAction.updateStatusOfUpdateColour(true));
           }, 500);
         }
+      }else{
+        
       }
+
     }
   }, []);
 

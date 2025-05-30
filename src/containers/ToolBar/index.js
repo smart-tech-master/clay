@@ -13,7 +13,7 @@ const ToolBar = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="acp-Toolbar min-vh-100">
+    <div className="acp-Toolbar acp-min-vh-100">
       <div style={{height:'20vh'}}>
         <Title title={t("CONFIG")} />
         <Alert text={t("Log in to save your objects and pallets.")} />

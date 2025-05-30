@@ -7,8 +7,13 @@ export function* getColours() {
   yield takeLatest(actions.GET_COLOURS_REQUEST, function* getPalletRequest() {
     try {
       //const response = yield getQuery(`colors?ajax=1`);
-      const response = yield getQuery(`/colour-tempdata.json`);
-/*      console.log('this is color request result', response.data);*/
+      const rootElement = document.getElementById('root');
+      const getColoursEndPoint = rootElement?.getAttribute('data-getcolors') || '';
+      //console.log("getColoursEndPoint", getColoursEndPoint);
+
+      const response = yield getQuery(getColoursEndPoint);
+      // const response = yield getQuery(`/colour-tempdata.json`);
+      // console.log('this is color request result', response.data);
       if(response.status === 200) {
         yield put({
           type: actions.GET_COLOURS_REQUEST_SUCCESS,
@@ -24,7 +29,11 @@ export function* getColours() {
 export function* getObjects() {
   yield takeLatest(actions.GET_OBJECTS_REQUEST, function* getObjectsRequest() {
     try {
-      const response = yield getQuery(`objects?ajax=1&action=getObjects`);
+      const rootElement = document.getElementById('root');
+      const getObjectsEndPoint = rootElement?.getAttribute('data-getobjects') || '';
+
+      //const response = yield getQuery(`objects?ajax=1&action=getObjects`);
+      const response = yield getQuery(getObjectsEndPoint);
       /* console.log('this is color request result', response.data);*/
       if(response.status === 200) {
         yield put({
@@ -41,9 +50,13 @@ export function* getObjects() {
 export function* setObjects() {
   yield takeLatest(actions.SET_OBJECTS_REQUEST, function* setObjectsRequest(payload) {
     try {
-/*      console.log('setObjects');*/
+      /*      console.log('setObjects');*/
+      const rootElement = document.getElementById('root');
+      const setObjectsEndPoint = rootElement?.getAttribute('data-setobjects') || '';
+
       const response = yield postQuery(
-        `objects?ajax=1`,
+        //`objects?ajax=1`,
+        setObjectsEndPoint,
         {
           action: 'setObject',
           name: `${payload.customerId}-objects`,
@@ -61,7 +74,7 @@ export function* setObjects() {
 
 export function* addProducts() {
   yield takeLatest(actions.ADD_PRODUCTS_REQUEST, function* addProductsRequest(payload) {
-    console.log('addProducts', payload);
+    //console.log('addProducts', payload);
     try {
       const response = yield postQuery(
         `cart?ajax=1`,
@@ -71,6 +84,28 @@ export function* addProducts() {
       );
       if(response.status === 200) {
         console.log('addProducts success');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  });
+}
+
+export function* addToCart() {
+  yield takeLatest(actions.ADD_TO_CART_REQUEST, function* addToCartRequest(payload) {
+    const rootElement = document.getElementById('root');
+    const addToCartEndPoint = rootElement?.getAttribute('data-addtocart') || '';
+    console.log('addToCartEndPoint', addToCartEndPoint);
+    try {
+      const response = yield postQuery(
+        //`cart?ajax=1`,
+        addToCartEndPoint,
+        {
+          products: payload,
+        }
+      );
+      if(response.status === 200) {
+        console.log('addToCart success');
       }
     } catch (e) {
       console.log(e);
@@ -93,6 +128,7 @@ export default function* rootSaga() {
     fork(getColours),
     fork(setObjects),
     fork(getObjects),
-    fork(addProducts)
+    fork(addProducts),
+    fork(addToCart)
   ]);
 }

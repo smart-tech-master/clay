@@ -29,6 +29,7 @@ const actions = {
   ADD_PRODUCTS_REQUEST: 'ADD_PRODUCT',
   SET_LANGUAGE: 'SET_LANGUAGE',
   SET_ASSETS_PATH: 'SET_ASSETS_PATH',
+  ADD_TO_CART_REQUEST: 'ADD_TO_CART_REQUEST',
 
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
@@ -128,7 +129,12 @@ const actions = {
   setAssetsPath: (payload) => ({
     type: actions.SET_ASSETS_PATH,
     payload
-  })
+  }),
+
+  addToCart: (payload) => ({
+    type: actions.ADD_TO_CART_REQUEST,
+    payload
+  }),
 }
 
 export default actions;

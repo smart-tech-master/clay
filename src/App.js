@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Canvas from './containers/Canvas';
 import ToolBar from "./containers/ToolBar";
@@ -10,11 +10,11 @@ import Init from './components/Init';
 
 function App() {
   return (
-    <div className="row acp-App">
-      <div className="col-12 col-md-8">
+    <div className="acp-row acp-App">
+      <div className="acp-col-12 acp-col-md-8">
         <Canvas />
       </div>
-      <div className="col-12 col-md-4 h-100">
+      <div className="acp-col-12 acp-col-md-4 acp-h-100">
         <ToolBar />
       </div>
       <Modals />
