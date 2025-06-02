@@ -127,12 +127,9 @@ const Canvas = () => {
   }, [size]);
 
   useEffect(() => {
-    let standardWidth = 1536;
-    let standardHeight = 738;
-
-    let width = window.innerWidth;
+    let width = document.getElementById('root').offsetWidth;
     let height = window.innerHeight;
-    let widthScale = 0.511;
+    let widthScale = 0.65;
     let heightScale = 1;
     let minWidth = 768;
 
@@ -145,7 +142,7 @@ const Canvas = () => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: width * widthScale ,
       height: height * heightScale,
-      // backgroundColor: '#f0f0f0', // Optional: Set a default background color
+      //backgroundColor: '#f0f0f0', // Optional: Set a default background color
       backgroundColor: '#ffffff', // Optional: Set a default background color
     });
 
