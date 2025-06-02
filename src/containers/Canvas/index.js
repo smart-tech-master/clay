@@ -132,7 +132,7 @@ const Canvas = () => {
 
     let width = window.innerWidth;
     let height = window.innerHeight;
-    let widthScale = 0.65;
+    let widthScale = 0.511;
     let heightScale = 1;
     let minWidth = 768;
 
@@ -145,7 +145,8 @@ const Canvas = () => {
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: width * widthScale ,
       height: height * heightScale,
-      backgroundColor: '#f0f0f0', // Optional: Set a default background color
+      // backgroundColor: '#f0f0f0', // Optional: Set a default background color
+      backgroundColor: '#ffffff', // Optional: Set a default background color
     });
 
     setCanvasInstance(canvas); // Store the canvas instance
