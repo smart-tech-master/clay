@@ -8,6 +8,8 @@ function Alert({ text }) {
   // assets init
   const assetsPath = useSelector(state => state.Feature.assetsPath);
   const info = process.env.PUBLIC_URL + assetsPath + 'images/info.svg';
+  // console.log("info url", info);
+  // console.log("assetsPath url", assetsPath);
 
   const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
 
