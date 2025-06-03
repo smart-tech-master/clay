@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import html2pdf from "html2pdf.js";
-import html2canvas from "html2canvas";
-/*import html2pdf from 'html2pdf.js/dist/html2pdf.min.js';*/
 import {useDispatch, useSelector} from "react-redux";
 
 import './Canvas.css';
@@ -10,10 +8,36 @@ import featureAction from "../../redux/feature/actions";
 import {compareArraysByName} from "../../utils/common";
 import Table from "./Table";
 
-
 import { useTranslation } from "react-i18next";
 
+function useDebouncedResize(callback, delay = 200) {
+  useEffect(() => {
+    let timeoutId;
+
+    function handleResize() {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        callback();
+      }, delay);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, [callback, delay]);
+}
+
 const Canvas = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useDebouncedResize(() => {
+    // console.log('Resize ended');
+    setWindowWidth(window.innerWidth);
+  }, 300); // You can tweak the delay
+
   // assets init
   const assetsPath = useSelector(state => state.Feature.assetsPath);
   const Logo = process.env.PUBLIC_URL + assetsPath + 'images/Logo.png';
@@ -21,10 +45,6 @@ const Canvas = () => {
   const remove = process.env.PUBLIC_URL + assetsPath + 'images/remove.svg';
 
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
-  const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
 
   const pdfContentRef = useRef();
 
@@ -88,7 +108,13 @@ const Canvas = () => {
     ];
 
     setRectsOptions([...reactPositionInit]);
-  }, []);
+  }, [windowWidth]);
+
+  // useEffect(() => {
+  //   formateHtmlRef();
+  //   repaintCanvas();
+  // }, [rectsOptions]);
+  
 
   const dispatch = useDispatch();
   const removeItem = (id) => {
@@ -111,38 +137,13 @@ const Canvas = () => {
   const [rects, setRects] = useState([]);
   const coloursOnCanvas = useSelector(state => state.Feature.coloursOnCanvas);
   const updatedColour = useSelector(state => state.Feature.updatedColour);
-  const priceData = useSelector(state => state.Feature.priceData);
 
   const canvasRef = useRef(null);
   const [canvasInstance, setCanvasInstance] = useState(null);
 
   const htmlRefs = useRef({});
 
-  useEffect(() => {
-    const handleResize = () => {
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-  useEffect(() => {
-    //console.log('current screen size', size);
-    const fetchData = async () => {
-      await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
-      /*repaintCanvas();*/
-    };
-    fetchData();
-  }, [size]);
-
-  useEffect(() => {
+  const getScaleInfo = () => {
     let width = document.getElementById('root').offsetWidth;
     let height = window.innerHeight;
     let widthScale = 0.65;
@@ -154,10 +155,19 @@ const Canvas = () => {
       heightScale = 0.8;
     }
 
+    return { 
+      canvasWidth: width * widthScale, 
+      canvasHeight: height * heightScale
+    }
+  }
+
+  useEffect(() => {
+    const scaleInfo = getScaleInfo();
+
     // Initialize Fabric.js canvas
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: width * widthScale ,
-      height: height * heightScale,
+      width: scaleInfo.canvasWidth ,
+      height: scaleInfo.canvasHeight,
       //backgroundColor: '#f0f0f0', // Optional: Set a default background color
       backgroundColor: '#ffffff', // Optional: Set a default background color
     });
@@ -168,13 +178,11 @@ const Canvas = () => {
     return () => {
       canvas.dispose(); // Dispose the canvas to prevent memory leaks
     };
-  }, [size]);
+  }, []);
 
   useEffect(() => {
     if(updatedColour.status) {
       try {
-        /*dispatch(statusAction.updatedClayData());
-        dispatch(statusAction.updateStatusOfUpdatedClayData(false));*/
         dispatch(featureAction.updateUserColours());
       } catch (error) {
         console.error('change background error:', error.message);
@@ -203,7 +211,7 @@ const Canvas = () => {
   useEffect(() => {
     formateHtmlRef();
     repaintCanvas();
-  }, [rects]);
+  }, [rects, rectsOptions]);
 
   const formateHtmlRef = () => {
     for(let i = 0; i < rects.length; i++) {
@@ -246,7 +254,6 @@ const Canvas = () => {
             backgroundImageSrc: baseUrl + rects[i].color_image
           });
         }
-
 
         fabric.Image.fromURL(baseUrl+rects[i].color_image, (img) => {
           fetch(baseUrl + rects[i].color_image)
@@ -307,6 +314,9 @@ const Canvas = () => {
         });
       }
 
+      const scaleInfo = getScaleInfo();
+      canvas.setWidth(scaleInfo.canvasWidth);
+      canvas.setHeight(scaleInfo.canvasHeight);
       canvas.renderAll();
     }
   }
@@ -316,8 +326,6 @@ const Canvas = () => {
     String(today.getMonth() + 1).padStart(2, '0') + '-' +
     String(today.getDate()).padStart(2, '0');
 
-/*  const language = useSelector(state => state.Feature.language);*/
-//languageData[language]
   const { t, i18n } = useTranslation();
 
   return (
