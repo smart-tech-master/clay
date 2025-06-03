@@ -28,24 +28,6 @@ const Canvas = () => {
 
   const pdfContentRef = useRef();
 
-  const generateImage = () => {
-    if (canvasInstance) {
-      const dataURL = canvasInstance.toDataURL({
-        format: 'png',
-        quality: 1.0
-      });
-
-      console.log('canvasInstance', dataURL);
-      const link = document.createElement('a');
-      link.href = dataURL;
-      link.download = 'canvas-capture.png'; // Change extension if needed
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-  }
-
   const generatePDF = () => {
     const element = pdfContentRef.current;
 
@@ -73,6 +55,40 @@ const Canvas = () => {
     { left: 400, top: 200, width: 200, height: 200 },
     { left: 700, top: 300, width: 200, height: 200 },
   ]);
+
+  const screenWidth = window.innerWidth;
+  const rootWidth = document.getElementById('root').offsetWidth;
+  const leftPositionMargin = (screenWidth - rootWidth) / 2;
+
+  useEffect(() => {
+    let widthScale = rootWidth > 768 ? 0.65 : 1;
+    let canvasWidth = rootWidth * widthScale;
+
+    let unitWidth = canvasWidth / 20;
+    let reactWidth = unitWidth * 4;
+    let reactHeight = reactWidth;
+    
+    const bgRectLeftPosition = unitWidth * 14;
+    const bgRectTopPosition = 70;
+
+    const firstRectLeftPosition = unitWidth * 2;
+    const firstRectTopPosition = 300;
+    
+    const secondRectLeftPosition = unitWidth * 2 + reactWidth + unitWidth * 2;
+    const secondRectTopPosition = 200;
+
+    const thirdRectLeftPosition = unitWidth * 2 + reactWidth + unitWidth * 2 + reactWidth + unitWidth * 2;
+    const thirdRectTopPosition = 300;
+
+    const reactPositionInit = [
+      { left: bgRectLeftPosition, top: bgRectTopPosition, width: reactWidth, height: reactHeight },
+      { left: firstRectLeftPosition, top: firstRectTopPosition, width: reactWidth, height: reactHeight },
+      { left: secondRectLeftPosition, top: secondRectTopPosition, width: reactWidth, height: reactHeight },
+      { left: thirdRectLeftPosition, top: thirdRectTopPosition, width: reactWidth, height: reactHeight },
+    ];
+
+    setRectsOptions([...reactPositionInit]);
+  }, []);
 
   const dispatch = useDispatch();
   const removeItem = (id) => {
@@ -135,7 +151,7 @@ const Canvas = () => {
 
     if(width <= minWidth) {
       widthScale = 1;
-      heightScale = 0.5;
+      heightScale = 0.8;
     }
 
     // Initialize Fabric.js canvas
@@ -194,7 +210,9 @@ const Canvas = () => {
       if(htmlRefs.current){
         if(htmlRefs.current[rects[i].id_product_attribute] !== null) {
           htmlRefs.current[rects[i].id_product_attribute].style.top = rectsOptions[i].top + 'px';
-          htmlRefs.current[rects[i].id_product_attribute].style.left = rectsOptions[i].left + 'px';
+          
+          htmlRefs.current[rects[i].id_product_attribute].style.left = rectsOptions[i].left + leftPositionMargin + 'px';
+          
           htmlRefs.current[rects[i].id_product_attribute].style.width = rectsOptions[i].width + 'px';
         }
       }
@@ -253,13 +271,13 @@ const Canvas = () => {
 
         canvas.on('object:moving', (e) => {
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
-          htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
+          htmlRefs.current[e.target.name].style.left = e.target.left + leftPositionMargin +'px';
         });
 
         canvas.on('object:scaling', (e) => {
           htmlRefs.current[e.target.name].style.width = e.target.width * e.target.scaleX + 'px';
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
-          htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
+          htmlRefs.current[e.target.name].style.left = e.target.left + leftPositionMargin + 'px';
         });
 
       }
@@ -336,7 +354,7 @@ const Canvas = () => {
               <div
                 key={index}
                 style={{
-                  width: '140px',
+                  width: '115px',
                   height: '100%',
                   backgroundColor: '#FFFFFF',
                   border: 'none',

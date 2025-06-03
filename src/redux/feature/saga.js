@@ -9,11 +9,9 @@ export function* getColours() {
       //const response = yield getQuery(`colors?ajax=1`);
       const rootElement = document.getElementById('root');
       const getColoursEndPoint = rootElement?.getAttribute('data-getcolors') || '';
-      //console.log("getColoursEndPoint", getColoursEndPoint);
 
       const response = yield getQuery(getColoursEndPoint);
       // const response = yield getQuery(`/colour-tempdata.json`);
-      // console.log('this is color request result', response.data);
       if(response.status === 200) {
         yield put({
           type: actions.GET_COLOURS_REQUEST_SUCCESS,

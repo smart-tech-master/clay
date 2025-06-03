@@ -18,7 +18,7 @@
             "m2": "1.4"
           },
           "name": "0_B",
-          "image": "/img/co/28.jpg"
+          "image": "https://clay.powdev.lt/img/co/28.jpg"
         },
         "1_B": {
           "64": {
@@ -34,7 +34,7 @@
             "m2": "1.4"
           },
           "name": "1_B",
-          "image": "/img/co/29.jpg"
+          "image": "https://clay.powdev.lt/img/co/29.jpg"
         },
         "2_B": {
           "65": {
@@ -50,7 +50,7 @@
             "m2": "1.4"
           },
           "name": "2_B",
-          "image": "/img/co/30.jpg"
+          "image": "https://clay.powdev.lt/img/co/30.jpg"
         },
         "3_B": {
           "69": {
@@ -66,7 +66,7 @@
             "m2": "1.4"
           },
           "name": "3_B",
-          "image": "/img/co/31.jpg"
+          "image": "https://clay.powdev.lt/img/co/31.jpg"
         },
         "12_B": {
           "70": {
@@ -82,7 +82,7 @@
             "m2": "1.4"
           },
           "name": "12_B",
-          "image": "/img/co/33.jpg"
+          "image": "https://clay.powdev.lt/img/co/33.jpg"
         },
         "18_B": {
           "71": {
@@ -98,7 +98,7 @@
             "m2": "1.4"
           },
           "name": "18_B",
-          "image": "/img/co/34.jpg"
+          "image": "https://clay.powdev.lt/img/co/34.jpg"
         },
         "23_B": {
           "72": {
@@ -114,7 +114,7 @@
             "m2": "1.4"
           },
           "name": "23_B",
-          "image": "/img/co/35.jpg"
+          "image": "https://clay.powdev.lt/img/co/35.jpg"
         },
         "24_B": {
           "73": {
@@ -130,7 +130,7 @@
             "m2": "1.4"
           },
           "name": "24_B",
-          "image": "/img/co/36.jpg"
+          "image": "https://clay.powdev.lt/img/co/36.jpg"
         },
         "WHITE BASE": {
           "93": {
@@ -146,7 +146,7 @@
             "m2": "1.4"
           },
           "name": "WHITE BASE",
-          "image": "/img/co/37.jpg"
+          "image": "https://clay.powdev.lt/img/co/37.jpg"
         }
       }
     },
@@ -168,7 +168,7 @@
             "m2": false
           },
           "name": "3_B",
-          "image": "/img/co/31.jpg"
+          "image": "https://clay.powdev.lt/img/co/31.jpg"
         },
         "2_B": {
           "12": {
@@ -184,7 +184,7 @@
             "m2": false
           },
           "name": "2_B",
-          "image": "/img/co/30.jpg"
+          "image": "https://clay.powdev.lt/img/co/30.jpg"
         },
         "1_B": {
           "13": {
@@ -200,7 +200,7 @@
             "m2": false
           },
           "name": "1_B",
-          "image": "/img/co/29.jpg"
+          "image": "https://clay.powdev.lt/img/co/29.jpg"
         },
         "0_B": {
           "14": {
@@ -216,7 +216,7 @@
             "m2": false
           },
           "name": "0_B",
-          "image": "/img/co/28.jpg"
+          "image": "https://clay.powdev.lt/img/co/28.jpg"
         }
       }
     },
@@ -238,7 +238,7 @@
             "m2": "5"
           },
           "name": "0_B",
-          "image": "/img/co/28.jpg"
+          "image": "https://clay.powdev.lt/img/co/28.jpg"
         },
         "1_B": {
           "88": {
@@ -254,7 +254,7 @@
             "m2": "5"
           },
           "name": "1_B",
-          "image": "/img/co/29.jpg"
+          "image": "https://clay.powdev.lt/img/co/29.jpg"
         },
         "2_B": {
           "89": {
@@ -270,7 +270,7 @@
             "m2": "5"
           },
           "name": "2_B",
-          "image": "/img/co/30.jpg"
+          "image": "https://clay.powdev.lt/img/co/30.jpg"
         }
       }
     }
