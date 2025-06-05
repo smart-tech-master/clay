@@ -26,6 +26,8 @@ function UpdatePaletModal() {
     dispatch(statusAction.isOpenUpdatePaletModal());
   }
 
+  const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
+  const customerId = useSelector(state => state.Feature.customerId);
   const colours = parseDataByObjectKey(useSelector(state => state.Feature.colours), 'product_name');
   const userColours = useSelector((state) => state.Feature.userColours);
   const paletNames = Object.keys(userColours);
@@ -75,8 +77,9 @@ function UpdatePaletModal() {
       userColours: {...colorData},
       isOpenUpdatePaletModal:false
     };
-    if (cloneUserData.isLoggedIn && cloneUserData.customerId) {
-      dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: cloneUserData});
+    if (isLoggedIn == 1) {
+      //dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: cloneUserData});
+      dispatch(featureAction.setPallet({customerId, colorData}));
     }else{
       localStorage.setItem("userData", JSON.stringify(cloneUserData));
       /*      const userData = JSON.parse(localStorage.getItem("userData"));*/

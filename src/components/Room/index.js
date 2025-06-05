@@ -19,7 +19,7 @@ function Room() {
   useEffect(() => {
     dispatch(featureActions.getColoursRequest());
 
-    if (userData.isLoggedIn && userData.customerId) {
+    if (userData.isLoggedIn == 1) {
       dispatch({type: featureAction.GET_OBJECTS_REQUEST});
     }else{
 
@@ -40,8 +40,6 @@ function Room() {
             dispatch(featureAction.updateStatusOfUpdateColour(true));
           }, 500);
         }
-      }else{
-        
       }
 
     }
@@ -51,7 +49,7 @@ function Room() {
   const dispatch = useDispatch();
 
   const setObject = () => {
-    if (userData.isLoggedIn && userData.customerId) {
+    if (userData.isLoggedIn == 1) {
       dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: userData});
     }else{
       localStorage.setItem("userData", JSON.stringify(userData));

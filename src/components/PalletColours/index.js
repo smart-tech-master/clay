@@ -15,15 +15,16 @@ function PalletColours() {
   const userColours = useSelector((state) => state.Feature.userColours);
   const paletNames = Object.keys(userColours);
   const coloursOnCanvas = useSelector((state) => state.Feature.coloursOnCanvas);
+  const [selectedPalet, setSelectedPalet] = useState("");
   /*api integration end*/
 
   useEffect(()=>{
-    if(paletNames.length === 1){
+    if(paletNames.length > 0 && !selectedPalet){
       setSelectedPalet(paletNames[0]);
     }
-  }, [paletNames]);
+  }, [paletNames, selectedPalet]);
 
-  const [selectedPalet, setSelectedPalet] = useState("");
+
 
   const handleSelectedPaletChange = (event) => {
     setSelectedPalet(event.target.value);
@@ -50,7 +51,7 @@ function PalletColours() {
         </select>
       </div>
 
-      <div className='acp-colours m-top'>
+      <div className='acp-colours m-top' >
         {
           selectedPalet &&
           Object.entries(parseDataByObjectKey(userColours[selectedPalet], 'product_name')).map(([key, data], index) => (

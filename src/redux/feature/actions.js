@@ -7,8 +7,9 @@ const actions = {
 
   CREATE_USER_COLOURS: 'CREATE_USER_COLOURS',
   ADD_COLOUR_ON_CANVAS: 'ADD_COLOUR_ON_CANVAS',
-  CONFIRM_MODAL_ACTION_DEFINE: 'CONFIRM_MODAL_ACTION_DEFINE',
   REMOVE_COLOUR_0N_CANVAS: 'REMOVE_COLOUR_0N_CANVAS',
+  UPDATED_COLOUR_ON_CANVAS: 'UPDATED_COLOUR_ON_CANVAS',
+  CONFIRM_MODAL_ACTION_DEFINE: 'CONFIRM_MODAL_ACTION_DEFINE',
   UPDATED_COLOUR_DEFINE: 'UPDATE_COLOUR_DEFINE',
   UPDATE_TO: 'UPDATE_TO',
   UPDATE_STATUS_OF_UPDATED_COLOUR: 'UPDATE_STATUS_OF_UPDATED_COLOUR',
@@ -30,6 +31,9 @@ const actions = {
   SET_LANGUAGE: 'SET_LANGUAGE',
   SET_ASSETS_PATH: 'SET_ASSETS_PATH',
   ADD_TO_CART_REQUEST: 'ADD_TO_CART_REQUEST',
+  GET_DEFAULT_PALLET_REQUEST: 'GET_DEFAULT_PALLET_REQUEST',
+  GET_DEFAULT_PALLET_REQUEST_SUCCESS: 'GET_DEFAULT_PALLET_REQUEST_SUCCESS',
+  SET_PALLET_REQUEST: 'SET_PALLET_REQUEST',
 
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
@@ -61,14 +65,19 @@ const actions = {
     type: actions.ADD_COLOUR_ON_CANVAS,
     payload
   }),
-
-  confirmModalActionDefine: (payload) => ({
-    type: actions.CONFIRM_MODAL_ACTION_DEFINE,
+  
+  removeColourOnCanvas: (payload) => ({
+    type: actions.REMOVE_COLOUR_0N_CANVAS,
     payload
   }),
 
-  removeColourOnCanvas: (payload) => ({
-    type: actions.REMOVE_COLOUR_0N_CANVAS,
+  updateColourOnCanvas: (payload) => ({
+    type: actions.UPDATED_COLOUR_ON_CANVAS,
+    payload
+  }),
+
+  confirmModalActionDefine: (payload) => ({
+    type: actions.CONFIRM_MODAL_ACTION_DEFINE,
     payload
   }),
 
@@ -133,6 +142,15 @@ const actions = {
 
   addToCart: (payload) => ({
     type: actions.ADD_TO_CART_REQUEST,
+    payload
+  }),
+
+  getDefaultPallet: () => ({
+    type: actions.GET_DEFAULT_PALLET_REQUEST
+  }),
+
+  setPallet: (payload) => ({
+    type: actions.SET_PALLET_REQUEST,
     payload
   }),
 }

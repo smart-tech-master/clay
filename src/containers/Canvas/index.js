@@ -110,12 +110,6 @@ const Canvas = () => {
     setRectsOptions([...reactPositionInit]);
   }, [windowWidth]);
 
-  // useEffect(() => {
-  //   formateHtmlRef();
-  //   repaintCanvas();
-  // }, [rectsOptions]);
-  
-
   const dispatch = useDispatch();
   const removeItem = (id) => {
     dispatch(featureAction.confirmModalActionDefine({type: featureAction.REMOVE_COLOUR_0N_CANVAS, payload: id}));
@@ -213,6 +207,10 @@ const Canvas = () => {
     repaintCanvas();
   }, [rects, rectsOptions]);
 
+  useEffect(() => {
+    // console.log('coloursOnCanvas', coloursOnCanvas);
+  }, []);
+
   const formateHtmlRef = () => {
     for(let i = 0; i < rects.length; i++) {
       if(htmlRefs.current){
@@ -289,29 +287,20 @@ const Canvas = () => {
 
       }
 
-      // background image setting
-      if(rects.length !== 0 ){
-        fabric.Image.fromURL(baseUrl+rects[0].color_image, (img) => {
-          img.set({
-            left: 0,  // Position the image
-            top: 0,   // Position the image
-            scaleX: canvas.width / img.width,  // Scale to fit the canvas width
-            scaleY: canvas.height / img.height, // Scale to fit the canvas height
+      // background image setting backgroundColor: '#ffffff',
+      if(rects.length !== 0 && rects[0].visible){
+          fabric.Image.fromURL(baseUrl+rects[0].color_image, (img) => {
+            img.set({
+              left: 0,  // Position the image
+              top: 0,   // Position the image
+              scaleX: canvas.width / img.width,  // Scale to fit the canvas width
+              scaleY: canvas.height / img.height, // Scale to fit the canvas height
+            });
+  
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
           });
-
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        });
       }else{
-        fabric.Image.fromURL('assets/images/clays/canvas-container.png', (img) => {
-          img.set({
-            left: 0,  // Position the image
-            top: 0,   // Position the image
-            scaleX: canvas.width / img.width,  // Scale to fit the canvas width
-            scaleY: canvas.height / img.height, // Scale to fit the canvas height
-          });
-
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        });
+        canvas.setBackgroundColor('white', canvas.renderAll.bind(canvas));
       }
 
       const scaleInfo = getScaleInfo();

@@ -97,3 +97,8 @@
 .acp-add-to-cart:hover {
     background-color: #535353;
 }
+
+.acp-unit-price {
+    min-width: 20%;
+    text-align: center;
+}

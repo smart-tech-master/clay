@@ -58,6 +58,11 @@ const Init = () => {
   // }, [language]);
 
   useEffect(() => {
+    const _sLoggedIn = document.getElementById("visualizer_customer_is_logged")?.value;
+    const _customerId = document.getElementById('visualizer_customer_id')?.value;
+    setIsLoggedIn(_sLoggedIn);
+    setCustomerId(_customerId);
+
     const assetsPath = document.getElementById('root')?.getAttribute('data-assetsurl');
     dispatch(featureActions.setAssetsPath(assetsPath));
   }, []);
@@ -70,6 +75,16 @@ const Init = () => {
       dispatch(featureActions.setLanguage('lt'));
     }
     dispatch(featureActions.setLanguage(language));
+  }, []);
+
+  // colours init
+  // useEffect(() => {
+  //   dispatch(featureActions.getColoursRequest())
+  // }, []);
+
+  // default pallet init
+  useEffect(() => {
+    dispatch(featureActions.getDefaultPallet())
   }, []);
 
   return(<></>)

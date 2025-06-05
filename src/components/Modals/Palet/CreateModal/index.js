@@ -27,6 +27,9 @@ function CreatePaletModal() {
     dispatch(statusAction.isOpenCreatePaletModal());
   }
 
+  const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
+  const customerId = useSelector(state => state.Feature.customerId);
+  const userColours = useSelector(state => state.Feature.userColours);
   const colours = useSelector(state => state.Feature.colours);
   const parsedColoursDataByProductName = parseDataByObjectKey(colours, 'product_name');
 
@@ -77,8 +80,11 @@ function CreatePaletModal() {
       userColours: {[userColoursData.userPaletName]: userColoursData.userColours},
       isOpenCreatePaletModal:false
     };
-    if (cloneUserData.isLoggedIn && cloneUserData.customerId) {
-      dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: cloneUserData});
+    if (isLoggedIn == 1) {
+      const userPallet = {...userColours, ...{[userColoursData.userPaletName]: userColoursData.userColours}};
+      // console.log('userColours', payload);
+      //dispatch({type: featureAction.SET_PALLET_REQUEST, payload:{customerId, userPallet} });
+      dispatch(featureAction.setPallet({customerId, userPallet}));
     }else{
       localStorage.setItem("userData", JSON.stringify(cloneUserData));
       /*      const userData = JSON.parse(localStorage.getItem("userData"));*/

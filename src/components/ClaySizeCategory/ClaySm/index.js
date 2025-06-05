@@ -40,6 +40,13 @@ const ClaySm = ({ src, name, onClickHandle }) => {
     fontSize: '12px',
   }
 
+  const smallNameStyle = {
+    fontSize: '7px',
+  }
+  const hoveredSmallNameStyle = {
+    fontSize: '8px',
+  }
+
   return (
     <div
       className='acp-clay-container-sm'
@@ -53,7 +60,7 @@ const ClaySm = ({ src, name, onClickHandle }) => {
           style={ isHovered ? showAddButtonStyle : hideAddButtonStyle }
         />
       </div>
-      <div className='acp-name' style={ isHovered ? hoveredNameStyle : normalNameStyle }>
+      <div className='acp-name' style={ isHovered ? (name.length > 5 ? hoveredSmallNameStyle : hoveredNameStyle) : (name.length > 5 ? smallNameStyle : normalNameStyle) }>
         { name }
       </div>
     </div>

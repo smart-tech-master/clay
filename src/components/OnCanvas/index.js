@@ -33,14 +33,14 @@ function OnCanvas() {
 
   const userData = useSelector(state => state.Feature);
   const addToCart = () => {
-    if (userData.isLoggedIn && userData.customerId) {
+    if (userData.isLoggedIn == 1) {
       const priceData = [...userData.priceData].map(item => {
         return {
           id_product_attribute: item.id_product_attribute,
           qty: item.m2,
         }
       });
-      dispatch({type: featureAction.ADD_TO_CART_REQUEST, payload: priceData});
+      dispatch({type: featureAction.ADD_TO_CART_REQUEST, payload: {priceData, customerId : userData.customerId}});
     }else{
       localStorage.setItem("productsData", JSON.stringify(userData.priceData));
       /*      const userData = JSON.parse(localStorage.getItem("priceData"));*/

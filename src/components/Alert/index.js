@@ -11,14 +11,12 @@ function Alert({ text }) {
   // console.log("info url", info);
   // console.log("assetsPath url", assetsPath);
 
-  const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
-
-  return isLoggedIn === 0 ? (
+  return (
     <div className='acp-alert' >
       <img src={info} alt='info' />
       <span>{ text }</span>
     </div>
-  ) : '';
+  );
 }
 
 export default Alert;

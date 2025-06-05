@@ -129,7 +129,7 @@ function IsOpenCanvasItemConfig() {
           <div className='cicm-colour'>
             <div className='cicm-current-color'>
               <Title title='CURRENT COLOUR'/>
-              <ClayLg src={baseUrl + updatedColour.to.color_image} name={updatedColour.to.color_name}/>
+              <ClayLg src={baseUrl + updatedColour?.to?.color_image} name={updatedColour?.to?.color_name}/>
             </div>
             <div className='cicm-change-out-color'>
               <Title title={t('CHANGE OUT COLOUR')}/>

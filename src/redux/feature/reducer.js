@@ -57,7 +57,9 @@ export default function reducer(state = initState, action) {
         break;
 
       case actions.GET_COLOURS_REQUEST_SUCCESS: {
-        draft.colours = convertAllProductsToColourArray(action.payload.products);
+        // if(action.payload.products.length > 0) {
+          draft.colours = convertAllProductsToColourArray(action.payload.products);
+        //}
       }
       break;
 
@@ -90,6 +92,11 @@ export default function reducer(state = initState, action) {
 
         const priceData = [...draft.priceData].filter((item) => item.id_product_attribute !== action.payload);
         draft.priceData = [...priceData];
+      }
+      break;
+
+      case actions.REMOVE_COLOUR_0N_CANVAS: {
+        draft.coloursOnCanvas = [...action.payload];
       }
       break;
 
@@ -202,7 +209,9 @@ export default function reducer(state = initState, action) {
       break;
 
       case actions.INIT_USER_DATA: {
-        Object.assign(draft, action.payload);
+        //if(draft.isLoggedIn === 1) {
+          Object.assign(draft, action.payload);
+        //}
       }
       break;
 

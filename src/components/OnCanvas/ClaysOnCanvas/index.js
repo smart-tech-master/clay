@@ -83,7 +83,7 @@ const ClaysOnCanvas = ({category, data}) => {
                 }
               />
             </div>
-            <div>€{truncateToTwoDecimals(size[item.id_product_attribute] * price[item.id_product_attribute])}</div>
+            <div className='acp-unit-price'>€{truncateToTwoDecimals(size[item.id_product_attribute] * price[item.id_product_attribute])}</div>
             <ActionButtons data={item} id={item.id_product_attribute} name={item.color_name} src={baseUrl+item.color_image} removeItem={removeItem}/>
           </div>
         ))

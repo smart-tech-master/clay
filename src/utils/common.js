@@ -67,6 +67,51 @@ export const convertAllProductsToColourArray = (products) => {
     return result;
 }
 
+export const getDefaultPallet = (data) => {
+  const result = {};
+
+  data.forEach(pallet => {
+    const title = pallet.title;
+    const palletResult = [];
+
+    const productEntries = Object.values(pallet.colors || {});
+
+    productEntries.forEach(product => {
+      const productName = product.name;
+      const id_product = product.id_product;
+
+      const colorEntries = Object.values(product.colors || {});
+
+      colorEntries.forEach(color => {
+        const colorName = color.name;
+        const colorImage = color.image;
+
+        // Iterate through values in color object to find attributes
+        Object.values(color).forEach(value => {
+          if (typeof value === 'object' && value.id_product_attribute) {
+            palletResult.push({
+              id_product,
+              product_name: productName,
+              color_name: colorName,
+              color_image: colorImage,
+              id_product_attribute: value.id_product_attribute,
+              price: value.price,
+              weight: value.weight,
+              m2: value.m2,
+              visible: true
+            });
+          }
+        });
+      });
+    });
+
+    result[title] = palletResult;
+  });
+
+  return result;
+};
+
+
 export const truncateToTwoDecimals = (num) => {
   return Math.ceil(num * 100) / 100;
 }

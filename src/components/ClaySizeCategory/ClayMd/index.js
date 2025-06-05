@@ -44,7 +44,7 @@ const ClayMd = ({ src, name, onClickHandle }) => {
       >
         <img src={ Add } alt='info' style={ isHovered ? showAddButtonStyle : hideAddButtonStyle }/>
       </div>
-      <div className='acp-name'>
+      <div className={name.length > 4 ? 'acp-small-name' : 'acp-name'}>
         { name }
       </div>
     </div>
