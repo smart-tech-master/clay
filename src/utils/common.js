@@ -111,6 +111,11 @@ export const getDefaultPallet = (data) => {
   return result;
 };
 
+export const getFilteredArray = (array1, array2) => {
+  return array1.filter(
+    item1 => !array2.some(item2 => item2.id_product_attribute === item1.id_product_attribute)
+  );
+}
 
 export const truncateToTwoDecimals = (num) => {
   return Math.ceil(num * 100) / 100;

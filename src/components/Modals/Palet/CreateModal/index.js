@@ -1,15 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 
 import statusAction from '../../../../redux/status/actions';
 import featureAction from '../../../../redux/feature/actions';
-import { parseDataByCategory, parseDataByObjectKey } from "utils/common";
+import { parseDataByObjectKey } from "utils/common";
 
 import PaletListSm from "components/PaletListCategory/PaletListSm";
 import PaletListRm from "components/PaletListCategory/PaletListRm";
 
 import 'components/Modals/TemplateModal/TemplateModal.css';
+import { getFilteredArray } from 'utils/common';
 
 import { useTranslation } from "react-i18next";
 
@@ -24,13 +25,18 @@ function CreatePaletModal() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.Feature.isOpenCreatePaletModal);
   const isOpenCreatePaletModal = () => {
+    setUserColoursData({
+      userPaletName: 'my palet',
+      userColours: []
+    });
     dispatch(statusAction.isOpenCreatePaletModal());
   }
 
   const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
   const customerId = useSelector(state => state.Feature.customerId);
   const userColours = useSelector(state => state.Feature.userColours);
-  const colours = useSelector(state => state.Feature.colours);
+  const allColours = useSelector(state => state.Feature.colours);
+  const [colours, setColours] = React.useState([]);
   const parsedColoursDataByProductName = parseDataByObjectKey(colours, 'product_name');
 
   const [userColoursData, setUserColoursData] = React.useState({
@@ -38,6 +44,14 @@ function CreatePaletModal() {
     userColours: []
   });
 
+  useEffect(() => {
+    setColours([...allColours]);
+  }, [allColours]);
+
+  useEffect(() => {
+    const fileredColours = getFilteredArray(allColours, userColoursData.userColours);
+    setColours([...fileredColours]);
+  }, [userColoursData]);
 
   const addUserColour = (data) => {
     const exist = userColoursData.userColours.some(item => item.id_product_attribute === data.id_product_attribute);
@@ -84,9 +98,17 @@ function CreatePaletModal() {
       const userPallet = {...userColours, ...{[userColoursData.userPaletName]: userColoursData.userColours}};
       // console.log('userColours', payload);
       //dispatch({type: featureAction.SET_PALLET_REQUEST, payload:{customerId, userPallet} });
-      dispatch(featureAction.setPallet({customerId, userPallet}));
+      dispatch(featureAction.setPallet({type: 'create', customerId, userPallet}));
     }else{
       localStorage.setItem("userData", JSON.stringify(cloneUserData));
+      dispatch({
+        type: featureAction.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "success",
+          message: "Pallet is created successfully"
+        },
+      })
       /*      const userData = JSON.parse(localStorage.getItem("userData"));*/
     }
   }

@@ -43,6 +43,14 @@ function OnCanvas() {
       dispatch({type: featureAction.ADD_TO_CART_REQUEST, payload: {priceData, customerId : userData.customerId}});
     }else{
       localStorage.setItem("productsData", JSON.stringify(userData.priceData));
+      dispatch({
+        type: featureAction.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "success",
+          message: "Add to cart is done successfully"
+        },
+      });
       /*      const userData = JSON.parse(localStorage.getItem("priceData"));*/
     }
   }

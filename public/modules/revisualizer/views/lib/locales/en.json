@@ -27,5 +27,16 @@
   "Delete canvas": "Delete canvas",
 
   "Colour": "Colour",
-  "Total": "Total"
+  "Total": "Total",
+
+  "Object is saved successfully": "Object is saved successfuly",
+  "Object saving is failed": "Object saving is failed",
+  "Pallet is created successfully": "Pallet is created successfuly",
+  "Pallet creating is failed": "Pallet creating is failed",
+  "Pallet is saved successfully": "Pallet is saved successfuly",
+  "Pallet saving is failed": "Pallet saving is failed",
+  "Pallet is deleted successfully": "Pallet is deleted successfuly",
+  "Pallet deleting is failed": "Pallet deleting is failed",
+  "Add to cart is done successfully": "Add to cart is done successfuly",
+  "Add to cart is failed": "Add to cart is failed"
 }

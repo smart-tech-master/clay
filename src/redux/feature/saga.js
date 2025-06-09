@@ -1,6 +1,7 @@
 import { all, takeLatest, fork, put } from 'redux-saga/effects';
 import actions from "./actions";
 import statusActions from "./../status/actions";
+import featureActions from "../../redux/feature/actions";
 import { getQuery, postQuery } from 'utils/api';
 import { getDefaultPallet } from 'utils/common';
 
@@ -64,10 +65,24 @@ export function* setObjects() {
         }
       );
       if(response.status === 200) {
-        console.log('setObjects success');
+        yield put({
+          type: actions.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "success",
+            message: "Object is saved successfully"
+          },
+        });
       }
     } catch (e) {
-      console.log(e);
+      yield put({
+        type: actions.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "error",
+          message: "Object saving is failed"
+        },
+      });
     }
   });
 }
@@ -106,10 +121,24 @@ export function* addToCart() {
         }
       );
       if(response.status === 200) {
-        console.log('addToCart success');
+        yield put({
+          type: actions.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "success",
+            message: "Add to cart is done successfully"
+          },
+        });
       }
     } catch (e) {
-      console.log(e);
+      yield put({
+        type: actions.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "error",
+          message: "Add to cart is failed"
+        },
+      });
     }
   });
 }
@@ -153,10 +182,73 @@ export function* setPallet() {
         }
       );
       if(response.status === 200) {
-        console.log('setObjects success');
+        if(param.payload.type === "create"){
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "success",
+              message: "Pallet is created successfully"
+            },
+          });
+        }
+
+        if(param.payload.type === "update"){
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "success",
+              message: "Pallet is saved successfully"
+            },
+          });
+        }
+
+        if(param.payload.type === "delete"){
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "success",
+              message: "Pallet is deleted successfully"
+            },
+          });
+        }
+        // console.log('setObjects success');
       }
     } catch (e) {
-      console.log(e);
+      if(param.payload.type === "create"){
+        yield put({
+          type: actions.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "error",
+            message: "Pallet creating is failed"
+          },
+        });
+      }
+
+      if(param.payload.type === "update"){
+        yield put({
+          type: actions.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "error",
+            message: "Pallet saving is failed"
+          },
+        });
+      }
+
+      if(param.payload.type === "delete"){
+        yield put({
+          type: actions.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "error",
+            message: "Pallet deleting is failed"
+          },
+        });
+      }
     }
   });
 }

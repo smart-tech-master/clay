@@ -27,5 +27,16 @@
   "LAYOUT": "IŠDĖSTYMAS",
 
   "Colour": "Spalva",
-  "Total": "Iš viso"
+  "Total": "Iš viso",
+
+  "Object is saved successfully": "Objektas sėkmingai išsaugotas",
+  "Object saving is failed": "Objekto išsaugojimas nepavyko",
+  "Pallet is created successfully": "Padėklas sėkmingai sukurtas",
+  "Pallet creating is failed": "Padėklo kūrimas nepavyko",
+  "Pallet is saved successfully": "Padėklas sėkmingai išsaugotas",
+  "Pallet saving is failed": "Padėklo išsaugojimas nepavyko",
+  "Pallet is deleted successfully": "Padėklas sėkmingai ištrintas",
+  "Pallet deleting is failed": "Padėklo ištrynimas nepavyko",
+  "Add to cart is done successfully": "Įdėti į krepšelį sėkmingai atlikta",
+  "Add to cart is failed": "Įdėti į krepšelį nepavyko"
 }

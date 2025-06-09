@@ -53,6 +53,14 @@ function Room() {
       dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: userData});
     }else{
       localStorage.setItem("userData", JSON.stringify(userData));
+      dispatch({
+        type: featureAction.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "success",
+          message: "Object is saved successfully"
+        },
+      });
 /*      const userData = JSON.parse(localStorage.getItem("userData"));*/
     }
   }

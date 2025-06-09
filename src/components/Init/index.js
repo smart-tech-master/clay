@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import featureActions from "../../redux/feature/actions";
+import { toast } from 'react-toastify';
+
+import { useTranslation } from "react-i18next";
 
 const Init = () => {
   const dispatch = useDispatch();
@@ -86,6 +89,22 @@ const Init = () => {
   useEffect(() => {
     dispatch(featureActions.getDefaultPallet())
   }, []);
+
+  const { t, i18n } = useTranslation();
+
+  const toastData = useSelector((state) => state.Feature.toast);
+  useEffect(() => {
+    if(toastData.isOpen){
+      if(toastData.status === 'success') {
+        toast.success(t(toastData.message));
+      }
+      if(toastData.status === 'error') {
+        toast.error(t(toastData.message));
+      }
+
+      dispatch(featureActions.closeToast())
+    }
+  }, [toastData]);
 
   return(<></>)
 }

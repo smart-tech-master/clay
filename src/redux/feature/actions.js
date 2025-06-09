@@ -34,6 +34,8 @@ const actions = {
   GET_DEFAULT_PALLET_REQUEST: 'GET_DEFAULT_PALLET_REQUEST',
   GET_DEFAULT_PALLET_REQUEST_SUCCESS: 'GET_DEFAULT_PALLET_REQUEST_SUCCESS',
   SET_PALLET_REQUEST: 'SET_PALLET_REQUEST',
+  OPEN_TOAST: 'OPEN_TOAST',
+  CLOSE_TOAST: 'CLOSE_TOAST',
 
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
@@ -152,6 +154,15 @@ const actions = {
   setPallet: (payload) => ({
     type: actions.SET_PALLET_REQUEST,
     payload
+  }),
+
+  openToast: (payload) => ({
+    type: actions.OPEN_TOAST,
+    payload
+  }),
+
+  closeToast: () => ({
+    type: actions.CLOSE_TOAST,
   }),
 }
 

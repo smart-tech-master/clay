@@ -12,6 +12,11 @@ const initState = {
   downloadPdf: false,
 
   confirmModalAction: {},
+  toast: {
+    isOpen: false,
+    status: "",
+    message: ""
+  },
 
   imageBaseUrl:'',
   assetsPath: '',
@@ -229,6 +234,27 @@ export default function reducer(state = initState, action) {
 
       case actions.SET_ASSETS_PATH: {
         draft.assetsPath = action.payload;
+      }
+      break;
+
+      case actions.OPEN_TOAST: {
+        //console.log("this is payload", action.payload)
+        if(action.payload) {
+          draft.toast = {
+            isOpen: true,
+            status: action.payload.status,
+            message: action.payload.message
+          };
+        }
+      }
+      break;
+
+      case actions.CLOSE_TOAST: {
+        draft.toast = {
+          isOpen: false,
+          status: "",
+          message: ""
+        };
       }
       break;
 

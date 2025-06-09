@@ -2,11 +2,13 @@ import React from 'react';
 
 import './App.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Canvas from './containers/Canvas';
 import ToolBar from "./containers/ToolBar";
 import Modals from "./components/Modals";
 import Init from './components/Init';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
       </div>
       <Modals />
       <Init />
+      <ToastContainer />
     </div>
   );
 }

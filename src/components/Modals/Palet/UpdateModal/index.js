@@ -10,6 +10,7 @@ import PaletListRm from "components/PaletListCategory/PaletListRm";
 
 import 'components/Modals/TemplateModal/TemplateModal.css';
 import featureAction from "../../../../redux/feature/actions";
+import { getFilteredArray } from 'utils/common';
 
 import { useTranslation } from "react-i18next";
 
@@ -23,16 +24,33 @@ function UpdatePaletModal() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.Feature.isOpenUpdatePaletModal);
   const isOpenUpdatePaletModal = () => {
+    setUserColoursData(userColours);
     dispatch(statusAction.isOpenUpdatePaletModal());
   }
 
   const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
   const customerId = useSelector(state => state.Feature.customerId);
-  const colours = parseDataByObjectKey(useSelector(state => state.Feature.colours), 'product_name');
+  const allColours = useSelector(state => state.Feature.colours);
+  const [colours, setColours] = React.useState([]);
+  const parsedColoursDataByProductName = parseDataByObjectKey(colours, 'product_name');
+
+  //const colours = parseDataByObjectKey(useSelector(state => state.Feature.colours), 'product_name');
   const userColours = useSelector((state) => state.Feature.userColours);
   const paletNames = Object.keys(userColours);
   const [userColoursData, setUserColoursData] = useState({});
   const [selectedPalet, setSelectedPalet] = useState("");
+
+  useEffect(() => {
+    if(paletNames[0] != "" && userColours[paletNames[0]]) {
+      const fileredColours = getFilteredArray(allColours, userColours[paletNames[0]]);
+      setColours([...fileredColours]);
+    }
+  }, [allColours]);
+
+  useEffect(() => {
+    const fileredColours = getFilteredArray(allColours, userColoursData[selectedPalet]);
+    setColours([...fileredColours]);
+  }, [selectedPalet, userColoursData]);
 
   useEffect(()=>{
     setUserColoursData(userColours);
@@ -59,7 +77,7 @@ function UpdatePaletModal() {
   const saveUserColours = () => {
     dispatch(featureAction.saveUserColours(userColoursData));
     isOpenUpdatePaletModal();
-    setObject(userColoursData);
+    setObject(userColoursData, "update");
   }
 
   const removeUserColours = () => {
@@ -67,11 +85,11 @@ function UpdatePaletModal() {
     delete cloneUserColoursData[selectedPalet];
     dispatch(featureAction.saveUserColours(cloneUserColoursData));
     isOpenUpdatePaletModal();
-    setObject(cloneUserColoursData);
+    setObject(cloneUserColoursData, "delete");
   }
 
   const userData = useSelector(state => state.Feature);
-  const setObject = (colorData) => {
+  const setObject = (colorData, type="update") => {
     const cloneUserData = {
       ...userData,
       userColours: {...colorData},
@@ -79,9 +97,32 @@ function UpdatePaletModal() {
     };
     if (isLoggedIn == 1) {
       //dispatch({type: featureAction.SET_OBJECTS_REQUEST, payload: cloneUserData});
-      dispatch(featureAction.setPallet({customerId, colorData}));
+      if(type==="update") {
+        dispatch(featureAction.setPallet({type, customerId, updatedPallet:{[selectedPalet]: userColoursData[selectedPalet]}}));
+      }else{
+        dispatch(featureAction.setPallet({type, customerId, deletedPallet:selectedPalet}));
+      }
     }else{
       localStorage.setItem("userData", JSON.stringify(cloneUserData));
+      if(type==="update") {
+        dispatch({
+          type: featureAction.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "success",
+            message: "Pallet is saved successfully"
+          },
+        })
+      }else{
+        dispatch({
+          type: featureAction.OPEN_TOAST,
+          payload: {
+            isOpen: true,
+            status: "success",
+            message: "Pallet is deleted successfully"
+          },
+        })
+      } 
       /*      const userData = JSON.parse(localStorage.getItem("userData"));*/
     }
   }
@@ -118,7 +159,7 @@ function UpdatePaletModal() {
 
           <div className='acp-tm-body-palet-list'>
             {
-              Object.entries(colours).map( ([key, data], index ) => (
+              Object.entries(parsedColoursDataByProductName).map( ([key, data], index ) => (
                 <PaletListSm key={index} category={key} data={data} onClickHandle={ addColour } />
               ))
             }

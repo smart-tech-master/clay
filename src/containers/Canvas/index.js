@@ -207,10 +207,6 @@ const Canvas = () => {
     repaintCanvas();
   }, [rects, rectsOptions]);
 
-  useEffect(() => {
-    // console.log('coloursOnCanvas', coloursOnCanvas);
-  }, []);
-
   const formateHtmlRef = () => {
     for(let i = 0; i < rects.length; i++) {
       if(htmlRefs.current){
@@ -233,6 +229,7 @@ const Canvas = () => {
 
       for(let i = 0; i < rects.length; i++) {
         let rect;
+        
         if(i === 0) {
           rect = new fabric.Rect({
             name: rects[i].id_product_attribute,
@@ -249,28 +246,34 @@ const Canvas = () => {
             left: rects[i].visible ? rectsOptions[i].left : rectsOptions[i].left + 3000,
             width: rectsOptions[i].width,
             height: rectsOptions[i].height,
-            backgroundImageSrc: baseUrl + rects[i].color_image
+            backgroundImageSrc: baseUrl + rects[i].color_image,
           });
         }
 
         fabric.Image.fromURL(baseUrl+rects[i].color_image, (img) => {
-          fetch(baseUrl + rects[i].color_image)
-            .then(response => console.log(response.headers.get("Access-Control-Allow-Origin")))
-            .catch(error => console.error("CORS error:", error));
 
           const tempCanvas = document.createElement('canvas');
           tempCanvas.width = rect.width;   // make sure width is not 0
           tempCanvas.height = rect.height; // make sure height is not 0
 
           const ctx = tempCanvas.getContext('2d');
-          ctx.drawImage(img.getElement(), 0, 0, rect.width, rect.height);
+          ctx.drawImage(
+            img.getElement(), 
+            0, 0
+          );
 
           const pattern = new fabric.Pattern({
             source: tempCanvas,
-            repeat: 'no-repeat'
+            repeat: 'repeat'
           });
 
-          rect.set({ fill: pattern });
+          rect.set(
+            { 
+              fill: pattern,
+              scaleX: 1,
+              scaleY: 1
+            }
+          );
           canvas.add(rect);
         });
 
@@ -284,6 +287,48 @@ const Canvas = () => {
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
           htmlRefs.current[e.target.name].style.left = e.target.left + leftPositionMargin + 'px';
         });
+
+        let scalingTimeout = null;
+        canvas.on('object:modified', (e) => {
+          const obj = e.target;
+          if (!obj || obj.type !== 'rect') return;
+        
+          clearTimeout(scalingTimeout); // clear any pending triggers
+        
+          scalingTimeout = setTimeout(() => {
+            const name = obj.name;
+            const rectData = rects.find(r => r.id_product_attribute == name);
+            if (!rectData) return;
+        
+            const imageUrl = baseUrl + rectData.color_image;
+        
+            fabric.Image.fromURL(imageUrl, (img) => {
+              const tempCanvas = document.createElement('canvas');
+              tempCanvas.width = obj.width * obj.scaleX;
+              tempCanvas.height = obj.height * obj.scaleY;
+        
+              const ctx = tempCanvas.getContext('2d');
+              ctx.drawImage(img.getElement(), 0, 0);
+        
+              const pattern = new fabric.Pattern({
+                source: tempCanvas,
+                repeat: 'repeat'
+              });
+        
+              obj.set({
+                fill: pattern,
+                width: tempCanvas.width,
+                height: tempCanvas.height,
+                scaleX: 1,
+                scaleY: 1
+              });
+        
+              obj.dirty = true;
+              canvas.requestRenderAll();
+            });
+          }, 150); // Wait 150ms after last event
+        });
+        
 
       }
 
