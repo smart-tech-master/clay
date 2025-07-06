@@ -108,3 +108,34 @@ https://chatgpt.com/c/67cd5b07-9d74-800b-8e68-bb6c48ce6473
       }
     }
   });*/
+
+
+
+=====================================
+<div id="root" data-assetsurl="/modules/revisualizer/src/app/assets/" data-locale="en" data-addtocart="https://clay.powdev.lt/en/module/revisualizer/visualizer?ajax=1&amp;add-to-cart=1" data-getcolors="https://clay.powdev.lt/en/module/revisualizer/colors?ajax=1&amp;v=12" data-getobjects="https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1" 
+data-setobjects="https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1" 
+data-getpallets="https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1&amp;action=getPallets" data-setpallets="https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1&amp;action=setPallet"></div>
+
+
+
+https://clay.powdev.lt/module/revisualizer/app
+Login: clay
+psw:Claypro31
+
+for data-calculateprice endpoint
+// I will send post request with this sample param
+{
+  "action": "calculateprice",
+  "payload": {
+    "id": 75,          // Required: ID of the product attribute
+    "size": 1.4        // Required: Surface area in square meters
+  }
+}
+
+// I hope the response like bellow example
+{
+  "success": true,
+  "data": {
+    "price": 76.36   // Final calculated price based on `id` and `size`
+  }
+}

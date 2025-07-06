@@ -106,6 +106,13 @@ const Init = () => {
     }
   }, [toastData]);
 
+  const _isLoggedIn = useSelector((state) => state.Feature.isLoggedIn);
+  useEffect(() => {
+    if(_isLoggedIn == 1){
+      dispatch({type: featureActions.GET_OBJECTS_REQUEST});
+    }
+  }, [_isLoggedIn]);
+
   return(<></>)
 }
 

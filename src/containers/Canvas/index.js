@@ -184,6 +184,7 @@ const Canvas = () => {
     }
   }, [updatedColour]);
 
+  const _isSelectedObject = useSelector(state => state.Feature.isSelectedObject);
   useEffect(() => {
     const compareResult = compareArraysByName(coloursOnCanvas, rects);
     if(compareResult.onlyInArray1.length > 0) {
@@ -197,7 +198,12 @@ const Canvas = () => {
     }
 
     if (compareResult.onlyInArray1.length === compareResult.onlyInArray2.length && compareResult.commonItems.length > 0) {
-        setRects([...coloursOnCanvas]);
+      setRects([...coloursOnCanvas]);
+    }
+
+    if(_isSelectedObject) {
+      setRects([...coloursOnCanvas]);
+      dispatch(featureAction.isSelectedObject());
     }
 
   }, [coloursOnCanvas]);

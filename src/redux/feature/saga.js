@@ -37,10 +37,18 @@ export function* getObjects() {
       const response = yield getQuery(getObjectsEndPoint);
       /* console.log('this is color request result', response.data);*/
       if(response.status === 200) {
-        yield put({
-          type: actions.GET_OBJECTS_REQUEST_SUCCESS,
-          payload: response.data,
-        });
+        const { success, objects } = response.data;
+
+        if (success) {
+          yield put({
+            type: actions.GET_OBJECTS_REQUEST_SUCCESS,
+            payload: objects, // or full response.data if needed
+          });
+        } else {
+          // API returned success: false inside 200 response
+          console.log('getObjects call result -> success: false');
+        }
+
       }
     } catch (e) {
       console.log(e);
@@ -54,25 +62,48 @@ export function* setObjects() {
       /*      console.log('setObjects');*/
       const rootElement = document.getElementById('root');
       const setObjectsEndPoint = rootElement?.getAttribute('data-setobjects') || '';
-
+      //console.log('set object request payload', payload);
       const response = yield postQuery(
         //`objects?ajax=1`,
         setObjectsEndPoint,
         {
           action: 'setObject',
-          name: `${payload.customerId}-objects`,
-          id_object: JSON.stringify(payload) ,
+          // customerId: payload.payload.customerId,
+          // name: `${payload.payload.customerId}-objects`,
+          objectId: payload.payload.objectId,
+          objectName: payload.payload.objectName,
+          object: payload.payload.object
         }
       );
       if(response.status === 200) {
-        yield put({
-          type: actions.OPEN_TOAST,
-          payload: {
-            isOpen: true,
-            status: "success",
-            message: "Object is saved successfully"
-          },
-        });
+
+        const data = response?.data || response; // adjust based on postQuery's return type
+
+        if (data.success) {
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "success",
+              message: "Object is saved successfully"
+            },
+          });
+        } else {
+          const errorMessage =
+            data?.errors?.[0]?.error ||
+            data?.message ||
+            "Saving failed. Please try again.";
+
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "error",
+              message: errorMessage,
+            },
+          });
+        }
+
       }
     } catch (e) {
       yield put({
@@ -121,14 +152,34 @@ export function* addToCart() {
         }
       );
       if(response.status === 200) {
-        yield put({
-          type: actions.OPEN_TOAST,
-          payload: {
-            isOpen: true,
-            status: "success",
-            message: "Add to cart is done successfully"
-          },
-        });
+
+        const data = response?.data || response; // depends on postQuery's return
+
+        if (data.success) {
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "success",
+              message: "Add to cart is done successfully"
+            },
+          });
+        } else {
+          const errorMessage =
+            data?.errors?.[0]?.error ||
+            data?.message ||
+            "Add to cart failed. Please check the product data.";
+
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "error",
+              message: errorMessage,
+            },
+          });
+        }
+
       }
     } catch (e) {
       yield put({
@@ -154,7 +205,7 @@ export function* defaultPalletRequest() {
       //const response = yield getQuery(`https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1&action=getPallets`);
       if(response.status === 200) {
         const defaultPalletData = getDefaultPallet(response.data.objects);
-        console.log('dispatch(featureActions.getDefaultPallet())', response);
+        //console.log('dispatch(featureActions.getDefaultPallet())', response);
         yield put({
           type: actions.CREATE_USER_COLOURS,
           payload: {...defaultPalletData},
@@ -182,73 +233,64 @@ export function* setPallet() {
         }
       );
       if(response.status === 200) {
-        if(param.payload.type === "create"){
+
+        const data = response?.data || response;
+        if (data.success) {
+          let successMessage = "Pallet action completed successfully";
+          if (param.payload.type === "create") {
+            successMessage = "Pallet is created successfully";
+          } else if (param.payload.type === "update") {
+            successMessage = "Pallet is saved successfully";
+          } else if (param.payload.type === "delete") {
+            successMessage = "Pallet is deleted successfully";
+          }
+
           yield put({
             type: actions.OPEN_TOAST,
             payload: {
               isOpen: true,
               status: "success",
-              message: "Pallet is created successfully"
+              message: successMessage,
+            },
+          });
+        } else {
+          const errorMessage =
+            data?.errors?.[0]?.error ||
+            data?.message ||
+            "Pallet action failed. Please check your input.";
+
+          yield put({
+            type: actions.OPEN_TOAST,
+            payload: {
+              isOpen: true,
+              status: "error",
+              message: errorMessage,
             },
           });
         }
 
-        if(param.payload.type === "update"){
-          yield put({
-            type: actions.OPEN_TOAST,
-            payload: {
-              isOpen: true,
-              status: "success",
-              message: "Pallet is saved successfully"
-            },
-          });
-        }
-
-        if(param.payload.type === "delete"){
-          yield put({
-            type: actions.OPEN_TOAST,
-            payload: {
-              isOpen: true,
-              status: "success",
-              message: "Pallet is deleted successfully"
-            },
-          });
-        }
         // console.log('setObjects success');
       }
     } catch (e) {
-      if(param.payload.type === "create"){
-        yield put({
-          type: actions.OPEN_TOAST,
-          payload: {
-            isOpen: true,
-            status: "error",
-            message: "Pallet creating is failed"
-          },
-        });
+      
+      let errorMessage = "Pallet action failed due to a system error";
+      if (param.payload.type === "create") {
+        errorMessage = "Pallet creating is failed";
+      } else if (param.payload.type === "update") {
+        errorMessage = "Pallet saving is failed";
+      } else if (param.payload.type === "delete") {
+        errorMessage = "Pallet deleting is failed";
       }
 
-      if(param.payload.type === "update"){
-        yield put({
-          type: actions.OPEN_TOAST,
-          payload: {
-            isOpen: true,
-            status: "error",
-            message: "Pallet saving is failed"
-          },
-        });
-      }
+      yield put({
+        type: actions.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "error",
+          message: errorMessage,
+        },
+      });
 
-      if(param.payload.type === "delete"){
-        yield put({
-          type: actions.OPEN_TOAST,
-          payload: {
-            isOpen: true,
-            status: "error",
-            message: "Pallet deleting is failed"
-          },
-        });
-      }
     }
   });
 }

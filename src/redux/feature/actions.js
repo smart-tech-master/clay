@@ -37,6 +37,9 @@ const actions = {
   OPEN_TOAST: 'OPEN_TOAST',
   CLOSE_TOAST: 'CLOSE_TOAST',
 
+  SELECT_OBJECT: 'SELECT_OBJECT',
+  IS_SELECTED_OBJECT: 'IS_SELECTED_OBJECT',
+
   isOpenConfirmModal: (action) => ({
     type: actions.IS_OPEN_CONFIRM_MODAL
   }),
@@ -164,6 +167,15 @@ const actions = {
   closeToast: () => ({
     type: actions.CLOSE_TOAST,
   }),
+
+  selectObject: (payload) => ({
+    type: actions.SELECT_OBJECT,
+    payload
+  }),
+
+  isSelectedObject: () => ({
+    type: actions.IS_SELECTED_OBJECT,
+  })
 }
 
 export default actions;

@@ -3,11 +3,48 @@ import {useDispatch, useSelector} from "react-redux";
 import statusActions from "../../../redux/status/actions";
 import featureActions from "../../../redux/feature/actions";
 import { truncateToTwoDecimals } from "utils/common";
+import { postQuery } from 'utils/api';
 
 import ActionButtons from "../../ActionButtons";
 
 
 const ClaysOnCanvas = ({category, data}) => {
+  // get price
+  const rootElement = document.getElementById('root');
+  const calculatepriceEndPoint = rootElement?.getAttribute('data-calculateprice') || '';
+
+  const getCalculatedData = async (id, size) => {
+    // response data format
+    // {
+    //   ...
+    //   data: {
+    //     price: price value
+    //   } 
+    // }
+
+    try {
+      const response = await postQuery(
+        calculatepriceEndPoint,
+        {
+          action: 'calculateprice',
+          payload: {
+            id, // id_product_attribute
+            size
+          }
+        }
+      );
+  
+      const price = response?.data?.price;
+  
+      // If price is undefined/null/NaN, fallback to 0
+      return typeof price === 'number' && !isNaN(price) ? price : 0;
+  
+    } catch (error) {
+      console.error('Error in getCalculatedData:', error);
+      return 0;
+    }
+  }
+
   /*api integration start*/
   const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   const dispatch = useDispatch();
@@ -17,18 +54,48 @@ const ClaysOnCanvas = ({category, data}) => {
   const [price, setPrice] = useState({});
 
   useEffect(() => {
-    const initSize = priceData.reduce((acc, item) => {
-      //console.log('item.name', item.name);
-      acc[item.id_product_attribute] = item.m2;
-      return acc;
-    }, {});
-    setSize(initSize);
+    // const initSize = priceData.reduce((acc, item) => {
+    //   //console.log('item.name', item.name);
+    //   acc[item.id_product_attribute] = item.m2;
+    //   return acc;
+    // }, {});
+    // setSize(initSize);
 
-    const initPrice = coloursOnCanvas.reduce((acc, item) => {
-      acc[item.id_product_attribute] = truncateToTwoDecimals(item.price / item.m2);
-      return acc;
-    }, {});
-    setPrice(initPrice);
+    // const initPrice = coloursOnCanvas.reduce((acc, item) => {
+    //   acc[item.id_product_attribute] = getCalculatedData(item.id_product_attribute, item.m2);
+    //   return acc;
+    // }, {});
+    // setPrice(initPrice);
+
+    // const initPrice = coloursOnCanvas.reduce((acc, item) => {
+    //   acc[item.id_product_attribute] = truncateToTwoDecimals(item.price / item.m2);
+    //   return acc;
+    // }, {});
+    // setPrice(initPrice);
+
+    const init = async () => {
+      // Initialize size (sync)
+      const initSize = priceData.reduce((acc, item) => {
+        acc[item.id_product_attribute] = item.m2;
+        return acc;
+      }, {});
+      setSize(initSize);
+  
+      // Initialize price (async)
+      const priceEntries = await Promise.all(
+        coloursOnCanvas.map(async (item) => {
+          const price = await getCalculatedData(item.id_product_attribute, item.m2);
+          return [item.id_product_attribute, price];
+        })
+      );
+  
+      const initPrice = Object.fromEntries(priceEntries);
+      setPrice(initPrice);
+    };
+  
+    if (data.length > 0) {
+      init();
+    }
   }, [data]);
 
   /*api integration end*/
@@ -45,14 +112,21 @@ const ClaysOnCanvas = ({category, data}) => {
   }, [size]);*/
 
 
-  const handleInputChange = (id, value) => {
+  const handleInputChange = async (id, value) => {
+      // setSize(prevSize => {
+      //   const newSize = { ...prevSize, [id]: value };
+      //   dispatch(featureActions.updateSize({ size: newSize, price }));
+      //   return newSize;
+      // });
 
-      setSize(prevSize => {
-        const newSize = { ...prevSize, [id]: value };
-        dispatch(featureActions.updateSize({ size: newSize, price }));
-        return newSize;
-      });
-
+      const newSize = { ...size, [id]: value };
+      setSize(newSize);
+    
+      const _price = await getCalculatedData(id, value);
+      const newPrice = { ...price, [id]: _price };
+      setPrice(newPrice);
+    
+      dispatch(featureActions.updateSize({ size: newSize, price: newPrice }));
   };
 
 /*  console.log('size, price', size, price);*/
@@ -73,7 +147,7 @@ const ClaysOnCanvas = ({category, data}) => {
                 value={size[item.id_product_attribute]}
                 onChange={(e) =>
                   {
-                    console.log("e.target.value", e.target.value);
+                    //console.log("e.target.value", e.target.value);
                     if(e.target.value === 0 || e.target.value ===undefined || e.target.value === null || e.target.value ==='') {
                       return;
                     }else{
@@ -83,7 +157,9 @@ const ClaysOnCanvas = ({category, data}) => {
                 }
               />
             </div>
-            <div className='acp-unit-price'>€{truncateToTwoDecimals(size[item.id_product_attribute] * price[item.id_product_attribute])}</div>
+            <div className='acp-unit-price'>
+              €{truncateToTwoDecimals(price[item.id_product_attribute])}  
+            </div>
             <ActionButtons data={item} id={item.id_product_attribute} name={item.color_name} src={baseUrl+item.color_image} removeItem={removeItem}/>
           </div>
         ))

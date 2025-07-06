@@ -4,12 +4,200 @@ import { produce } from 'immer';
 import { convertAllProductsToColourArray } from 'utils/common'
 
 const initState = {
+  userObjects: [
+    {
+      objectId: 0,
+      objectName: "Bedroom",
+      object: {
+        objectName: "Bedroom",
+        userColours:{},
+        coloursOnCanvas:[
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '12_B',
+            color_image: 'https://clay.powdev.lt/img/co/33.jpg',
+            id_product_attribute: '75',
+            price: 54.545455,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'WHITE decorative clay plaster 0-0,5 mm',
+            color_name: '2_B',
+            color_image: 'https://clay.powdev.lt/img/co/30.jpg',
+            id_product_attribute: '68',
+            price: 86,
+            weight: '25 kg',
+            m2: 16,
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '23_B',
+            color_image: 'https://clay.powdev.lt/img/co/35.jpg',
+            id_product_attribute: '77',
+            price: 0,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '24_B',
+            color_image: 'https://clay.powdev.lt/img/co/36.jpg',
+            id_product_attribute: '78',
+            price: 0,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          }
+        ],
+        priceData:[
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '12_B',
+            color_image: 'https://clay.powdev.lt/img/co/33.jpg',
+            id_product_attribute: '75',
+            price: 54.545455,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'WHITE decorative clay plaster 0-0,5 mm',
+            color_name: '2_B',
+            color_image: 'https://clay.powdev.lt/img/co/30.jpg',
+            id_product_attribute: '68',
+            price: 86,
+            weight: '25 kg',
+            m2: 16,
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '23_B',
+            color_image: 'https://clay.powdev.lt/img/co/35.jpg',
+            id_product_attribute: '77',
+            price: 0,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '24_B',
+            color_image: 'https://clay.powdev.lt/img/co/36.jpg',
+            id_product_attribute: '78',
+            price: 0,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          }
+        ],
+      }
+    },
+    {
+      objectId: 1,
+      objectName: "Bathroom",
+      object: {
+        objectName: "Bedroom",
+        userColours:{},
+        coloursOnCanvas:[
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '12_B',
+            color_image: 'https://clay.powdev.lt/img/co/33.jpg',
+            id_product_attribute: '75',
+            price: 54.545455,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'WHITE decorative clay plaster 0-0,5 mm',
+            color_name: '2_B',
+            color_image: 'https://clay.powdev.lt/img/co/30.jpg',
+            id_product_attribute: '68',
+            price: 86,
+            weight: '25 kg',
+            m2: 16,
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '23_B',
+            color_image: 'https://clay.powdev.lt/img/co/35.jpg',
+            id_product_attribute: '77',
+            price: 0,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          }
+        ],
+        priceData:[
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '12_B',
+            color_image: 'https://clay.powdev.lt/img/co/33.jpg',
+            id_product_attribute: '75',
+            price: 54.545455,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'WHITE decorative clay plaster 0-0,5 mm',
+            color_name: '2_B',
+            color_image: 'https://clay.powdev.lt/img/co/30.jpg',
+            id_product_attribute: '68',
+            price: 86,
+            weight: '25 kg',
+            m2: 16,
+            visible: true
+          },
+          {
+            id_product: 72451,
+            product_name: 'BALTAS apdailinis molio tinkas 0-0,5 mm',
+            color_name: '23_B',
+            color_image: 'https://clay.powdev.lt/img/co/35.jpg',
+            id_product_attribute: '77',
+            price: 0,
+            weight: '25 kg',
+            m2: '1.4',
+            visible: true
+          }
+        ],
+      }
+    },
+  ],
+  
+  // userObjects: [
+  // ],
+
+  selectedObjectId: 0,
+  selectedObjectName: "Bedroom",
+
   isOpenConfirmModal: false,
   isOpenTemplateModal: false,
   isOpenCanvasItemConfigModal: false,
   isOpenCreatePaletModal: false,
   isOpenUpdatePaletModal: false,
   downloadPdf: false,
+  isSelectedObject: false,
 
   confirmModalAction: {},
   toast: {
@@ -77,12 +265,21 @@ export default function reducer(state = initState, action) {
       break;
 
       case actions.ADD_COLOUR_ON_CANVAS: {
+        const selectedObject = draft.userObjects.find(obj => obj.objectId == draft.selectedObjectId);
+
         if(!draft.coloursOnCanvas.some(item => item.id_product_attribute === action.payload.id_product_attribute)) {
-          draft.coloursOnCanvas = [...draft.coloursOnCanvas, action.payload];
+          draft.coloursOnCanvas.push(action.payload);
+          if(selectedObject){
+            selectedObject.object.coloursOnCanvas = [...draft.coloursOnCanvas];
+          }
         }
         if(!draft.priceData.some(item => item.id_product_attribute === action.payload.id_product_attribute)) {
-          draft.priceData = [...draft.priceData, action.payload];
+          draft.priceData.push(action.payload);
+          if(selectedObject){
+            selectedObject.object.priceData = [...draft.priceData];
+          }
         }
+
       }
       break;
 
@@ -97,13 +294,31 @@ export default function reducer(state = initState, action) {
 
         const priceData = [...draft.priceData].filter((item) => item.id_product_attribute !== action.payload);
         draft.priceData = [...priceData];
+
+        const selectedObject = draft.userObjects.find(obj => obj.objectId == draft.selectedObjectId);
+        if (selectedObject) {
+          const _userObjects= draft.userObjects.map(obj => {
+            if (obj.objectId === draft.selectedObjectId) {
+              return {
+                ...obj,
+                object:{
+                  coloursOnCanvas: colours,
+                  priceData: priceData
+                }
+              }
+            }
+            return obj;
+          });
+          draft.userObjects = _userObjects;
+        }
+
       }
       break;
 
-      case actions.REMOVE_COLOUR_0N_CANVAS: {
-        draft.coloursOnCanvas = [...action.payload];
-      }
-      break;
+      // case actions.REMOVE_COLOUR_0N_CANVAS: {
+      //   draft.coloursOnCanvas = [...action.payload];
+      // }
+      // break;
 
       case actions.UPDATED_COLOUR_DEFINE: {
         draft.updatedColour = {
@@ -194,11 +409,18 @@ export default function reducer(state = initState, action) {
             return {
               ...item,
               m2: action.payload.size[item.id_product_attribute],
-              price: action.payload.price[item.id_product_attribute] * action.payload.size[item.id_product_attribute],
+              price: action.payload.price[item.id_product_attribute]
             }
         });
 
         draft.priceData = [...priceData];
+
+        const selectedObject = draft.userObjects.find(obj => obj.objectId == draft.selectedObjectId);
+
+        if(selectedObject){
+          selectedObject.object.priceData = priceData;
+        }
+    
       }
       break;
 
@@ -214,15 +436,28 @@ export default function reducer(state = initState, action) {
       break;
 
       case actions.INIT_USER_DATA: {
-        //if(draft.isLoggedIn === 1) {
+        // if(draft.isLoggedIn === 1) {
           Object.assign(draft, action.payload);
-        //}
+        // }
       }
       break;
 
       case actions.GET_OBJECTS_REQUEST_SUCCESS: {
         if(action.payload.length) {
-          Object.assign(draft, JSON.parse(action.payload.length[0]));
+          draft.userObjects = [...action.payload];
+          // Object.assign(draft, JSON.parse(action.payload.length[0]));
+
+          // coloursOnCanvas:[],
+          // priceData:[],
+          // updatedColour: {
+          //   status: false,
+          //   from: {},
+          //   to: {},
+          //   order: 0
+          // }
+
+          // const selectedRoom = _objects.find(obj => obj.objectId.toString() === selectedId);
+          // console.log('Selected room object:', selectedRoom);
         }
       }
       break;
@@ -255,6 +490,30 @@ export default function reducer(state = initState, action) {
           status: "",
           message: ""
         };
+      }
+      break;
+
+      case actions.SELECT_OBJECT: {
+        const selectedObject = [...draft.userObjects].find(obj => obj.objectId == action.payload);
+
+        if (selectedObject) {
+          // draft.selectedObjectId = selectedObject.objectId;
+          // draft.selectedObjectName = selectedObject.objectName;
+          draft.isSelectedObject = true;
+          draft.selectedObjectId = action.payload;
+          draft.coloursOnCanvas = selectedObject.object.coloursOnCanvas || [];
+          draft.priceData = selectedObject.object.priceData || [];
+          draft.selectedObjectName = selectedObject.objectName;
+          // draft.userColours = selectedObject.userColours;
+
+          // For debug:
+          console.log('Selected object:', JSON.parse(JSON.stringify(selectedObject))); // clean clone
+        }
+      }
+      break;
+
+      case actions.IS_SELECTED_OBJECT: {
+        draft.isSelectedObject = false;
       }
       break;
 
