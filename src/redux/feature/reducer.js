@@ -9,8 +9,6 @@ const initState = {
       objectId: 0,
       objectName: "Bedroom",
       object: {
-        objectName: "Bedroom",
-        userColours:{},
         coloursOnCanvas:[
           {
             id_product: 72451,
@@ -109,8 +107,6 @@ const initState = {
       objectId: 1,
       objectName: "Bathroom",
       object: {
-        objectName: "Bedroom",
-        userColours:{},
         coloursOnCanvas:[
           {
             id_product: 72451,

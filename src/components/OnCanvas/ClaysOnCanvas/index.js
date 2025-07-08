@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import statusActions from "../../../redux/status/actions";
 import featureActions from "../../../redux/feature/actions";
 import { truncateToTwoDecimals } from "utils/common";
-import { postQuery } from 'utils/api';
+import { getQuery, postQuery } from 'utils/api';
 
 import ActionButtons from "../../ActionButtons";
 
@@ -23,15 +23,19 @@ const ClaysOnCanvas = ({category, data}) => {
     // }
 
     try {
-      const response = await postQuery(
-        calculatepriceEndPoint,
-        {
-          action: 'calculateprice',
-          payload: {
-            id, // id_product_attribute
-            size
-          }
-        }
+      // const response = await postQuery(
+      //   calculatepriceEndPoint,
+      //   {
+      //     action: 'calculateprice',
+      //     payload: {
+      //       id, // id_product_attribute
+      //       size
+      //     }
+      //   }
+      // );
+
+      const response = await getQuery(
+        'https://clay.powdev.lt/module/revisualizer/cart?ajax=1&action=calculateprice'
       );
   
       const price = response?.data?.price;
@@ -53,50 +57,62 @@ const ClaysOnCanvas = ({category, data}) => {
   const [size, setSize] = useState({});
   const [price, setPrice] = useState({});
 
+  // useEffect(() => {
+
+  //   const init = async () => {
+  //     // Initialize size (sync)
+  //     const initSize = priceData.reduce((acc, item) => {
+  //       acc[item.id_product_attribute] = item.m2;
+  //       return acc;
+  //     }, {});
+  //     setSize(initSize);
+  
+  //     // Initialize price (async)
+  //     const priceEntries = await Promise.all(
+  //       coloursOnCanvas.map(async (item) => {
+  //         const price = await getCalculatedData(item.id_product_attribute, item.m2);
+  //         return [item.id_product_attribute, price];
+  //       })
+  //     );
+  
+  //     const initPrice = Object.fromEntries(priceEntries);
+  //     setPrice(initPrice);
+  //   };
+  
+  //   if (data.length > 0) {
+  //     init();
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    // const initSize = priceData.reduce((acc, item) => {
-    //   //console.log('item.name', item.name);
-    //   acc[item.id_product_attribute] = item.m2;
-    //   return acc;
-    // }, {});
-    // setSize(initSize);
-
-    // const initPrice = coloursOnCanvas.reduce((acc, item) => {
-    //   acc[item.id_product_attribute] = getCalculatedData(item.id_product_attribute, item.m2);
-    //   return acc;
-    // }, {});
-    // setPrice(initPrice);
-
-    // const initPrice = coloursOnCanvas.reduce((acc, item) => {
-    //   acc[item.id_product_attribute] = truncateToTwoDecimals(item.price / item.m2);
-    //   return acc;
-    // }, {});
-    // setPrice(initPrice);
-
-    const init = async () => {
-      // Initialize size (sync)
-      const initSize = priceData.reduce((acc, item) => {
-        acc[item.id_product_attribute] = item.m2;
-        return acc;
-      }, {});
-      setSize(initSize);
+   // const timeout = setTimeout(() => {
+      const init = async () => {
+        // Initialize size (sync)
+        const initSize = priceData.reduce((acc, item) => {
+          acc[item.id_product_attribute] = item.m2;
+          return acc;
+        }, {});
+        setSize(initSize);
+    
+        // Initialize price (async)
+        const priceEntries = await Promise.all(
+          coloursOnCanvas.map(async (item) => {
+            const price = await getCalculatedData(item.id_product_attribute, item.m2);
+            return [item.id_product_attribute, price];
+          })
+        );
+    
+        const initPrice = Object.fromEntries(priceEntries);
+        setPrice(initPrice);
+      };
+    
+      if (data.length > 0) {
+        init();
+      }
+    //}, 200);
   
-      // Initialize price (async)
-      const priceEntries = await Promise.all(
-        coloursOnCanvas.map(async (item) => {
-          const price = await getCalculatedData(item.id_product_attribute, item.m2);
-          return [item.id_product_attribute, price];
-        })
-      );
-  
-      const initPrice = Object.fromEntries(priceEntries);
-      setPrice(initPrice);
-    };
-  
-    if (data.length > 0) {
-      init();
-    }
-  }, [data]);
+    //return () => clearTimeout(timeout);
+  }, []);
 
   /*api integration end*/
 

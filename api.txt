@@ -139,3 +139,104 @@ for data-calculateprice endpoint
     "price": 76.36   // Final calculated price based on `id` and `size`
   }
 }
+
+
+{
+   "action":"setObject",
+   "objectId":0,
+   "objectName":"Bedroom",
+   "object":{
+      "coloursOnCanvas":[
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"12_B",
+            "color_image":"https://clay.powdev.lt/img/co/33.jpg",
+            "id_product_attribute":"75",
+            "price":54.545455,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"WHITE decorative clay plaster 0-0,5 mm",
+            "color_name":"2_B",
+            "color_image":"https://clay.powdev.lt/img/co/30.jpg",
+            "id_product_attribute":"68",
+            "price":86,
+            "weight":"25 kg",
+            "m2":16,
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"23_B",
+            "color_image":"https://clay.powdev.lt/img/co/35.jpg",
+            "id_product_attribute":"77",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"24_B",
+            "color_image":"https://clay.powdev.lt/img/co/36.jpg",
+            "id_product_attribute":"78",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         }
+      ],
+      "priceData":[
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"12_B",
+            "color_image":"https://clay.powdev.lt/img/co/33.jpg",
+            "id_product_attribute":"75",
+            "price":54.545455,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"WHITE decorative clay plaster 0-0,5 mm",
+            "color_name":"2_B",
+            "color_image":"https://clay.powdev.lt/img/co/30.jpg",
+            "id_product_attribute":"68",
+            "price":86,
+            "weight":"25 kg",
+            "m2":16,
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"23_B",
+            "color_image":"https://clay.powdev.lt/img/co/35.jpg",
+            "id_product_attribute":"77",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"24_B",
+            "color_image":"https://clay.powdev.lt/img/co/36.jpg",
+            "id_product_attribute":"78",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         }
+      ]
+   }
+}
