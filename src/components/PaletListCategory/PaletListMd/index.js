@@ -1,15 +1,17 @@
 import React from 'react';
+import {useSelector} from "react-redux";
 import ClayMd from "components/ClaySizeCategory/ClayMd";
 import PaletListMdPrettier from "./paletListMdPrettier";
 
 const PaletListMd = ({ category, data, onClickHandle }) => {
+  const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
   return (
     <div>
-      <div className='sm-title fw-500'>{category}</div>
-      <div className='clays d-flex'>
+      <div className='acp-sm-title acp-fw-500'>{category}</div>
+      <div className='acp-clays acp-d-flex'>
         {
           data.map((item, index) => (
-            <ClayMd key={index} src={item.src} name={item.name} onClickHandle={() => onClickHandle(item) }/>
+            <ClayMd key={index} id={item.id_product_attribute} src={baseUrl+item.color_image} name={item.color_name} onClickHandle={() => onClickHandle(item) }/>
           ))
         }
         <PaletListMdPrettier />

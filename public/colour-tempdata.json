@@ -1,0 +1,278 @@
+{
+  "products": {
+    "72451": {
+      "name": "BALTAS apdailinis molio tinkas 0-0,5 mm",
+      "id_product": 72451,
+      "colors": {
+        "0_B": {
+          "63": {
+            "id_product_attribute": "63",
+            "price": 9.917355,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "66": {
+            "id_product_attribute": "66",
+            "price": 56.198347,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "0_B",
+          "image": "/img/co/28.jpg"
+        },
+        "1_B": {
+          "64": {
+            "id_product_attribute": "64",
+            "price": 28.92562,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "67": {
+            "id_product_attribute": "67",
+            "price": 75.206612,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "1_B",
+          "image": "/img/co/29.jpg"
+        },
+        "2_B": {
+          "65": {
+            "id_product_attribute": "65",
+            "price": 24.793388,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "68": {
+            "id_product_attribute": "68",
+            "price": 71.07438,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "2_B",
+          "image": "/img/co/30.jpg"
+        },
+        "3_B": {
+          "69": {
+            "id_product_attribute": "69",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "74": {
+            "id_product_attribute": "74",
+            "price": 62.809917,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "3_B",
+          "image": "/img/co/31.jpg"
+        },
+        "12_B": {
+          "70": {
+            "id_product_attribute": "70",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "75": {
+            "id_product_attribute": "75",
+            "price": 54.545455,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "12_B",
+          "image": "/img/co/33.jpg"
+        },
+        "18_B": {
+          "71": {
+            "id_product_attribute": "71",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "76": {
+            "id_product_attribute": "76",
+            "price": 0,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "18_B",
+          "image": "/img/co/34.jpg"
+        },
+        "23_B": {
+          "72": {
+            "id_product_attribute": "72",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "77": {
+            "id_product_attribute": "77",
+            "price": 0,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "23_B",
+          "image": "/img/co/35.jpg"
+        },
+        "24_B": {
+          "73": {
+            "id_product_attribute": "73",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "78": {
+            "id_product_attribute": "78",
+            "price": 0,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "24_B",
+          "image": "/img/co/36.jpg"
+        },
+        "WHITE BASE": {
+          "93": {
+            "id_product_attribute": "93",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "16"
+          },
+          "94": {
+            "id_product_attribute": "94",
+            "price": 46.280992,
+            "weight": "25 kg",
+            "m2": "1.4"
+          },
+          "name": "WHITE BASE",
+          "image": "/img/co/37.jpg"
+        }
+      }
+    },
+    "72458": {
+      "name": "Spalvų pigmentai",
+      "id_product": 72458,
+      "colors": {
+        "3_B": {
+          "11": {
+            "id_product_attribute": "11",
+            "price": 20,
+            "weight": false,
+            "m2": false
+          },
+          "16": {
+            "id_product_attribute": "16",
+            "price": 0,
+            "weight": false,
+            "m2": false
+          },
+          "name": "3_B",
+          "image": "/img/co/31.jpg"
+        },
+        "2_B": {
+          "12": {
+            "id_product_attribute": "12",
+            "price": 4,
+            "weight": false,
+            "m2": false
+          },
+          "17": {
+            "id_product_attribute": "17",
+            "price": 0,
+            "weight": false,
+            "m2": false
+          },
+          "name": "2_B",
+          "image": "/img/co/30.jpg"
+        },
+        "1_B": {
+          "13": {
+            "id_product_attribute": "13",
+            "price": 6,
+            "weight": false,
+            "m2": false
+          },
+          "18": {
+            "id_product_attribute": "18",
+            "price": 0,
+            "weight": false,
+            "m2": false
+          },
+          "name": "1_B",
+          "image": "/img/co/29.jpg"
+        },
+        "0_B": {
+          "14": {
+            "id_product_attribute": "14",
+            "price": 5,
+            "weight": false,
+            "m2": false
+          },
+          "19": {
+            "id_product_attribute": "19",
+            "price": 20,
+            "weight": false,
+            "m2": false
+          },
+          "name": "0_B",
+          "image": "/img/co/28.jpg"
+        }
+      }
+    },
+    "72710": {
+      "name": "Produktas testavimui",
+      "id_product": 72710,
+      "colors": {
+        "0_B": {
+          "87": {
+            "id_product_attribute": "87",
+            "price": 0,
+            "weight": "25 kg",
+            "m2": "50"
+          },
+          "90": {
+            "id_product_attribute": "90",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "5"
+          },
+          "name": "0_B",
+          "image": "/img/co/28.jpg"
+        },
+        "1_B": {
+          "88": {
+            "id_product_attribute": "88",
+            "price": 0,
+            "weight": "25 kg",
+            "m2": "50"
+          },
+          "91": {
+            "id_product_attribute": "91",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "5"
+          },
+          "name": "1_B",
+          "image": "/img/co/29.jpg"
+        },
+        "2_B": {
+          "89": {
+            "id_product_attribute": "89",
+            "price": 0,
+            "weight": "25 kg",
+            "m2": "50"
+          },
+          "92": {
+            "id_product_attribute": "92",
+            "price": 0,
+            "weight": "1 kg",
+            "m2": "5"
+          },
+          "name": "2_B",
+          "image": "/img/co/30.jpg"
+        }
+      }
+    }
+  }
+}

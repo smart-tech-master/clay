@@ -30,7 +30,25 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+<!--    <input type="hidden" id="visualizer_customer_is_logged" name="visualizer_customer_is_logged" value="0">
+    <input type="hidden" id="visualizer_customer_id" name="visualizer_customer_id" value="0">
+    <input type="hidden" id="visualizer_language" name="visualizer_language" value="0">-->
+    <input type="hidden" id="visualizer_customer_is_logged" name="visualizer_customer_is_logged" value="1">
+    <input type="hidden" id="visualizer_customer_id" name="visualizer_customer_id" value="-1">
+    <input type="hidden" id="visualizer_language" name="visualizer_language" value="0">
+    <div id="root"  
+      data-assetsurl="/modules/revisualizer/views/lib/" 
+      data-locale="{$language.iso_code}"
+      data-calculateprice="{$calculateprice}"
+      data-getcolors="/colour-tempdata.json"
+      data-getobjects="https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1&action=getObjects"
+      data-setobjects="setobjects"
+      data-addtocart="{$addtocart}"
+      data-imagebaseurl="https://clay.powdev.lt"
+      data-getpallets="/default-pallets.json"
+      data-setpallets="data-setpallets"
+      >
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

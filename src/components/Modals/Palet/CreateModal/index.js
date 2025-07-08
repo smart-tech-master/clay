@@ -1,67 +1,120 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 
 import statusAction from '../../../../redux/status/actions';
-import { parseDataByCategory } from "utils/common";
+import featureAction from '../../../../redux/feature/actions';
+import { parseDataByObjectKey } from "utils/common";
 
 import PaletListSm from "components/PaletListCategory/PaletListSm";
 import PaletListRm from "components/PaletListCategory/PaletListRm";
 
 import 'components/Modals/TemplateModal/TemplateModal.css';
-import mdClose from 'assets/images/md-close.svg';
+import { getFilteredArray } from 'utils/common';
+
+import { useTranslation } from "react-i18next";
 
 Modal.setAppElement('#root');
 
 function CreatePaletModal() {
-  const [userPalet, setUserPalet] = React.useState({
-    userPaletName: 'my palet',
-    userPaletData: []
-  });
-
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const mdClose = process.env.PUBLIC_URL + assetsPath + 'images/md-close.svg';
+  
+  // start of backend integration
   const dispatch = useDispatch();
-
-  const isOpen = useSelector((state) => state.Status.isOpenCreatePaletModal);
+  const isOpen = useSelector((state) => state.Feature.isOpenCreatePaletModal);
   const isOpenCreatePaletModal = () => {
+    setUserColoursData({
+      userPaletName: 'my palet',
+      userColours: []
+    });
     dispatch(statusAction.isOpenCreatePaletModal());
   }
 
-  const parsedPaletData = parseDataByCategory(
-    useSelector((state) => state.Status.paletData)
-  );
+  const isLoggedIn = useSelector(state => state.Feature.isLoggedIn);
+  const customerId = useSelector(state => state.Feature.customerId);
+  const userColours = useSelector(state => state.Feature.userColours);
+  const allColours = useSelector(state => state.Feature.colours);
+  const [colours, setColours] = React.useState([]);
+  const parsedColoursDataByProductName = parseDataByObjectKey(colours, 'product_name');
 
-  const parsedUserPaletData = parseDataByCategory(userPalet.userPaletData);
+  const [userColoursData, setUserColoursData] = React.useState({
+    userPaletName: 'my palet',
+    userColours: []
+  });
+
+  useEffect(() => {
+    setColours([...allColours]);
+  }, [allColours]);
+
+  useEffect(() => {
+    const fileredColours = getFilteredArray(allColours, userColoursData.userColours);
+    setColours([...fileredColours]);
+  }, [userColoursData]);
+
+  const addUserColour = (data) => {
+    const exist = userColoursData.userColours.some(item => item.id_product_attribute === data.id_product_attribute);
+    if(exist) return;
+
+    setUserColoursData({
+      ...userColoursData,
+      userColours: [...userColoursData.userColours, data]
+    });
+  };
+
+  const removeUserColour = (data) => {
+    const removedData= userColoursData.userColours.filter(item => item.id_product_attribute !== data.id_product_attribute);
+
+    setUserColoursData({
+      ...userColoursData,
+      userColours: [...removedData]
+    });
+  };
+
+  const createUserColours = () => {
+    dispatch(featureAction.createUserColours({[userColoursData.userPaletName]: userColoursData.userColours}));
+    isOpenCreatePaletModal();
+
+    setObject();
+  }
 
   const handleUserPaletNameChange = (event) => {
-    setUserPalet({
-      ...userPalet,
+    setUserColoursData({
+      ...userColoursData,
       userPaletName: event.target.value
     });
   };
 
-  const addUserPaletData = (data) => {
-    const exist = userPalet.userPaletData.some(item => item.name === data.name);
-    if(exist) return;
 
-    setUserPalet({
-      ...userPalet,
-      userPaletData: [...userPalet.userPaletData, data]
-    });
-  };
-
-  const removeUserPaletData = (data) => {
-    const removedData= userPalet.userPaletData.filter(item => item.name !== data.name);
-
-    setUserPalet({
-      ...userPalet,
-      userPaletData: [...removedData]
-    });
-  };
-
-  const createUserPalet = () => {
-    dispatch(statusAction.createUserPalet({ [userPalet.userPaletName]: userPalet.userPaletData }));
-    isOpenCreatePaletModal();
+  const userData = useSelector(state => state.Feature);
+  const setObject = () => {
+    const cloneUserData = {
+      ...userData,
+      userColours: {[userColoursData.userPaletName]: userColoursData.userColours},
+      isOpenCreatePaletModal:false
+    };
+    if (isLoggedIn == 1) {
+      const userPallet = {...userColours, ...{[userColoursData.userPaletName]: userColoursData.userColours}};
+      // console.log('userColours', payload);
+      //dispatch({type: featureAction.SET_PALLET_REQUEST, payload:{customerId, userPallet} });
+      dispatch(featureAction.setPallet({type: 'create', customerId, userPallet}));
+    }else{
+      localStorage.setItem("userData", JSON.stringify(cloneUserData));
+      dispatch({
+        type: featureAction.OPEN_TOAST,
+        payload: {
+          isOpen: true,
+          status: "success",
+          message: "Pallet is created successfully"
+        },
+      })
+      /*      const userData = JSON.parse(localStorage.getItem("userData"));*/
+    }
   }
+  // end of backend ingration
+
+  const { t, i18n } = useTranslation();
 
   return (
     <div className='confirm-modal'>
@@ -83,50 +136,46 @@ function CreatePaletModal() {
           }
         }}
       >
-        <div className='tm-header' >
-          <div className='tm-header-title'>PALET CONFIG</div>
-          <div className='tm-header-close' onClick={isOpenCreatePaletModal}>
+        <div className='acp-tm-header' >
+          <div className='acp-tm-header-title'>{t('PALLET CONFIG')}</div>
+          <div className='acp-tm-header-close' onClick={isOpenCreatePaletModal}>
             <img src={mdClose} alt='close' />
           </div>
         </div>
-        <div className='tm-body'>
+        <div className='acp-tm-body'>
 
-          <div className='tm-body-palet-list'>
+          <div className='acp-tm-body-palet-list'>
             {
-              Object.entries(parsedPaletData).map( ([key, data], index ) => (
-                <PaletListSm key={index} category={key} data={data} onClickHandle={ addUserPaletData } />
+              Object.entries(parsedColoursDataByProductName).map( ([key, data], index ) => (
+                <PaletListSm key={index} category={key} data={data} onClickHandle={ addUserColour } />
               ))
             }
           </div>
 
-          <div className='tm-body-setting-bar'>
-            <div className='xs-title'>PALLET NAME</div>
-            <div className='settings-select-container'>
+          <div className='acp-tm-body-setting-bar'>
+            <div className='acp-xs-title'>{t('PALLET NAME')}</div>
+            <div className='acp-settings-select-container'>
               <input
+                className='acp-input'
                 type="text"
-                value={userPalet.userPaletName}
+                value={userColoursData.userPaletName}
                 onChange={handleUserPaletNameChange}
               />
             </div>
-            <div className='xs-title'>IN YOUR PALLET</div>
+            <div className='acp-xs-title'>{t('IN YOUR PALLET')}</div>
 
-            <div className='setting-colours m-top'>
+            <div className='acp-setting-colours m-top'>
               {
-                Object.entries(parsedUserPaletData).map( ([key, data], index ) => (
-                  <PaletListRm key={index} category={key} data={data} onClickHandle={ removeUserPaletData } />
+                Object.entries(parseDataByObjectKey(userColoursData.userColours, 'product_name')).map( ([key, data], index ) => (
+                  <PaletListRm key={index} category={key} data={data} onClickHandle={ removeUserColour } />
                 ))
               }
             </div>
 
-            <div className='tm-setting-buttons'>
+            <div className='acp-tm-setting-buttons'>
               <div></div>
-              {/*              <div className='delete-button'>
-                <svg className="delete-icon" width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.15717 13.0831C2.78745 13.0831 2.47169 12.9523 2.20988 12.6906C1.94822 12.4288 1.81738 12.113 1.81738 11.7433V1.99978H0.817383V0.916445H4.40072V0.0126953H8.40072V0.916445H11.984V1.99978H10.984V11.7344C10.984 12.1196 10.8545 12.4408 10.5955 12.6977C10.3365 12.9546 10.0194 13.0831 9.64426 13.0831H3.15717ZM9.90072 1.99978H2.90072V11.7433C2.90072 11.8182 2.92474 11.8796 2.9728 11.9277C3.02085 11.9758 3.08231 11.9998 3.15717 11.9998H9.64426C9.70843 11.9998 9.76718 11.973 9.82051 11.9196C9.87398 11.8662 9.90072 11.8075 9.90072 11.7433V1.99978ZM4.73738 10.4998H5.82051V3.49978H4.73738V10.4998ZM6.98092 10.4998H8.06405V3.49978H6.98092V10.4998Z" fill="#BF0000"/>
-                </svg>Delete pallet
-              </div>*/}
-              <div className='save-button' onClick={createUserPalet}>
-                Create
+              <div className='acp-save-button' onClick={createUserColours}>
+                {t('Create')}
               </div>
             </div>
           </div>

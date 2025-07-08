@@ -7,15 +7,17 @@ const ClayLg = ({ src, name }) => {
   const normalBackgroundStyle = {
     backgroundImage: `url("${src}")`,
     backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
   };
 
   return (
     <div
-      className='container-lg'
+      className='acp-clay-container-lg'
     >
-      <div className='clay' style={ normalBackgroundStyle }>
+      <div className='acp-clay' style={ normalBackgroundStyle }>
       </div>
-      <div className='name'>
+      <div className='acp-name'>
         { name }
       </div>
     </div>

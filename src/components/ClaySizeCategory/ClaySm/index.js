@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-
+import {useSelector} from "react-redux";
 import './ClaySm.css';
 
-import Add from '../../../assets/images/add.png';
-
 const ClaySm = ({ src, name, onClickHandle }) => {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const Add = process.env.PUBLIC_URL + assetsPath + 'images/add.svg';
+
   const [isHovered, setIsHovered] = useState(false);
 
   // background
@@ -38,20 +40,27 @@ const ClaySm = ({ src, name, onClickHandle }) => {
     fontSize: '12px',
   }
 
+  const smallNameStyle = {
+    fontSize: '7px',
+  }
+  const hoveredSmallNameStyle = {
+    fontSize: '8px',
+  }
+
   return (
     <div
-      className='clay-container-sm'
+      className='acp-clay-container-sm'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className='clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle } onClick={onClickHandle}>
+      <div className='acp-clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle } onClick={onClickHandle}>
         <img
           src={ Add }
           alt='info'
           style={ isHovered ? showAddButtonStyle : hideAddButtonStyle }
         />
       </div>
-      <div className='name' style={ isHovered ? hoveredNameStyle : normalNameStyle }>
+      <div className='acp-name' style={ isHovered ? (name.length > 5 ? hoveredSmallNameStyle : hoveredNameStyle) : (name.length > 5 ? smallNameStyle : normalNameStyle) }>
         { name }
       </div>
     </div>

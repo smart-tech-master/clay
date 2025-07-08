@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-
+import {useSelector} from "react-redux";
 import './RemoveClay.css';
-import removeClay from '../../../assets/images/remove-clay.png';
 
 const RemoveClay = ({ src, name, onClickHandle }) => {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const removeClay = process.env.PUBLIC_URL + assetsPath + 'images/remove-clay.png';
+
   const [isHovered, setIsHovered] = useState(false);
 
   // background
@@ -30,11 +33,11 @@ const RemoveClay = ({ src, name, onClickHandle }) => {
 
   return (
     <div
-      className='remove-container'
+      className='acp-remove-container'
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className='clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle }>
+      <div className='acp-clay' style={ isHovered ? hoveredBackgroundStyle : normalBackgroundStyle }>
         <img
           src={ removeClay }
           alt='info'
@@ -42,7 +45,7 @@ const RemoveClay = ({ src, name, onClickHandle }) => {
           onClick={onClickHandle}
         />
       </div>
-      <div className='name'>
+      <div className='acp-name'>
         { name }
       </div>
     </div>

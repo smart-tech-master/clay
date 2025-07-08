@@ -91,7 +91,7 @@ const actions = {
   }),
   dowloadPdf: () => ({
     type: actions.DOWNLOAD_PDF
-  })
+  }),
 }
 
 export default actions;

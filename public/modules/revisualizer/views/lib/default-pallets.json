@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "objects": [
+    {
+      "id_re_visualizer_pallet": "1",
+      "id_customer": "0",
+      "title": "Default pallet",
+      "colors": {
+        "72451": {
+          "name": "WHITE decorative clay plaster 0-0,5 mm",
+          "id_product": 72451,
+          "colors": {
+            "12_B": {
+              "75": {
+                "id_product_attribute": "75",
+                "price": 66,
+                "weight": "25 kg",
+                "weight_numeric": 25,
+                "m2": 16
+              },
+              "name": "12_B",
+              "image": "https://clay.powdev.lt/img/co/33.jpg"
+            },
+            "24_B": {
+              "78": {
+                "id_product_attribute": "78",
+                "price": 66,
+                "weight": "25 kg",
+                "weight_numeric": 25,
+                "m2": 16
+              },
+              "name": "24_B",
+              "image": "https://clay.powdev.lt/img/co/36.jpg"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id_re_visualizer_pallet": "2",
+      "id_customer": "0",
+      "title": "Extra Public pallet",
+      "colors": {
+        "72451": {
+          "name": "WHITE decorative clay plaster 0-0,5 mm",
+          "id_product": 72451,
+          "colors": {
+            "WHITE BASE": {
+              "94": {
+                "id_product_attribute": "94",
+                "price": 56,
+                "weight": "25 kg",
+                "weight_numeric": 25,
+                "m2": 16
+              },
+              "name": "WHITE BASE",
+              "image": "https://clay.powdev.lt/img/co/37.jpg"
+            },
+            "2_B": {
+              "68": {
+                "id_product_attribute": "68",
+                "price": 86,
+                "weight": "25 kg",
+                "weight_numeric": 25,
+                "m2": 16
+              },
+              "name": "2_B",
+              "image": "https://clay.powdev.lt/img/co/30.jpg"
+            },
+            "12_B": {
+              "75": {
+                "id_product_attribute": "75",
+                "price": 66,
+                "weight": "25 kg",
+                "weight_numeric": 25,
+                "m2": 16
+              },
+              "name": "12_B",
+              "image": "https://clay.powdev.lt/img/co/33.jpg"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

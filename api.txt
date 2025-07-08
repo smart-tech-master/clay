@@ -35,3 +35,208 @@ console.log(visualizer_colors); // To get colors
 console.log(visualizer_cart); // To add products to cart
 
 https://docs.google.com/document/d/1zZCAYU2tE0TH645JPELdAD1zjHOTq3-H_QUbQqL70LI/edit?tab=t.0
+
+
+<div class="language-selector-wrapper dropdown js-dropdown popup-over popup-hover DeoModule" id="language-selector-label">
+    <a class="popup-title" href="javascript:void(0)" data-toggle="dropdown" title="Language" aria-label="Language dropdown">
+                                    <i class="sc-icon current lang en"></i>
+                <span class="iso-code">en</span>
+                                                <span class="name-simple">English</span>
+        <i class="icon-arrow-down deo-custom-icons"></i>
+    </a>
+    <ul class="dropdown-menu popup-content link language-selector" aria-labelledby="language-selector-label">
+                    <li class="current">
+                <a href="https://clay.powdev.lt/en/module/revisualizer/app" class="dropdown-item" data-iso-code="en">
+                    <i class="sc-icon lang en"></i>
+                    <span class="lang-name">English</span>
+                </a>
+            </li>
+                    <li>
+                <a href="https://clay.powdev.lt/lt/module/revisualizer/app" class="dropdown-item" data-iso-code="lt">
+                    <i class="sc-icon lang lt"></i>
+                    <span class="lang-name">Lietuvių</span>
+                </a>
+            </li>
+            </ul>
+</div>
+
+English
+Lietuvių
+
+let labelText = document.getElementById("language-selector-label").innerText.trim();
+console.log(labelText);
+
+https://stackoverflow.com/questions/22710627/tainted-canvases-may-not-be-exported
+
+
+//input change detect
+https://chatgpt.com/c/67cd5b07-9d74-800b-8e68-bb6c48ce6473
+
+<input type="hidden" id="visualizer_customer_is_logged" name="visualizer_customer_is_logged" value="0">
+<input type="hidden" id="visualizer_customer_id" name="visualizer_customer_id" value="0">
+<input type="hidden" id="visualizer_language" name="visualizer_language" value="1">
+
+
+/*  useEffect(() => {
+    dispatch(featureActions.getColoursRequest());
+
+    // getting logged in user info
+    const scripts = document.querySelectorAll("script");
+    let scriptContent = "";
+    scripts.forEach(script => {
+      if (script.textContent.includes("visualizer_customer_is_logged")) {
+        scriptContent = script.textContent;
+      }
+    });
+    const isLoggedInMatch = scriptContent.match(/let visualizer_customer_is_logged = "(.*?)"/);
+    const customerIdMatch = scriptContent.match(/let visualizer_customer_id = "(.*?)"/);
+    const visualizer_customer_is_logged = isLoggedInMatch ? isLoggedInMatch[1] : undefined;
+    const visualizer_customer_id = customerIdMatch ? customerIdMatch[1] : undefined;
+    if(visualizer_customer_is_logged !== undefined && visualizer_customer_id !== undefined) {
+      if(visualizer_customer_is_logged && visualizer_customer_id) {
+        dispatch(featureActions.setUserInfo({isLoggedIn:visualizer_customer_is_logged, customerId:visualizer_customer_id}))
+      }
+    }
+
+    // getting language info
+    if(document.getElementById("language-selector-label")){
+      let labelText = document.getElementById("language-selector-label").innerText.trim();
+      if(labelText === 'English') {
+        dispatch(featureActions.setLanguage('en'));
+      }else{
+        dispatch(featureActions.setLanguage('lt'));
+      }
+    }
+  });*/
+
+
+
+=====================================
+<div id="root" data-assetsurl="/modules/revisualizer/src/app/assets/" data-locale="en" data-addtocart="https://clay.powdev.lt/en/module/revisualizer/visualizer?ajax=1&amp;add-to-cart=1" data-getcolors="https://clay.powdev.lt/en/module/revisualizer/colors?ajax=1&amp;v=12" data-getobjects="https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1" 
+data-setobjects="https://clay.powdev.lt/en/module/revisualizer/objects?ajax=1" 
+data-getpallets="https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1&amp;action=getPallets" data-setpallets="https://clay.powdev.lt/en/module/revisualizer/pallets?ajax=1&amp;action=setPallet"></div>
+
+
+
+https://clay.powdev.lt/module/revisualizer/app
+Login: clay
+psw:Claypro31
+
+for data-calculateprice endpoint
+// I will send post request with this sample param
+{
+  "action": "calculateprice",
+  "payload": {
+    "id": 75,          // Required: ID of the product attribute
+    "size": 1.4        // Required: Surface area in square meters
+  }
+}
+
+// I hope the response like bellow example
+{
+  "success": true,
+  "data": {
+    "price": 76.36   // Final calculated price based on `id` and `size`
+  }
+}
+
+
+{
+   "action":"setObject",
+   "objectId":0,
+   "objectName":"Bedroom",
+   "object":{
+      "coloursOnCanvas":[
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"12_B",
+            "color_image":"https://clay.powdev.lt/img/co/33.jpg",
+            "id_product_attribute":"75",
+            "price":54.545455,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"WHITE decorative clay plaster 0-0,5 mm",
+            "color_name":"2_B",
+            "color_image":"https://clay.powdev.lt/img/co/30.jpg",
+            "id_product_attribute":"68",
+            "price":86,
+            "weight":"25 kg",
+            "m2":16,
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"23_B",
+            "color_image":"https://clay.powdev.lt/img/co/35.jpg",
+            "id_product_attribute":"77",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"24_B",
+            "color_image":"https://clay.powdev.lt/img/co/36.jpg",
+            "id_product_attribute":"78",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         }
+      ],
+      "priceData":[
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"12_B",
+            "color_image":"https://clay.powdev.lt/img/co/33.jpg",
+            "id_product_attribute":"75",
+            "price":54.545455,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"WHITE decorative clay plaster 0-0,5 mm",
+            "color_name":"2_B",
+            "color_image":"https://clay.powdev.lt/img/co/30.jpg",
+            "id_product_attribute":"68",
+            "price":86,
+            "weight":"25 kg",
+            "m2":16,
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"23_B",
+            "color_image":"https://clay.powdev.lt/img/co/35.jpg",
+            "id_product_attribute":"77",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         },
+         {
+            "id_product":72451,
+            "product_name":"BALTAS apdailinis molio tinkas 0-0,5 mm",
+            "color_name":"24_B",
+            "color_image":"https://clay.powdev.lt/img/co/36.jpg",
+            "id_product_attribute":"78",
+            "price":0,
+            "weight":"25 kg",
+            "m2":"1.4",
+            "visible":true
+         }
+      ]
+   }
+}

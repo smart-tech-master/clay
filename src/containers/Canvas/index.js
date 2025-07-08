@@ -4,31 +4,64 @@ import html2pdf from "html2pdf.js";
 import {useDispatch, useSelector} from "react-redux";
 
 import './Canvas.css';
-import statusAction from "../../redux/status/actions";
-import Logo from "assets/images/Logo.png"
-import settings from "../../assets/images/settings.svg";
-import remove from "../../assets/images/remove.svg";
+import featureAction from "../../redux/feature/actions";
 import {compareArraysByName} from "../../utils/common";
-import statusActions from "../../redux/status/actions";
+import Table from "./Table";
+
+import { useTranslation } from "react-i18next";
+
+function useDebouncedResize(callback, delay = 200) {
+  useEffect(() => {
+    let timeoutId;
+
+    function handleResize() {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        callback();
+      }, delay);
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, [callback, delay]);
+}
 
 const Canvas = () => {
-  const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useDebouncedResize(() => {
+    // console.log('Resize ended');
+    setWindowWidth(window.innerWidth);
+  }, 300); // You can tweak the delay
+
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const Logo = process.env.PUBLIC_URL + assetsPath + 'images/Logo.png';
+  const settings = process.env.PUBLIC_URL + assetsPath + 'images/settings.svg';
+  const remove = process.env.PUBLIC_URL + assetsPath + 'images/remove.svg';
+
+  const baseUrl = useSelector(state => state.Feature.imageBaseUrl);
 
   const pdfContentRef = useRef();
+
   const generatePDF = () => {
     const element = pdfContentRef.current;
+
     const options = {
       margin:       1,
       filename:     'invoice.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
+      image:        { type: 'jpeg', quality: 1 },
       html2canvas:  { dpi: 192, letterRendering: true },
       jsPDF:        { unit: 'in', format: [12.5, 18.75], orientation: 'portrait' }
     };
+
     html2pdf().from(element).set(options).save();
   };
+
   const getDownloadPdfStatus = useSelector(state => state.Status.downloadPdf);
   useEffect(()=>{
     if(getDownloadPdfStatus) {
@@ -37,111 +70,100 @@ const Canvas = () => {
   }, [getDownloadPdfStatus]);
 
   const [rectsOptions, setRectsOptions] = useState([
-    { left: 720, top: 70, width: 200, height: 0 },
+    { left: 720, top: 70, width: 200, height: 10 },
     { left: 100, top: 300, width: 200, height: 200 },
     { left: 400, top: 200, width: 200, height: 200 },
     { left: 700, top: 300, width: 200, height: 200 },
   ]);
 
+  const screenWidth = window.innerWidth;
+  const rootWidth = document.getElementById('root').offsetWidth;
+  const leftPositionMargin = (screenWidth - rootWidth) / 2;
+
+  useEffect(() => {
+    let widthScale = rootWidth > 768 ? 0.65 : 1;
+    let canvasWidth = rootWidth * widthScale;
+
+    let unitWidth = canvasWidth / 20;
+    let reactWidth = unitWidth * 4;
+    let reactHeight = reactWidth;
+    
+    const bgRectLeftPosition = unitWidth * 14;
+    const bgRectTopPosition = 70;
+
+    const firstRectLeftPosition = unitWidth * 2;
+    const firstRectTopPosition = 300;
+    
+    const secondRectLeftPosition = unitWidth * 2 + reactWidth + unitWidth * 2;
+    const secondRectTopPosition = 200;
+
+    const thirdRectLeftPosition = unitWidth * 2 + reactWidth + unitWidth * 2 + reactWidth + unitWidth * 2;
+    const thirdRectTopPosition = 300;
+
+    const reactPositionInit = [
+      { left: bgRectLeftPosition, top: bgRectTopPosition, width: reactWidth, height: reactHeight },
+      { left: firstRectLeftPosition, top: firstRectTopPosition, width: reactWidth, height: reactHeight },
+      { left: secondRectLeftPosition, top: secondRectTopPosition, width: reactWidth, height: reactHeight },
+      { left: thirdRectLeftPosition, top: thirdRectTopPosition, width: reactWidth, height: reactHeight },
+    ];
+
+    setRectsOptions([...reactPositionInit]);
+  }, [windowWidth]);
+
   const dispatch = useDispatch();
-  const removeItem = (name) => {
-    dispatch(statusActions.confirmModalActionDefine({
-      type: statusActions.REMOVE_CALY_ON_CANVAS,
-      payload: name,
-    }));
-    dispatch(
-      statusAction.isOpenConfirmModal()
-    );
+  const removeItem = (id) => {
+    dispatch(featureAction.confirmModalActionDefine({type: featureAction.REMOVE_COLOUR_0N_CANVAS, payload: id}));
+    dispatch(featureAction.isOpenConfirmModal());
   }
-  const UpdatedClayDataDefine = (name) => {
-    dispatch(
-      statusAction.updatedClayDataDefine({status: false,from:name, to:name, order: 1})
-    )
+
+  const updatedColourDefine = (id) => {
+    dispatch(featureAction.updatedColourDataDefine({status: false,from:id, to:id, order: 0}));
   }
-  const isOpenCanvasItemConfigModal = (name) => {
-    UpdatedClayDataDefine(name);
+
+  const isOpenCanvasItemConfigModal = (id) => {
+    updatedColourDefine(id);
 
     dispatch(
-      statusAction.isOpenCanvasItemConfigModal()
+      featureAction.isOpenCanvasItemConfigModal()
     );
   };
 
   const [rects, setRects] = useState([]);
-  const claysOnCanvas = useSelector(state => state.Status.claysDataOnCanvas);
-  const updatedClayData = useSelector(state => state.Status.updatedClayData);
-  const updatedPriceOfClayData = useSelector(state => state.Status.updatedPriceOfClayData);
+  const coloursOnCanvas = useSelector(state => state.Feature.coloursOnCanvas);
+  const updatedColour = useSelector(state => state.Feature.updatedColour);
 
   const canvasRef = useRef(null);
   const [canvasInstance, setCanvasInstance] = useState(null);
 
   const htmlRefs = useRef({});
 
-  useEffect(() => {
-    const handleResize = () => {
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-  useEffect(() => {
-    console.log('current screen size', size);
-    const fetchData = async () => {
-      await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
-      /*repaintCanvas();*/
-    };
-    fetchData();
-  }, [size]);
-
-  useEffect(() => {
-    let standardWidth = 1536;
-    let standardHeight = 738;
-
-    let width = window.innerWidth;
+  const getScaleInfo = () => {
+    let width = document.getElementById('root').offsetWidth;
     let height = window.innerHeight;
-    let widthScale = 0.62;
+    let widthScale = 0.65;
     let heightScale = 1;
     let minWidth = 768;
 
     if(width <= minWidth) {
       widthScale = 1;
-      heightScale = 0.5;
+      heightScale = 0.8;
     }
-/*    width = width * widthScale;
-    height = heightScale * widthScale;
 
-    setRectsOptions(prevState => {
-      return prevState.map(item => {
-        return {
-          top: item.top * (height/standardHeight),
-          left: item.left * (width/standardWidth),
-          width: item.width * (width/standardWidth),
-          height: item.height * (height/standardHeight)
-        }
-      })
-    });*/
-/*
-    [...rectsOptions].map((item, index) => {
-        return {
-          top: item.top * (standardHeight/height),
-          left: item.left * (width/standardWidth),
-          width: item.left * (standardWidth/width),
-          height: item.height * (standardHeight/height)
-        }
-    })*/
+    return { 
+      canvasWidth: width * widthScale, 
+      canvasHeight: height * heightScale
+    }
+  }
+
+  useEffect(() => {
+    const scaleInfo = getScaleInfo();
 
     // Initialize Fabric.js canvas
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: width * widthScale ,
-      height: height * heightScale,
-      backgroundColor: '#f0f0f0', // Optional: Set a default background color
+      width: scaleInfo.canvasWidth ,
+      height: scaleInfo.canvasHeight,
+      //backgroundColor: '#f0f0f0', // Optional: Set a default background color
+      backgroundColor: '#ffffff', // Optional: Set a default background color
     });
 
     setCanvasInstance(canvas); // Store the canvas instance
@@ -150,21 +172,21 @@ const Canvas = () => {
     return () => {
       canvas.dispose(); // Dispose the canvas to prevent memory leaks
     };
-  }, [size]);
+  }, []);
 
   useEffect(() => {
-    if(updatedClayData.status) {
+    if(updatedColour.status) {
       try {
-        dispatch(statusAction.updatedClayData());
-        dispatch(statusAction.updateStatusOfUpdatedClayData(false));
+        dispatch(featureAction.updateUserColours());
       } catch (error) {
         console.error('change background error:', error.message);
       }
     }
-  }, [updatedClayData]);
+  }, [updatedColour]);
 
+  const _isSelectedObject = useSelector(state => state.Feature.isSelectedObject);
   useEffect(() => {
-    const compareResult = compareArraysByName(claysOnCanvas, rects);
+    const compareResult = compareArraysByName(coloursOnCanvas, rects);
     if(compareResult.onlyInArray1.length > 0) {
       setRects(prevState => [...prevState, compareResult.onlyInArray1[0]]);
     }
@@ -176,23 +198,30 @@ const Canvas = () => {
     }
 
     if (compareResult.onlyInArray1.length === compareResult.onlyInArray2.length && compareResult.commonItems.length > 0) {
-        setRects([...claysOnCanvas]);
+      setRects([...coloursOnCanvas]);
     }
 
-  }, [claysOnCanvas]);
+    if(_isSelectedObject) {
+      setRects([...coloursOnCanvas]);
+      dispatch(featureAction.isSelectedObject());
+    }
+
+  }, [coloursOnCanvas]);
 
   useEffect(() => {
     formateHtmlRef();
     repaintCanvas();
-  }, [rects]);
+  }, [rects, rectsOptions]);
 
   const formateHtmlRef = () => {
     for(let i = 0; i < rects.length; i++) {
       if(htmlRefs.current){
-        if(htmlRefs.current[rects[i].name] !== null) {
-          htmlRefs.current[rects[i].name].style.top = rectsOptions[i].top + 'px';
-          htmlRefs.current[rects[i].name].style.left = rectsOptions[i].left + 'px';
-          htmlRefs.current[rects[i].name].style.width = rectsOptions[i].width + 'px';
+        if(htmlRefs.current[rects[i].id_product_attribute] !== null) {
+          htmlRefs.current[rects[i].id_product_attribute].style.top = rectsOptions[i].top + 'px';
+          
+          htmlRefs.current[rects[i].id_product_attribute].style.left = rectsOptions[i].left + leftPositionMargin + 'px';
+          
+          htmlRefs.current[rects[i].id_product_attribute].style.width = rectsOptions[i].width + 'px';
         }
       }
     }
@@ -202,80 +231,151 @@ const Canvas = () => {
     const canvas = canvasInstance;
     if(canvas) {
       canvas.clear();
-
       canvas.renderAll();
+
       for(let i = 0; i < rects.length; i++) {
-
-        let rect = new fabric.Rect({
-          name: rects[i].name,
-          top: rectsOptions[i].top,
-          left: rectsOptions[i].left,
-          width: rects[i].visible ? rectsOptions[i].width : 0,
-          height: rects[i].visible ? rectsOptions[i].height : 0,
-          backgroundImageSrc: rects[i].src
-        });
-
-        fabric.Image.fromURL(rects[i].src, (img) => {
-          const pattern = new fabric.Pattern({
-            source: img.getElement(),
-            repeat: 'no-repeat', // You can change this to 'repeat' or 'repeat-x' if needed
+        let rect;
+        
+        if(i === 0) {
+          rect = new fabric.Rect({
+            name: rects[i].id_product_attribute,
+            top: rectsOptions[i].top + 3000,
+            left: rectsOptions[i].left + 3000,
+            width: rectsOptions[i].width,
+            height: rectsOptions[i].height,
+            backgroundImageSrc: baseUrl + rects[i].color_image
           });
-          rect.set({ fill: pattern });
+        }else{
+          rect = new fabric.Rect({
+            name: rects[i].id_product_attribute,
+            top: rects[i].visible ? rectsOptions[i].top : rectsOptions[i].top + 3000,
+            left: rects[i].visible ? rectsOptions[i].left : rectsOptions[i].left + 3000,
+            width: rectsOptions[i].width,
+            height: rectsOptions[i].height,
+            backgroundImageSrc: baseUrl + rects[i].color_image,
+          });
+        }
+
+        fabric.Image.fromURL(baseUrl+rects[i].color_image, (img) => {
+
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = rect.width;   // make sure width is not 0
+          tempCanvas.height = rect.height; // make sure height is not 0
+
+          const ctx = tempCanvas.getContext('2d');
+          ctx.drawImage(
+            img.getElement(), 
+            0, 0
+          );
+
+          const pattern = new fabric.Pattern({
+            source: tempCanvas,
+            repeat: 'repeat'
+          });
+
+          rect.set(
+            { 
+              fill: pattern,
+              scaleX: 1,
+              scaleY: 1
+            }
+          );
           canvas.add(rect);
         });
 
         canvas.on('object:moving', (e) => {
-       /*   console.log('object:moving', htmlRefs);*/
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
-          htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
+          htmlRefs.current[e.target.name].style.left = e.target.left + leftPositionMargin +'px';
         });
 
         canvas.on('object:scaling', (e) => {
-       /*   console.log('object:scaling', htmlRefs)*/
           htmlRefs.current[e.target.name].style.width = e.target.width * e.target.scaleX + 'px';
           htmlRefs.current[e.target.name].style.top = e.target.top + 'px';
-          htmlRefs.current[e.target.name].style.left = e.target.left + 'px';
-        })
+          htmlRefs.current[e.target.name].style.left = e.target.left + leftPositionMargin + 'px';
+        });
+
+        let scalingTimeout = null;
+        canvas.on('object:modified', (e) => {
+          const obj = e.target;
+          if (!obj || obj.type !== 'rect') return;
+        
+          clearTimeout(scalingTimeout); // clear any pending triggers
+        
+          scalingTimeout = setTimeout(() => {
+            const name = obj.name;
+            const rectData = rects.find(r => r.id_product_attribute == name);
+            if (!rectData) return;
+        
+            const imageUrl = baseUrl + rectData.color_image;
+        
+            fabric.Image.fromURL(imageUrl, (img) => {
+              const tempCanvas = document.createElement('canvas');
+              tempCanvas.width = obj.width * obj.scaleX;
+              tempCanvas.height = obj.height * obj.scaleY;
+        
+              const ctx = tempCanvas.getContext('2d');
+              ctx.drawImage(img.getElement(), 0, 0);
+        
+              const pattern = new fabric.Pattern({
+                source: tempCanvas,
+                repeat: 'repeat'
+              });
+        
+              obj.set({
+                fill: pattern,
+                width: tempCanvas.width,
+                height: tempCanvas.height,
+                scaleX: 1,
+                scaleY: 1
+              });
+        
+              obj.dirty = true;
+              canvas.requestRenderAll();
+            });
+          }, 150); // Wait 150ms after last event
+        });
+        
 
       }
 
-      // background image setting
-      if(rects.length !== 0 ){
-        fabric.Image.fromURL(rects[0].src, (img) => {
-          img.set({
-            left: 0,  // Position the image
-            top: 0,   // Position the image
-            scaleX: canvas.width / img.width,  // Scale to fit the canvas width
-            scaleY: canvas.height / img.height, // Scale to fit the canvas height
+      // background image setting backgroundColor: '#ffffff',
+      if(rects.length !== 0 && rects[0].visible){
+          fabric.Image.fromURL(baseUrl+rects[0].color_image, (img) => {
+            img.set({
+              left: 0,  // Position the image
+              top: 0,   // Position the image
+              scaleX: canvas.width / img.width,  // Scale to fit the canvas width
+              scaleY: canvas.height / img.height, // Scale to fit the canvas height
+            });
+  
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
           });
-
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        });
       }else{
-        fabric.Image.fromURL('assets/images/clays/canvas-container.png', (img) => {
-          img.set({
-            left: 0,  // Position the image
-            top: 0,   // Position the image
-            scaleX: canvas.width / img.width,  // Scale to fit the canvas width
-            scaleY: canvas.height / img.height, // Scale to fit the canvas height
-          });
-
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-        });
+        canvas.setBackgroundColor('white', canvas.renderAll.bind(canvas));
       }
 
+      const scaleInfo = getScaleInfo();
+      canvas.setWidth(scaleInfo.canvasWidth);
+      canvas.setHeight(scaleInfo.canvasHeight);
       canvas.renderAll();
     }
   }
 
+  const today = new Date();
+  const formattedDate = today.getFullYear() + '-' +
+    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+    String(today.getDate()).padStart(2, '0');
+
+  const { t, i18n } = useTranslation();
+
   return (
-    <div className='canvas-container' ref={pdfContentRef}>
-      {getDownloadPdfStatus && (<div className='pdf-header'>
-        <div>Bedroom</div>
+    <div className='acp-canvas-container' ref={pdfContentRef}>
+      {getDownloadPdfStatus && (<div className='acp-pdf-header'>
+        <div>{t('Bedroom')}</div>
         <div>
           <img src={Logo} alt='logo'/>
         </div>
-        <div>2025-02-03</div>
+        <div>{formattedDate}</div>
       </div>)}
 
       <div></div>
@@ -283,10 +383,10 @@ const Canvas = () => {
       {
         rects.map((rect, index) => {
           /*console.log('htmlRefs', htmlRefs);*/
-            return rect.visible && (<div
-              id={rect.name}
+            return rect.visible && !getDownloadPdfStatus && (<div
+              id={rect.id_product_attribute}
               key={index}
-              ref={(el) => (htmlRefs.current[rect.name] = el)}
+              ref={(el) => (htmlRefs.current[rect.id_product_attribute] = el)}
               style={{
                 position: 'absolute',
                 top: `${rectsOptions[index].top}px`,
@@ -302,7 +402,7 @@ const Canvas = () => {
               <div
                 key={index}
                 style={{
-                  width: '140px',
+                  width: '115px',
                   height: '100%',
                   backgroundColor: '#FFFFFF',
                   border: 'none',
@@ -314,18 +414,18 @@ const Canvas = () => {
                   marginTop: "-70px",
                 }}
               >
-                <div>{rect.name}</div>
+                <div>{rect.color_name}</div>
                 <img
                   src={settings}
                   alt={'setting'}
                   style={{marginLeft: '8px', marginRight: '8px', cursor: 'pointer'}}
-                  onClick={()=>isOpenCanvasItemConfigModal(rect.name)}
+                  onClick={()=>isOpenCanvasItemConfigModal(rect.id_product_attribute)}
                 />
                 <img
                   src={remove}
                   alt={'remove'}
                   style={{cursor: 'pointer'}}
-                  onClick={() => removeItem(rect.name) }
+                  onClick={() => removeItem(rect.id_product_attribute) }
                 />
               </div>
 
@@ -333,48 +433,7 @@ const Canvas = () => {
           }
         )
       }
-
-      {getDownloadPdfStatus &&
-        (<>
-          <div>
-            <table border="1">
-              <thead>
-              <tr>
-                <th>Colour</th>
-                <th>M²</th>
-                <th>Total</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>1_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              <tr>
-                <td>2_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              <tr>
-                <td>3_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              <tr>
-                <td>4_b</td>
-                <td>158</td>
-                <td>€290.66</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className='total-price'>
-            <div>Total:</div>
-            <div>€1162,64</div>
-          </div>
-        </>)
-      }
+    {getDownloadPdfStatus && <Table />}
     </div>
   );
 };

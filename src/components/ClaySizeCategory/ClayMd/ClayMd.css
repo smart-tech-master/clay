@@ -1,11 +1,11 @@
-.clay-container-md {
+.acp-clay-container-md {
     width: 56px;
     height: 60px;
 
     border: 1px solid #CACACA;
 }
 
-.clay-container-md > .clay {
+.acp-clay-container-md > .acp-clay {
     width: 100%;
     height: 40px;
 
@@ -20,11 +20,20 @@
     cursor: pointer;
 }*/
 
-.clay-container-md > .name {
+.acp-clay-container-md > .acp-name {
     width: 100%;
     height: 10px;
 
     font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.acp-clay-container-md > .acp-small-name {
+    width: 100%;
+    height: 10px;
+
+    font-size: 9px;
     font-weight: 400;
     text-align: center;
 }

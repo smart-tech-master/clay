@@ -1,11 +1,18 @@
 import React from 'react';
 
 import './Alert.css';
-import info from '../../assets/images/info.svg';
+
+import {useSelector} from "react-redux";
 
 function Alert({ text }) {
+  // assets init
+  const assetsPath = useSelector(state => state.Feature.assetsPath);
+  const info = process.env.PUBLIC_URL + assetsPath + 'images/info.svg';
+  // console.log("info url", info);
+  // console.log("assetsPath url", assetsPath);
+
   return (
-    <div className='alert m-top' >
+    <div className='acp-alert' >
       <img src={info} alt='info' />
       <span>{ text }</span>
     </div>
